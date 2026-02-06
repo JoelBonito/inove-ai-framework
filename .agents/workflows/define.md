@@ -26,6 +26,7 @@ description: Cria documentacao de projeto estruturada em 9 etapas (Brief, PRD, U
 | 1 | Brief | `product-manager` | brainstorming, plan-writing | Nenhum |
 | 2 | PRD | `product-owner` | plan-writing, gap-analysis | Produto/Negocio |
 | 3 | UX Concept | `ux-researcher` | ux-research, frontend-design, gap-analysis | Experiencia |
+| 3.5 | Visual Mockups | `frontend-specialist` | stitch-ui-design, frontend-design | Visual |
 | 4 | Architecture | `project-planner` | architecture, system-design, gap-analysis | Infraestrutura |
 | 5 | Security | `security-auditor` | vulnerability-scanner, gap-analysis | Seguranca |
 | 6 | Stack | `project-planner` | app-builder, architecture, gap-analysis | Tecnologia |
@@ -687,6 +688,103 @@ Documento gerado: docs/01-Planejamento/03-ux-concept.md
 Por favor, revise o UX Concept e responda:
 - ok — Aprovar e continuar para Architecture
 - editar [secao] — Ajustar secao especifica
+- cancelar — Parar o workflow
+```
+
+**AGUARDE** resposta antes de prosseguir.
+
+---
+
+### Fase 3.5: Visual Mockups (OPCIONAL)
+
+> **Condicao de Ativacao:** Esta fase e executada quando:
+> - O usuario solicita explicitamente mockups visuais, OU
+> - O projeto tem 5+ telas unicas no UX Concept
+>
+> Se nenhuma condicao for atendida, pule para Fase 4.
+
+**Agente:** `frontend-specialist`
+**Output:** `docs/01-Planejamento/03.5-visual-mockups.md`
+**Skills:** `stitch-ui-design`, `frontend-design`
+**Referencia:** Leia `01-product-brief.md` e `03-ux-concept.md`
+
+**Processo:**
+
+1. **Verificar disponibilidade do Stitch MCP**
+   - Invocar `mcp__stitch__list_projects` para confirmar conectividade
+   - Se falhar: informar usuario e pular para Fase 4
+
+2. **Criar projeto Stitch**
+   - Invocar `mcp__stitch__create_project` com titulo do projeto
+   - Registrar Project ID
+
+3. **Converter wireframes em prompts**
+   - Ler Section 4 do UX Concept (wireframes textuais)
+   - Carregar skill `stitch-ui-design` → ler `wireframe-to-prompt.md`
+   - Aplicar algoritmo de conversao de 7 passos para cada tela
+
+4. **Gerar telas**
+   - Telas-chave (Dashboard, Landing, Onboarding): GEMINI_3_PRO + MOBILE + DESKTOP
+   - Telas secundarias (Settings, Lists, Forms): GEMINI_3_FLASH + MOBILE
+   - Respeitar regras anti-cliche do `@frontend-specialist`
+
+5. **Documentar resultados**
+   - Criar arquivo de output com template abaixo
+
+```markdown
+# Visual Mockups: {Nome do Projeto}
+
+## Metadados
+- **Baseado em:** 03-ux-concept.md
+- **Data:** {YYYY-MM-DD}
+- **Autor:** AI Frontend Specialist (via Stitch MCP)
+- **Stitch Project ID:** {project_id}
+
+---
+
+## Telas Geradas
+
+| # | Tela | Device | Screen ID | Modelo | Status |
+|---|------|--------|-----------|--------|--------|
+| 1 | [Nome] | MOBILE | [id] | PRO | Pendente |
+| 2 | [Nome] | DESKTOP | [id] | FLASH | Pendente |
+
+---
+
+## Cobertura
+
+| Tela do UX Concept | MOBILE | DESKTOP | Estados |
+|---------------------|--------|---------|---------|
+| [Tela 1] | Sim | Sim | Success |
+| [Tela 2] | Sim | Nao | Success, Empty |
+
+---
+
+## Insights para Design System
+
+- **Cor primaria observada:** [cor dos mockups]
+- **Estilo tipografico:** [serif/sans/display]
+- **Geometria:** [sharp/rounded/mixed]
+- **Padroes notaveis:** [padroes de UI dos mockups]
+
+---
+
+## Notas
+- Mockups sao referencia visual, nao source of truth
+- Design System (Fase 7) formaliza as decisoes de design
+- IDs de telas podem ser usados para iteracao futura via Stitch
+```
+
+**CHECKPOINT:**
+```markdown
+Documento gerado: docs/01-Planejamento/03.5-visual-mockups.md
+
+Foram geradas [N] telas visuais via Stitch MCP.
+
+Por favor, revise os mockups e responda:
+- ok — Aprovar e continuar para Architecture
+- refinar [tela] — Regenerar tela especifica com feedback
+- pular — Ignorar mockups e continuar sem eles
 - cancelar — Parar o workflow
 ```
 
@@ -1643,6 +1741,7 @@ Apos criar todos os 8 documentos:
 1. docs/01-Planejamento/01-product-brief.md — Visao e contexto
 2. docs/01-Planejamento/02-prd.md — Requisitos + GAP produto
 3. docs/01-Planejamento/03-ux-concept.md — UX + GAP experiencia
+3.5. docs/01-Planejamento/03.5-visual-mockups.md — Mockups visuais (se gerados)
 4. docs/01-Planejamento/04-architecture.md — Arquitetura + DB + GAP infra
 5. docs/01-Planejamento/05-security.md — Seguranca + GAP security
 6. docs/01-Planejamento/06-stack.md — Stack + GAP tecnologia

@@ -27,8 +27,8 @@ Este projeto usa o **Inove AI Framework** com estrutura unificada:
 ```
 .agents/
 ├── agents/      # 21 agentes especializados
-├── skills/      # 40 skills modulares
-├── workflows/   # 18 workflows (via /prompts:)
+├── skills/      # 41 skills modulares
+├── workflows/   # 21 workflows (via /prompts:)
 ├── scripts/     # Scripts de automação Python
 └── config/      # Configurações por plataforma
 ```

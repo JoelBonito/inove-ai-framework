@@ -97,6 +97,27 @@ This also creates:
 2. If the page file exists, its rules **override** the Master file
 3. If not, use `design-system/MASTER.md` exclusively
 
+### Step 2c: Visual Preview with Stitch (OPTIONAL)
+
+After generating the design system, optionally create visual mockups to validate design tokens:
+
+1. **Check Stitch MCP availability:** Call `mcp__stitch__list_projects` to confirm connectivity
+2. **Create or find project:** Use `mcp__stitch__create_project` with the project name
+3. **Generate key screens:** Use design system tokens (colors, typography, geometry) in the Stitch prompt
+   - Embed actual token values: `"primary color #e8590c, heading font DM Sans, 2px border radius"`
+   - Generate 1-2 representative screens (e.g., main dashboard + landing hero)
+   - Use `GEMINI_3_PRO` for best quality
+4. **Validate visual coherence:**
+   - Do the generated screens look cohesive with the design tokens?
+   - Does the color palette work in a real UI context?
+   - Is the typography hierarchy visible?
+5. **Iterate if needed:**
+   - If mockups reveal token issues, adjust the design system and regenerate
+   - Load `stitch-ui-design` skill for detailed prompt engineering guidance
+
+> **Skill:** Load `stitch-ui-design` for prompt templates and anti-cliche rules.
+> **Note:** This step validates the design system visually. It is optional but recommended for projects where visual identity is critical.
+
 ### Step 3: Supplement with Detailed Searches (as needed)
 
 After getting the design system, use domain searches to get additional details:
@@ -298,3 +319,9 @@ Before delivering UI code, verify these items:
 - [ ] Form inputs have labels
 - [ ] Color is not the only indicator
 - [ ] `prefers-reduced-motion` respected
+
+### Visual Validation (if Stitch was used in Step 2c)
+- [ ] Generated mockups align with design system tokens (colors, typography, geometry)
+- [ ] Key screens (dashboard, landing) have both MOBILE and DESKTOP variants
+- [ ] No purple, glassmorphism, or standard hero split in mockups (anti-cliche check)
+- [ ] Stitch project ID and screen IDs documented for future reference

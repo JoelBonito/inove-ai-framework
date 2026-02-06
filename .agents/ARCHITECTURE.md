@@ -1,6 +1,6 @@
 # Inove AI Framework - Architecture
 
-> Multi-agent AI development framework with 21 agents, 40 skills, 18 workflows, and multi-platform support.
+> Multi-agent AI development framework with 21 agents, 41 skills, 21 workflows, and multi-platform support.
 
 ---
 
@@ -9,9 +9,9 @@
 Inove AI Framework is a modular system that enhances AI coding assistants with:
 
 - **21 Specialist Agents** -- Role-based AI personas for different domains
-- **40 Skills** -- Domain-specific knowledge modules loaded on demand
-- **18 Workflows** -- Slash command procedures for structured processes
-- **19 Scripts** -- Python/Bash automation for task tracking, sessions, and validation
+- **41 Skills** -- Domain-specific knowledge modules loaded on demand
+- **21 Workflows** -- Slash command procedures for structured processes
+- **21 Scripts** -- Python/Bash automation for task tracking, sessions, and validation
 - **Multi-Platform Support** -- Claude Code, Codex CLI, and Antigravity/Gemini
 
 The canonical source of truth lives in `.agents/`. Other platforms access it through symlinks.
@@ -46,19 +46,19 @@ The canonical source of truth lives in `.agents/`. Other platforms access it thr
 │   ├── game-developer.md
 │   ├── ux-researcher.md
 │   └── explorer-agent.md
-├── skills/                      # 40 skill modules
+├── skills/                      # 41 skill modules
 │   ├── api-patterns/
 │   ├── app-builder/
 │   │   └── templates/           # 13 project templates
 │   ├── architecture/
 │   ├── ...                      # (see Skills section below)
 │   └── webapp-testing/
-├── workflows/                   # 18 slash command workflows
+├── workflows/                   # 21 slash command workflows
 │   ├── brainstorm.md
 │   ├── context.md
 │   ├── ...                      # (see Workflows section below)
 │   └── ui-ux-pro-max.md
-├── scripts/                     # 19 automation scripts
+├── scripts/                     # 21 automation scripts
 │   ├── auto_finish.py
 │   ├── dashboard.py
 │   ├── ...                      # (see Scripts section below)
@@ -101,14 +101,14 @@ Each agent is a Markdown file in `.agents/agents/` defining a persona, rules, an
 | `performance-optimizer` | Speed, Web Vitals | performance-profiling |
 | `seo-specialist` | SEO, visibility, GEO | seo-fundamentals, geo-fundamentals |
 | `game-developer` | Game logic, mechanics | game-development |
-| `ux-researcher` | UX research, user flows, wireframes | ux-research, frontend-design, gap-analysis |
+| `ux-researcher` | UX research, user flows, wireframes | ux-research, frontend-design, stitch-ui-design, gap-analysis |
 | `explorer-agent` | Codebase analysis, discovery | architecture, plan-writing, brainstorming, systematic-debugging |
 
 > **Note:** All agents implicitly load `clean-code` as a Tier 0 (mandatory) skill.
 
 ---
 
-## 4. Skills (40)
+## 4. Skills (41)
 
 Skills are modular knowledge domains in `.agents/skills/`. Each contains at minimum a `SKILL.md` file, and optionally `scripts/` and `references/` subdirectories.
 
@@ -120,6 +120,7 @@ Skills are modular knowledge domains in `.agents/skills/`. Each contains at mini
 | `tailwind-patterns` | Tailwind CSS utility patterns and best practices |
 | `frontend-design` | UI/UX patterns, design systems, color/typography systems |
 | `web-design-guidelines` | UI audit against Web Interface Guidelines |
+| `stitch-ui-design` | Stitch MCP integration for generating high-fidelity UI designs from textual wireframes |
 
 ### Backend and API
 
@@ -259,7 +260,7 @@ The `app-builder` skill includes a `templates/` subdirectory with scaffolding fo
 
 ---
 
-## 5. Workflows (18)
+## 5. Workflows (21)
 
 Slash command procedures in `.agents/workflows/`. Invoke with `/command`.
 
@@ -282,11 +283,14 @@ Slash command procedures in `.agents/workflows/`. Invoke with `/command`.
 | `/status` | Consolidated project dashboard |
 | `/log` | Record session activity |
 | `/finish` | Mark tasks as complete |
+| `/review` | Post-sprint code review and quality checks |
+| `/test-book` | Generate or update testing notebook artifacts |
+| `/release` | Final release workflow for MVP or production |
 | `/ui-ux-pro-max` | Design system workflow with styles, palettes, and fonts |
 
 ---
 
-## 6. Scripts (19)
+## 6. Scripts (21)
 
 Automation scripts in `.agents/scripts/` for task management, validation, and session tracking.
 
@@ -329,6 +333,7 @@ Automation scripts in `.agents/scripts/` for task management, validation, and se
 | `verify_all.py` | Comprehensive pre-deployment verification (all checks) |
 | `validate_installation.py` | Verify framework installation and setup |
 | `validate_traceability.py` | Validate backlog-to-code traceability |
+| `_check_runner.py` | Shared check runner utilities for verification scripts |
 
 ### Notifications and Previews
 
@@ -337,6 +342,7 @@ Automation scripts in `.agents/scripts/` for task management, validation, and se
 | `notifier.py` | Send notifications on task events |
 | `reminder_system.py` | Scheduled reminders for pending tasks |
 | `auto_preview.py` | Automated preview generation |
+| `generate_web_data.py` | Generate JSON data artifacts for web docs/dashboard |
 
 ### Git Hooks
 
@@ -489,9 +495,9 @@ skill-name/
 | Metric | Count |
 | ------ | ----- |
 | Agents | 21 |
-| Skills | 40 |
-| Workflows | 18 |
-| Scripts | 19 |
+| Skills | 41 |
+| Workflows | 21 |
+| Scripts | 21 |
 | App Templates | 13 |
 | Shared Data CSVs | 13 (general) + 12 (stack-specific) |
 | Supported Platforms | 3 (Claude Code, Codex CLI, Antigravity/Gemini) |

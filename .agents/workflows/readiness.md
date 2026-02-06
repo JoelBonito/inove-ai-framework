@@ -33,19 +33,23 @@ Verifique a existência de todos os documentos obrigatórios:
 |-----------|------|--------|
 | Product Brief | `docs/01-Planejamento/01-product-brief.md` | ✅ Encontrado / ❌ Faltando |
 | PRD | `docs/01-Planejamento/02-prd.md` | ✅ / ❌ |
-| Design System | `docs/01-Planejamento/03-design-system.md` | ✅ / ❌ |
-| Database Design | `docs/01-Planejamento/04-database.md` | ✅ / ❌ |
+| UX Concept | `docs/01-Planejamento/03-ux-concept.md` | ✅ / ❌ |
+| Architecture | `docs/01-Planejamento/04-architecture.md` | ✅ / ❌ |
+| Security | `docs/01-Planejamento/05-security.md` | ✅ / ❌ |
+| Stack | `docs/01-Planejamento/06-stack.md` | ✅ / ❌ |
+| Design System | `docs/01-Planejamento/07-design-system.md` | ✅ / ❌ |
 | Backlog | `docs/BACKLOG.md` | ✅ / ❌ |
 
 ### Documentos Complementares (Recomendados)
 | Documento | Path | Status |
 |-----------|------|--------|
-| User Journeys | `docs/01-Planejamento/05-user-journeys.md` | ✅ / ❌ / ⚠️ Não criado |
+| User Journeys | `docs/01-Planejamento/user-journeys.md` | ✅ / ❌ / ⚠️ Não criado |
 | Project Context | `docs/PROJECT-CONTEXT.md` | ✅ / ❌ / ⚠️ Não criado |
+| Readiness | `docs/01-Planejamento/IMPLEMENTATION-READINESS.md` | ✅ / ❌ / ⚠️ Não criado |
 
 ### Resultado do Inventário
-- **Documentos obrigatórios:** X/5 ✅
-- **Documentos complementares:** Y/2 ✅
+- **Documentos obrigatórios:** X/8 ✅
+- **Documentos complementares:** Y/3 ✅
 - **Status:** ✅ Completo / ⚠️ Parcial / ❌ Incompleto
 ```
 

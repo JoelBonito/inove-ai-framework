@@ -18,6 +18,9 @@ __pycache__/
 .temp_ag_kit/
 antigravity-doc
 
+# MCP config (contains API keys)
+.mcp.json
+
 # IDE
 .idea/
 .vscode/

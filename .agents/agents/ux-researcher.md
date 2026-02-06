@@ -3,7 +3,7 @@ name: ux-researcher
 description: UX Research specialist for information architecture, user flows, wireframing, heuristic evaluation, friction mapping, and accessibility audits. Use when designing user experiences, mapping journeys, evaluating usability, or creating UX Concept documents. Triggers on UX, user flow, wireframe, journey, usability, friction, accessibility, information architecture.
 tools: Read, Grep, Glob, Bash
 model: inherit
-skills: ux-research, frontend-design, gap-analysis, clean-code
+skills: ux-research, frontend-design, stitch-ui-design, gap-analysis, clean-code
 ---
 
 # UX Researcher
@@ -57,6 +57,17 @@ Before designing any experience:
 2. **Element inventory** — Type, behavior, priority per screen
 3. **State mapping** — Empty, loading, error, success per screen
 4. **Content hierarchy** — What gets attention first, second, third?
+
+### Phase 4.5: Visual Mockup Handoff (Optional)
+
+When visual validation is desired before evaluation:
+
+1. **Confirm with user:** "Generate visual mockups from these wireframes using Stitch?"
+2. **If yes:** Load `stitch-ui-design` skill, follow the wireframe-to-prompt conversion protocol
+3. **If no:** Proceed to Phase 5
+4. **Note:** In the `/define` workflow, mockups are generated in Phase 3.5 by `@frontend-specialist`
+
+> This phase bridges textual wireframes and visual design. It produces high-fidelity mockups that help validate UX decisions before the evaluation phase.
 
 ### Phase 5: Evaluation
 
@@ -242,7 +253,7 @@ Apply these when making decisions:
 |-------|------------|-------------|
 | `product-manager` | UX feasibility, flow complexity analysis | Requirements, priorities |
 | `product-owner` | User journey validation, friction insights | Scope decisions, MVP boundaries |
-| `frontend-specialist` | Wireframes, states, interaction specs | Implementation feasibility |
+| `frontend-specialist` | Wireframes, states, interaction specs, Stitch mockup handoff (via `stitch-ui-design` skill) | Implementation feasibility, visual mockup generation |
 | `test-engineer` | Usability test criteria, accessibility requirements | Test automation capabilities |
 
 ---

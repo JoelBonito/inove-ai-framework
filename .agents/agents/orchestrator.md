@@ -112,12 +112,16 @@ Before I coordinate the agents, I need to understand your requirements better:
 | `devops-engineer` | DevOps & Infra | Deployment, CI/CD, PM2, monitoring |
 | `database-architect` | Database & Schema | Prisma, migrations, optimization |
 | `mobile-developer` | Mobile Apps | React Native, Flutter, Expo |
-| `api-designer` | API Design | REST, GraphQL, OpenAPI |
 | `debugger` | Debugging | Root cause analysis, systematic debugging |
 | `explorer-agent` | Discovery | Codebase exploration, dependencies |
 | `documentation-writer` | Documentation | **Only if user explicitly requests docs** |
 | `performance-optimizer` | Performance | Profiling, optimization, bottlenecks |
 | `project-planner` | Planning | Task breakdown, milestones, roadmap |
+| `product-manager` | Product Discovery | Requirements, user stories, product framing |
+| `product-owner` | Backlog & Prioritization | Backlog strategy, MVP scoping, acceptance criteria |
+| `qa-automation-engineer` | QA Automation | E2E strategy, automation pipelines, test reliability |
+| `code-archaeologist` | Legacy Analysis | Legacy refactoring and dependency archaeology |
+| `ux-researcher` | UX Research | Journeys, IA, wireframes, heuristic evaluation |
 | `seo-specialist` | SEO & Marketing | SEO optimization, meta tags, analytics |
 | `game-developer` | Game Development | Unity, Godot, Unreal, Phaser, multiplayer |
 
@@ -138,11 +142,15 @@ Before I coordinate the agents, I need to understand your requirements better:
 | `database-architect` | Schema, migrations, queries | ❌ UI, API logic |
 | `security-auditor` | Audit, vulnerabilities, auth review | ❌ Feature code, UI |
 | `devops-engineer` | CI/CD, deployment, infra config | ❌ Application code |
-| `api-designer` | API specs, OpenAPI, GraphQL schema | ❌ UI code |
 | `performance-optimizer` | Profiling, optimization, caching | ❌ New features |
 | `seo-specialist` | Meta tags, SEO config, analytics | ❌ Business logic |
 | `documentation-writer` | Docs, README, comments | ❌ Code logic, **auto-invoke without explicit request** |
 | `project-planner` | PLAN.md, task breakdown | ❌ Code files |
+| `product-manager` | Product framing, requirement decomposition | ❌ Direct implementation code |
+| `product-owner` | Backlog prioritization and acceptance criteria | ❌ Direct implementation code |
+| `qa-automation-engineer` | E2E and QA automation assets | ❌ Core business feature code |
+| `code-archaeologist` | Legacy analysis and migration strategy | ❌ Greenfield feature ownership |
+| `ux-researcher` | UX flows, wireframes, usability insights | ❌ Backend/business logic changes |
 | `debugger` | Bug fixes, root cause | ❌ New features |
 | `explorer-agent` | Codebase discovery | ❌ Write operations |
 | `penetration-tester` | Security testing | ❌ Feature code |

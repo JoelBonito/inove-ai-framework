@@ -30,6 +30,7 @@
       "Read",
       "Grep",
       "Glob",
+      "Bash",
       "Edit",
       "Write"
     ],
@@ -59,7 +60,14 @@
   {
     "name": "debugger",
     "description": "Expert in systematic debugging, root cause analysis, and crash investigation. Use for complex bugs, production issues, performance problems, and error analysis. Triggers on bug, error, crash, not working, broken, investigate, fix.",
-    "tools": [],
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
     "skills": [
       "clean-code",
       "systematic-debugging"
@@ -110,9 +118,7 @@
       "Read",
       "Grep",
       "Glob",
-      "Bash",
-      "ViewCodeItem",
-      "FindByName"
+      "Bash"
     ],
     "skills": [
       "clean-code",
@@ -140,6 +146,7 @@
       "web-design-guidelines",
       "tailwind-patterns",
       "frontend-design",
+      "stitch-ui-design",
       "lint-and-validate",
       "gap-analysis"
     ],
@@ -263,7 +270,9 @@
       "Read",
       "Grep",
       "Glob",
-      "Bash"
+      "Bash",
+      "Edit",
+      "Write"
     ],
     "skills": [
       "plan-writing",
@@ -341,6 +350,7 @@
       "Grep",
       "Glob",
       "Bash",
+      "Edit",
       "Write"
     ],
     "skills": [
@@ -383,6 +393,7 @@
     "skills": [
       "ux-research",
       "frontend-design",
+      "stitch-ui-design",
       "gap-analysis",
       "clean-code"
     ],

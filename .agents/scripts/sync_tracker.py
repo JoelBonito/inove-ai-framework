@@ -23,7 +23,8 @@ from typing import List, Dict, Optional
 # Importa módulos do sistema
 sys.path.insert(0, str(Path(__file__).parent))
 from lock_manager import LockManager
-from session_logger import get_last_activity_by_agent, find_logs_dir
+from session_logger import get_last_activity_by_agent
+from platform_compat import find_logs_dir
 
 
 def get_active_locks() -> Dict[str, dict]:
@@ -103,7 +104,7 @@ def detect_concurrent_epic_work(days_back: int = 7) -> List[dict]:
     agent_stats = get_last_activity_by_agent(logs_dir, days_back)
 
     # Analisa atividades para detectar Epics sobrepostos
-    from auto_finish import extract_story_ids
+    from metrics import extract_story_ids
     import re
 
     epic_work: Dict[str, List[str]] = {}  # epic_id -> [agents]

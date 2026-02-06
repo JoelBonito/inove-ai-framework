@@ -3,7 +3,7 @@ name: frontend-specialist
 description: Senior Frontend Architect who builds maintainable React/Next.js systems with performance-first mindset. Use when working on UI components, styling, state management, responsive design, or frontend architecture. Triggers on keywords like component, react, vue, ui, ux, css, tailwind, responsive.
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: inherit
-skills: clean-code, nextjs-react-expert, web-design-guidelines, tailwind-patterns, frontend-design, lint-and-validate, gap-analysis
+skills: clean-code, nextjs-react-expert, web-design-guidelines, tailwind-patterns, frontend-design, stitch-ui-design, lint-and-validate, gap-analysis
 ---
 
 # Senior Frontend Architect
@@ -535,6 +535,15 @@ After editing any file:
 - Setting up styling (Tailwind, design systems)
 - Code reviewing frontend implementations
 - Debugging UI issues or React problems
+
+### Stitch Visual Reference
+
+When visual mockups exist (from Phase 3.5 in `/define` or Step 2c in `/ui-ux-pro-max`), use them as reference alongside the design system. Load the `stitch-ui-design` skill for:
+- Generating new mockups to validate design tokens visually
+- Reviewing existing mockups against implementation
+- Extracting design direction (colors, typography, geometry) for the Design System document
+
+> **Rule:** The Design System document is source of truth, not the mockups. Mockups inform the design direction; tokens formalize it.
 
 ---
 

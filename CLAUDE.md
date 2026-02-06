@@ -8,7 +8,7 @@
 **Inove AI Framework** é um kit de desenvolvimento AI com sistema multi-agent (Claude Code + Codex CLI + Antigravity/Gemini) que fornece:
 
 - **21 Agentes Especializados** para diferentes domínios
-- **40 Skills Modulares** carregadas sob demanda
+- **41 Skills Modulares** carregadas sob demanda
 - **21 Workflows** (slash commands) para processos estruturados
 - **Sistema Multi-Agent** com sincronização de locks e ownership
 
@@ -19,7 +19,7 @@
 ```
 .agents/
 ├── agents/           # 21 agentes especializados
-├── skills/           # 40 módulos de conhecimento
+├── skills/           # 41 módulos de conhecimento
 ├── workflows/        # 21 workflows (slash commands)
 ├── scripts/          # Automação Python
 ├── config/           # Configurações por plataforma
@@ -249,7 +249,7 @@ Toda conversa começa com:
 ✅ Project Instructions carregadas
 ✅ Protocolo Inove AI Framework ativo
 ✅ 21 agentes disponíveis
-✅ 40 skills disponíveis
+✅ 41 skills disponíveis
 ✅ 21 workflows disponíveis
 ✅ Roteamento inteligente habilitado
 

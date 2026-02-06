@@ -48,7 +48,7 @@ Pergunte ao usuário se necessário:
 
 ### Fase 1: Estrutura do Documento
 
-**Output:** `docs/01-Planejamento/05-user-journeys.md`
+**Output:** `docs/01-Planejamento/user-journeys.md`
 
 ```markdown
 # User Journeys: {Nome do Projeto}
@@ -442,7 +442,7 @@ Para jornadas menores ou variações:
 ```markdown
 ## 📋 User Journeys Criadas!
 
-**Arquivo:** `docs/01-Planejamento/05-user-journeys.md`
+**Arquivo:** `docs/01-Planejamento/user-journeys.md`
 
 ### Resumo
 - **Jornadas criadas:** {N}

@@ -40,6 +40,10 @@ $ARGUMENTS
 | **Database** | database-architect, backend-specialist, security-auditor |
 | **Full Stack** | project-planner, frontend-specialist, backend-specialist, devops-engineer |
 | **Debug** | debugger, explorer-agent, test-engineer |
+| **Product/Planning** | product-manager, product-owner, project-planner |
+| **UX/Research** | ux-researcher, frontend-specialist, product-manager |
+| **QA/Automation** | qa-automation-engineer, test-engineer, devops-engineer |
+| **Legacy/Refactoring** | code-archaeologist, debugger, test-engineer |
 | **Security** | security-auditor, penetration-tester, devops-engineer |
 
 ---
@@ -90,7 +94,7 @@ Do you approve? (Y/N)
 
 > ✅ After user approval, invoke multiple agents in PARALLEL.
 
-## Available Agents (17 total)
+## Available Agents (21 total)
 
 | Agent | Domain | Use When |
 |-------|--------|----------|
@@ -109,6 +113,11 @@ Do you approve? (Y/N)
 | `documentation-writer` | Docs | README, API docs |
 | `debugger` | Debug | Error analysis |
 | `game-developer` | Games | Unity, Godot |
+| `product-manager` | Product | Requirements, user stories, acceptance criteria |
+| `product-owner` | Strategy | Strategic planning, PRD, roadmap, backlog prioritization |
+| `ux-researcher` | UX | UX research, user flows, wireframes, usability analysis |
+| `code-archaeologist` | Legacy | Legacy code analysis, refactoring, reverse engineering |
+| `qa-automation-engineer` | QA | E2E test automation, Playwright, CI pipelines |
 | `orchestrator` | Meta | Coordination |
 
 ---
@@ -130,6 +139,10 @@ Identify ALL domains this task touches:
 □ Performance  → performance-optimizer
 □ SEO          → seo-specialist
 □ Planning     → project-planner
+□ Product      → product-manager, product-owner
+□ UX Research  → ux-researcher
+□ Legacy       → code-archaeologist
+□ QA Automation → qa-automation-engineer
 ```
 
 ### Step 2: Phase Detection

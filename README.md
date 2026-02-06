@@ -13,8 +13,8 @@ This installs the `.agents` folder containing all templates into your project, a
 ## What's Included
 
 - **21 Specialized Agents** for different domains (frontend, backend, security, database, etc.)
-- **40 Modular Skills** loaded on demand
-- **18 Workflows** (slash commands) for structured processes
+- **41 Modular Skills** loaded on demand
+- **21 Workflows** (slash commands) for structured processes
 - **Multi-Agent System** with lock synchronization and ownership
 
 ## Usage

@@ -8,7 +8,7 @@
 **Inove AI Framework** é um kit de desenvolvimento AI com sistema multi-agent (Claude Code + Codex CLI + Antigravity/Gemini) que fornece:
 
 - **21 Agentes Especializados** para diferentes domínios
-- **40 Skills Modulares** carregadas sob demanda
+- **41 Skills Modulares** carregadas sob demanda
 - **21 Workflows** (slash commands) para processos estruturados
 - **Sistema Multi-Agent** com sincronização de locks e ownership
 
@@ -19,9 +19,10 @@
 ```
 .agents/
 ├── agents/           # 21 agentes especializados
-├── skills/           # 40 módulos de conhecimento
+├── skills/           # 41 módulos de conhecimento
 ├── workflows/        # 21 workflows (slash commands)
 ├── scripts/          # Automação Python
+├── config/           # Configurações por plataforma
 └── ARCHITECTURE.md   # Documentação técnica
 ```
 
@@ -224,6 +225,18 @@ Este framework suporta **três ferramentas AI simultaneamente**:
 | Codex CLI | `AGENTS.md` | `.codex/skills/` (symlink) | `.agents/config/codex.toml` |
 | Antigravity/Gemini | `GEMINI.md` | `.agents/skills/` | `.agents/rules/GEMINI.md` |
 
+### Symlinks Nativos
+
+Cada plataforma acessa os mesmos recursos via caminhos nativos (symlinks para `.agents/`):
+
+| Plataforma | Agents | Skills | Workflows |
+|------------|--------|--------|-----------|
+| Claude Code | `.claude/agents/` | `.claude/skills/` | `.agents/workflows/` |
+| Codex CLI | `.codex/agents/` | `.codex/skills/` | `.codex/prompts/` |
+| Antigravity | `.agents/agents/` | `.agents/skills/` | `.agents/workflows/` |
+
+> **Fonte canônica:** `.agents/` — todos os symlinks apontam para lá.
+
 ### Detecção Automática de Plataforma
 
 Os scripts Python detectam automaticamente qual ferramenta está executando:
@@ -244,6 +257,9 @@ export AGENT_SOURCE=antigravity
 
 # Para Claude Code
 export AGENT_SOURCE=claude_code
+
+# Para Codex CLI
+export AGENT_SOURCE=codex
 ```
 
 ### Lock Manager
@@ -277,6 +293,10 @@ Formato no BACKLOG.md:
 | Métricas | `python .agents/scripts/metrics.py` | Insights |
 | Validar | `python .agents/scripts/validate_installation.py` | Verificar setup |
 | Rastreabilidade | `python .agents/scripts/validate_traceability.py` | Validar cobertura |
+| Projeto | `python .agents/scripts/project_analyzer.py status` | Analisar tech stack |
+| Web Data | `python .agents/scripts/generate_web_data.py` | Gerar JSONs do site |
+| Checklist | `python .agents/scripts/checklist.py .` | Validação incremental |
+| Verificar Tudo | `python .agents/scripts/verify_all.py .` | Verificação completa |
 
 ---
 
@@ -288,7 +308,7 @@ Toda conversa começa com:
 ✅ Project Instructions carregadas
 ✅ Protocolo Inove AI Framework ativo
 ✅ 21 agentes disponíveis
-✅ 40 skills disponíveis
+✅ 41 skills disponíveis
 ✅ 21 workflows disponíveis
 ✅ Roteamento inteligente habilitado
 
@@ -339,3 +359,17 @@ Toda conversa começa com:
 5. ✅ Implementação completa
 6. 🔧 Executando: `python .agents/scripts/finish_task.py "Epic 1"`
 7. 📊 Progresso: 25% (1/4 epics concluídos)
+
+**Usuário:** `/define App de gestão de tarefas`
+
+**Claude (ou Antigravity):**
+1. Fase 0: Discovery (12 perguntas estruturadas)
+2. Fase 1: Brief (`product-manager`)
+3. Fase 2: PRD + GAP Produto (`product-owner`)
+4. Fase 3: UX Concept + GAP UX (`ux-researcher`)
+5. Fase 4: Architecture + DB + GAP Infra (`project-planner`)
+6. Fase 5: Security + GAP Segurança (`security-auditor`)
+7. Fase 6: Stack + GAP Tech (`project-planner`)
+8. Fase 7: Design System + GAP Design (`frontend-specialist`)
+9. Fase 8: Backlog + GAPs consolidados (`product-owner`)
+10. Revisão: Claude Code/Codex valida com skill `doc-review`

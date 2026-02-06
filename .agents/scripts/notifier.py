@@ -19,8 +19,8 @@ Casos de uso:
 
 import sys
 import subprocess
-import shlex
 from pathlib import Path
+from typing import Optional
 
 
 def _sanitize_applescript_string(text: str) -> str:
@@ -100,7 +100,7 @@ def get_agent_emoji(agent: str) -> str:
     return "🤖" if agent == "antigravity" else "🔵"
 
 
-def load_session() -> dict | None:
+def load_session() -> Optional[dict]:
     """Carrega sessão atual."""
     session_file = Path(".agents/.session_state.json")
     if session_file.exists():

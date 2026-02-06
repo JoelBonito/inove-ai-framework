@@ -16,6 +16,7 @@ Lembretes implementados:
 
 import sys
 import json
+import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
@@ -167,8 +168,6 @@ def check_completion_reminder():
 
     Usa o auto_finish.py para sugerir tarefas.
     """
-    import subprocess
-
     script_dir = Path(__file__).parent
     auto_finish = script_dir / "auto_finish.py"
 
@@ -229,8 +228,6 @@ def cmd_end_of_day():
     response = input("   Encerrar sessão agora? (s/N): ").strip().lower()
 
     if response == 's':
-        import subprocess
-
         script_dir = Path(__file__).parent
         auto_session = script_dir / "auto_session.py"
 

@@ -1,6 +1,6 @@
 {
   "agents_count": 21,
-  "skills_count": 51,
+  "skills_count": 52,
   "workflows_count": 21,
   "agent_names": [
     "backend-specialist",
@@ -57,6 +57,7 @@
     "red-team-tactics",
     "seo-fundamentals",
     "server-management",
+    "stitch-ui-design",
     "system-design",
     "systematic-debugging",
     "tailwind-patterns",

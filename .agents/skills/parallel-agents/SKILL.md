@@ -102,12 +102,16 @@ Agents: security-auditor → penetration-tester → synthesis
 | `devops-engineer` | DevOps | "deploy", "CI/CD", "infrastructure" |
 | `database-architect` | Database | "schema", "Prisma", "migrations" |
 | `mobile-developer` | Mobile | "React Native", "Flutter", "mobile" |
-| `api-designer` | API Design | "REST", "GraphQL", "OpenAPI" |
 | `debugger` | Debugging | "bug", "error", "not working" |
 | `explorer-agent` | Discovery | "explore", "map", "structure" |
 | `documentation-writer` | Documentation | "write docs", "create README", "generate API docs" |
 | `performance-optimizer` | Performance | "slow", "optimize", "profiling" |
 | `project-planner` | Planning | "plan", "roadmap", "milestones" |
+| `product-manager` | Product Discovery | "requirements", "discovery", "user stories" |
+| `product-owner` | Backlog Strategy | "MVP", "backlog", "prioritization" |
+| `qa-automation-engineer` | QA Automation | "E2E", "automation", "test pipeline" |
+| `code-archaeologist` | Legacy Code | "legacy", "refactor", "archaeology" |
+| `ux-researcher` | UX Research | "journeys", "wireframes", "usability" |
 | `seo-specialist` | SEO | "SEO", "meta tags", "search ranking" |
 | `game-developer` | Game Development | "game", "Unity", "Godot", "Phaser" |
 
@@ -158,7 +162,7 @@ After all agents complete, synthesize:
 
 ## Best Practices
 
-1. **Available agents** - 17 specialized agents can be orchestrated
+1. **Available agents** - 21 specialized agents can be orchestrated
 2. **Logical order** - Discovery → Analysis → Implementation → Testing
 3. **Share context** - Pass relevant findings to subsequent agents
 4. **Single synthesis** - One unified report, not separate outputs

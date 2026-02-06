@@ -10,6 +10,7 @@ Uso:
 """
 
 import os
+import re
 import sys
 import json
 from datetime import datetime
@@ -63,7 +64,6 @@ def update_daily_log_start(session: dict):
         content = log_file.read_text(encoding='utf-8')
 
         # Encontra o último número de sessão
-        import re
         session_numbers = re.findall(r'^(\d+)\.\s+\d{1,2}:\d{2}', content, re.MULTILINE)
         next_number = max([int(n) for n in session_numbers], default=0) + 1
 
@@ -115,7 +115,6 @@ def update_daily_log_end(session: dict):
     agent_emoji = "🤖" if session['agent'] == "antigravity" else "🔵"
 
     # Encontra a sessão em andamento (última com "em andamento")
-    import re
     pattern = rf'(\d+\.\s+{re.escape(session["start_time"])})\s+—\s+\*\(em andamento\)\*\s+\[{agent_emoji}\s+{session["agent"]}\]\s+- Atividades:\s+- \*\(sessão ativa\)\*'
 
     if re.search(pattern, content):

@@ -16,16 +16,33 @@ Métricas coletadas:
     - Distribuição por agente
 """
 
-import re
 import sys
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional
 from collections import defaultdict
+import re
 
 sys.path.insert(0, str(Path(__file__).parent))
 from platform_compat import find_backlog, find_logs_dir
+
+
+def extract_story_ids(text: str) -> List[str]:
+    """Extrai IDs de Stories/Epics de texto."""
+    patterns = [
+        r'(?:Story|Epic)\s+(\d+(?:\.\d+)?)',
+        r'(?:Story|Epic)-(\d+(?:\.\d+)?)',
+        r'#(\d+\.\d+)',
+    ]
+
+    story_ids = set()
+    for pattern in patterns:
+        matches = re.finditer(pattern, text, re.IGNORECASE)
+        for match in matches:
+            story_ids.add(match.group(1))
+
+    return sorted(list(story_ids))
 
 
 def parse_session_log(filepath: Path) -> List[dict]:
@@ -107,23 +124,6 @@ def get_sessions_in_range(days_back: int = 7) -> List[dict]:
                 all_sessions.extend(sessions)
 
     return sorted(all_sessions, key=lambda s: (s['date'], s['start']))
-
-
-def extract_story_ids(text: str) -> List[str]:
-    """Extrai IDs de Stories/Epics de texto."""
-    patterns = [
-        r'(?:Story|Epic)\s+(\d+(?:\.\d+)?)',
-        r'(?:Story|Epic)-(\d+(?:\.\d+)?)',
-        r'#(\d+\.\d+)',
-    ]
-
-    story_ids = set()
-    for pattern in patterns:
-        matches = re.finditer(pattern, text, re.IGNORECASE)
-        for match in matches:
-            story_ids.add(match.group(1))
-
-    return sorted(list(story_ids))
 
 
 def calculate_time_per_epic(sessions: List[dict]) -> Dict[str, int]:

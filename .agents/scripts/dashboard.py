@@ -11,6 +11,7 @@ import sys
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Optional
 
 # Importar módulos necessários
 sys.path.insert(0, str(Path(__file__).parent))
@@ -27,7 +28,7 @@ def format_duration(minutes: int) -> str:
     return f"{hours:02d}h {mins:02d}m"
 
 
-def load_current_session() -> dict | None:
+def load_current_session() -> Optional[dict]:
     """Carrega informações da sessão atual."""
     session = auto_session.load_session()
 

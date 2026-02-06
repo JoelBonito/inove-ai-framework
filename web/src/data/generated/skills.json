@@ -345,6 +345,16 @@
     "file": ".agents/skills/server-management/SKILL.md"
   },
   {
+    "name": "stitch-ui-design",
+    "description": "Knowledge on how to use Stitch MCP to generate high-fidelity UI designs from textual wireframes. Integrates with UX Concept and Design System workflows.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/stitch-ui-design/SKILL.md"
+  },
+  {
     "name": "system-design",
     "description": "System architecture design with C4 diagrams, infrastructure patterns, scalability planning, ADR documentation, and integration mapping. Use when designing system architecture or documenting technical decisions.",
     "tools": [

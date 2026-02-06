@@ -18,6 +18,17 @@
                 "shadcn@latest",
                 "mcp"
             ]
+        },
+        "stitch": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@_davideast/stitch-mcp@latest",
+                "proxy"
+            ],
+            "env": {
+                "STITCH_API_KEY": "${STITCH_API_KEY}"
+            }
         }
     }
 }
