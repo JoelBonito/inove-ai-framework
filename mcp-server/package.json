@@ -1,0 +1,39 @@
+{
+  "name": "@inove-ai/mcp-server",
+  "version": "5.0.1",
+  "description": "MCP server for Inove AI Framework — agents, skills, and workflows as MCP resources, tools and prompts",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "inove-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "prebuild": "tsx scripts/bundle-content.ts",
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "yaml": "^2.7.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
