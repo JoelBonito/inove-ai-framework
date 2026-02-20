@@ -337,6 +337,8 @@ Módulo: `.agents/scripts/recovery.py`
 
 ## Inicialização de Sessão
 
+> **PULO DO GATO (Context State):** Sempre que iniciar o trabalho com o usuário, **leia silenciosamente o arquivo `docs/PROJECT_STATUS.md`** (se existir). Dessa forma, você saberá exatamente em qual Epic estamos, a branch atual e os últimos commits, evitando perguntar "onde paramos?".
+
 Toda conversa começa com:
 
 ```

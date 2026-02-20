@@ -39,6 +39,7 @@ O Codex CLI é primariamente um **implementador de código**. Quando usado junto
 
 **ANTES de começar qualquer implementação:**
 
+0. **Ler silenciosamente** o arquivo `docs/PROJECT_STATUS.md` (se existir) para resgatar o contexto atual (onde paramos, branch atual, etc) sem perguntar ao usuário.
 1. **Verificar** se `docs/HANDOFF.md` existe:
    - **Se existir:** Ler para entender prioridades e decisões (contexto rico)
    - **Se não existir:** Prosseguir sem ele (ver Standalone Mode abaixo)

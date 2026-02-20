@@ -323,6 +323,37 @@ def cmd_activate(name: str):
         print(f"Squad '{name}': no symlinks created (components may already exist as core).")
 
 
+def cmd_auto_activate(name: str):
+    """Silently activate squad if not already active."""
+    squad_dir = _get_squad_dir(name)
+    if not squad_dir.exists():
+        sys.exit(0)
+
+    manifest = _get_manifest(name)
+    components = _get_components(manifest)
+    
+    is_active = False
+    if components["agents"]:
+        for agent_name in components["agents"]:
+            link_path = AGENTS_DIR / "agents" / f"{agent_name}.md"
+            if link_path.is_symlink():
+                target = link_path.resolve()
+                if str(squad_dir) in str(target):
+                    is_active = True
+                    break
+
+    if not is_active:
+        import io
+        old_stdout = sys.stdout
+        sys.stdout = io.StringIO()
+        try:
+            cmd_activate(name)
+        except Exception:
+            pass
+        finally:
+            sys.stdout = old_stdout
+
+
 def cmd_deactivate(name: str):
     """Deactivate squad by removing symlinks."""
     squad_dir = _get_squad_dir(name)
@@ -456,7 +487,7 @@ Commands:
         """
     )
     parser.add_argument("command", choices=[
-        "create", "list", "validate", "activate", "deactivate", "info", "export"
+        "create", "list", "validate", "activate", "deactivate", "auto-activate", "info", "export"
     ])
     parser.add_argument("name", nargs="?", help="Squad name")
     parser.add_argument("--template", default="basic", choices=["basic", "specialist"],
@@ -469,7 +500,7 @@ Commands:
 
     if args.command == "list":
         cmd_list()
-    elif args.command in ("validate", "activate", "deactivate", "info", "export", "create"):
+    elif args.command in ("validate", "activate", "auto-activate", "deactivate", "info", "export", "create"):
         if not args.name:
             print(f"Error: '{args.command}' requires a squad name.")
             sys.exit(1)
@@ -479,6 +510,8 @@ Commands:
             cmd_validate(args.name)
         elif args.command == "activate":
             cmd_activate(args.name)
+        elif args.command == "auto-activate":
+            cmd_auto_activate(args.name)
         elif args.command == "deactivate":
             cmd_deactivate(args.name)
         elif args.command == "info":

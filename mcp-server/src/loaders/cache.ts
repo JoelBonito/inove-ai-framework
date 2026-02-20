@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { IS_DEV, PATHS } from "../constants.js";
+import { IS_DEV, PATHS } from "../paths.js";
 import type { ContentCache } from "../types.js";
 import { loadAllAgents } from "./agents.js";
 import { loadAllSkills } from "./skills.js";

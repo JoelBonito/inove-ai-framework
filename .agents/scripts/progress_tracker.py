@@ -13,6 +13,7 @@ Se nenhum caminho for fornecido, procura automaticamente em:
 
 import re
 import sys
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import NamedTuple
@@ -193,6 +194,40 @@ def main():
     done = sum(e.done for e in epics)
     percent = (done / total * 100) if total > 0 else 0
     
+    # PULO DO GATO: Context State (Gera docs/PROJECT_STATUS.md)
+    try:
+        branch = subprocess.check_output(["git", "branch", "--show-current"], text=True).strip()
+        commits = subprocess.check_output(["git", "log", "-3", "--oneline"], text=True).strip()
+        
+        status_content = [
+            "# 📍 Project Status (Context State)\n",
+            "> **AUTO-GENERATED:** Lê este arquivo para se situar no projeto.\n",
+            f"**Última Atualização:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n",
+            f"**Branch Atual:** `{branch}`\n",
+            "## 🔄 Progresso Atual\n",
+            f"- **Global:** {percent:.1f}% ({done}/{total} tarefas)\n",
+        ]
+        
+        status_content.append("## 📌 Próxima Tarefa no Foco\n")
+        next_task = ""
+        for epic in epics:
+            if epic.percent < 100:
+                next_task = f"- Epic Atual: **{epic.name}** ({epic.percent:.0f}%)\n"
+                break
+        if next_task:
+            status_content.append(next_task)
+        else:
+            status_content.append("- 🎉 Projeto 100% Finalizado!\n")
+            
+        status_content.append("\n## 📝 Últimos Commits\n")
+        status_content.append("```bash\n" + commits + "\n```\n")
+        
+        status_path = Path("docs/PROJECT_STATUS.md")
+        status_path.write_text("".join(status_content), encoding="utf-8")
+        print(f"✅ Contexto atualizado em: {status_path}")
+    except Exception as e:
+        print(f"⚠️ Não foi possível gerar PROJECT_STATUS.md: {e}")
+
     print()
     print("📊 **Progresso Atualizado!**")
     print()
@@ -212,7 +247,6 @@ def main():
         print(f"  {status} {epic.name}{meta_text}: {epic.percent:.0f}% ({epic.done}/{epic.total})")
     print()
     print(f"✅ Arquivo gerado: {output_path}")
-
 
 if __name__ == "__main__":
     main()

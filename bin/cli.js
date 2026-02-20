@@ -84,6 +84,29 @@ function copyDir(src, dest) {
 function init() {
     const forceMode = args.includes('--force');
 
+    const isTTY = process.stderr.isTTY;
+    const yellow = isTTY ? '\x1b[33m' : '';
+    const reset = isTTY ? '\x1b[0m' : '';
+    console.warn('\n' + yellow +
+        '┌─────────────────────────────────────────────────────────────────┐\n' +
+        '│  DEPRECATED: This installation method is deprecated.           │\n' +
+        '│                                                                │\n' +
+        '│  Use the MCP server instead (zero disk usage, auto-updates):   │\n' +
+        '│                                                                │\n' +
+        '│  Claude Code:                                                  │\n' +
+        '│    claude mcp add inove-ai -- npx -y @joelbonito/mcp-server     │\n' +
+        '│                                                                │\n' +
+        '│  Cursor / VS Code:                                             │\n' +
+        '│    Add to .cursor/mcp.json or .vscode/mcp.json:               │\n' +
+        '│    { "mcpServers": { "inove-ai": {                            │\n' +
+        '│        "command": "npx",                                       │\n' +
+        '│        "args": ["-y", "@joelbonito/mcp-server"]                 │\n' +
+        '│    }}}                                                         │\n' +
+        '│                                                                │\n' +
+        '│  Docs: https://github.com/inove-ai/inove-ai-framework         │\n' +
+        '└─────────────────────────────────────────────────────────────────┘\n' +
+        reset);
+
     console.log('Initializing Inove AI Framework...');
 
     // 1. Check source exists
@@ -111,7 +134,7 @@ function init() {
             for (const p of existingPaths) {
                 console.log(`  - ${p}`);
             }
-            console.log('Use --force to overwrite: npx @inove-ai/inove-ai-framework init --force');
+            console.log('Use --force to overwrite: npx @joelbonito/inove-ai-framework init --force');
             process.exit(1);
         }
     }
@@ -178,11 +201,16 @@ function init() {
 
 function showHelp() {
     console.log(`
-Inove AI Framework CLI
+Inove AI Framework CLI (DEPRECATED)
 
-Usage:
-  npx @inove-ai/inove-ai-framework init   Install framework in current directory
-  npx @inove-ai/inove-ai-framework help   Show this help
+This CLI is deprecated. Use the MCP server instead:
+
+  Claude Code:    claude mcp add inove-ai -- npx -y @joelbonito/mcp-server
+  Cursor/VSCode:  Add to .cursor/mcp.json or .vscode/mcp.json
+
+Legacy usage:
+  npx @joelbonito/inove-ai-framework init   Install framework in current directory
+  npx @joelbonito/inove-ai-framework help   Show this help
 `);
 }
 

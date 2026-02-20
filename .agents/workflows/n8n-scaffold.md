@@ -1,0 +1,1 @@
+../../squads/n8n-automation/workflows/n8n-scaffold.md

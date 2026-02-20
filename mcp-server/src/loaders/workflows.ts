@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { PATHS } from "../constants.js";
+import { PATHS } from "../paths.js";
 import type { Workflow } from "../types.js";
 import { parseWorkflowFrontmatter } from "./frontmatter.js";
 

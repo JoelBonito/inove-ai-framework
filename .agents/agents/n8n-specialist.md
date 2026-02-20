@@ -1,0 +1,1 @@
+../../squads/n8n-automation/agents/n8n-specialist.md

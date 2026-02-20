@@ -1,7 +1,7 @@
 # Inove AI Framework
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/@inove-ai/inove-ai-framework)](https://www.npmjs.com/package/@inove-ai/inove-ai-framework)
+[![npm version](https://img.shields.io/npm/v/@joelbonito/mcp-server)](https://www.npmjs.com/package/@joelbonito/mcp-server)
 [![Agents](https://img.shields.io/badge/Agents-21-green)](.agents/agents/)
 [![Skills](https://img.shields.io/badge/Skills-41-orange)](.agents/skills/)
 [![Workflows](https://img.shields.io/badge/Workflows-22-purple)](.agents/workflows/)
@@ -10,11 +10,44 @@
 
 ## Quick Install
 
+> **Requires:** Node.js >= 22. Check with `node -v`.
+
+### Claude Code (recommended)
+
 ```bash
-npx @inove-ai/inove-ai-framework init
+claude mcp add inove-ai -- npx -y @joelbonito/mcp-server
 ```
 
-This installs the `.agents` folder containing all templates into your project, along with `CLAUDE.md`, `AGENTS.md`, and `GEMINI.md`.
+### Cursor / VS Code
+
+Add to `.cursor/mcp.json` or `.vscode/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "inove-ai": {
+      "command": "npx",
+      "args": ["-y", "@joelbonito/mcp-server"]
+    }
+  }
+}
+```
+
+### Windsurf / Cline
+
+Any MCP-compatible tool works — point it to `npx -y @joelbonito/mcp-server` as a stdio server.
+
+> Zero disk usage per project. Auto-updates on every run. Setup in 30 seconds.
+
+### Legacy Install (Deprecated)
+
+> **Deprecated.** Use the MCP server above instead.
+
+```bash
+npx @joelbonito/inove-ai-framework init
+```
+
+This copies `.agents/` into your project (~15MB). The MCP server provides the same content without copying files.
 
 ## What's Included
 

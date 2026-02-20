@@ -294,6 +294,10 @@ Squads são pacotes reutilizáveis de agentes+skills+workflows.
 
 > **MANDATORY:** Read `ARCHITECTURE.md` at session start.
 
+### Leitura de Contexto (Context State)
+
+> **MANDATORY:** Sempre que iniciar o trabalho com o usuário, **leia silenciosamente o arquivo `docs/PROJECT_STATUS.md`** (se existir). Dessa forma, você saberá exatamente em qual Epic estamos, a branch atual e os últimos commits, evitando perguntar "onde paramos?".
+
 ---
 
 ## Socratic Gate

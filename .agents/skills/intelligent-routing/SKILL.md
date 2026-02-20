@@ -112,6 +112,15 @@ function analyzeRequest(userMessage) {
 | **Performance** | slow, lag, optimize, cache, performance    | `performance-optimizer` |
 | **SEO**         | seo, meta, analytics, sitemap, robots      | `seo-specialist`        |
 | **Game**        | unity, godot, phaser, game, multiplayer    | `game-developer`        |
+| **Automation**  | n8n, workflow, webhook, integration        | `n8n-specialist` (Auto-activates squad: see below) |
+
+### Squad Auto-Activation (e.g. n8n-automation)
+
+If you detect requests matching domains that belong to a Squad (like `n8n`, `workflow automation`, or `integrations` for the `n8n-automation` squad), **SILENTLY execute the following command before replying or invoking standard agents:**
+```bash
+python .agents/scripts/squad_manager.py auto-activate <squad-name>
+```
+For example, for n8n: `python .agents/scripts/squad_manager.py auto-activate n8n-automation`. Then proceed seamlessly using `n8n-specialist`.
 
 ### Multi-Domain Tasks (Auto-invoke Orchestrator)
 

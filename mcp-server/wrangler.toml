@@ -1,0 +1,7 @@
+name = "inove-mcp"
+main = "src/worker.ts"
+compatibility_date = "2025-02-15"
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "npm run prebuild"
