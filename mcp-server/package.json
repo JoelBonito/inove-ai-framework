@@ -2,6 +2,15 @@
   "name": "@inove-ai/mcp-server",
   "version": "5.0.1",
   "description": "MCP server for Inove AI Framework — agents, skills, and workflows as MCP resources, tools and prompts",
+  "license": "MIT",
+  "author": "Inove AI <hello@inove.ai>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inove-ai/inove-ai-framework",
+    "directory": "mcp-server"
+  },
+  "homepage": "https://github.com/inove-ai/inove-ai-framework/tree/main/mcp-server#readme",
+  "keywords": ["mcp", "ai-framework", "agents", "skills", "workflows", "claude", "model-context-protocol"],
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -10,6 +19,7 @@
   "scripts": {
     "prebuild": "tsx scripts/bundle-content.ts",
     "build": "tsc",
+    "postbuild": "chmod +x dist/index.js",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
     "test": "vitest run",
@@ -31,7 +41,8 @@
     "node": ">=22.0.0"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "!dist/**/*.map"
   ],
   "publishConfig": {
     "access": "public"

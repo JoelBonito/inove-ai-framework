@@ -6,7 +6,8 @@ import { loadAllSkills } from "./skills.js";
 import { loadAllWorkflows } from "./workflows.js";
 import { EmbeddedLoader } from "./embedded.js";
 
-let cached: ContentCache | null = null;
+// Store the Promise (not the result) to prevent concurrent load race conditions
+let cachePromise: Promise<ContentCache> | null = null;
 
 async function loadFromFilesystem(): Promise<ContentCache> {
   const [agents, skills, workflows, architecture, instructions] = await Promise.all([
@@ -31,12 +32,13 @@ async function loadFromEmbedded(): Promise<ContentCache> {
   return { agents, skills, workflows, architecture, instructions };
 }
 
-export async function getCache(): Promise<ContentCache> {
-  if (cached) return cached;
-  cached = IS_DEV ? await loadFromFilesystem() : await loadFromEmbedded();
-  return cached;
+export function getCache(): Promise<ContentCache> {
+  if (!cachePromise) {
+    cachePromise = IS_DEV ? loadFromFilesystem() : loadFromEmbedded();
+  }
+  return cachePromise;
 }
 
 export function resetCache(): void {
-  cached = null;
+  cachePromise = null;
 }

@@ -54,8 +54,8 @@ export class EmbeddedLoader implements ContentLoader {
 
   async loadFile(path: string): Promise<string> {
     const registry = await loadRegistry();
-    if (path.includes("ARCHITECTURE")) return registry.EMBEDDED_ARCHITECTURE;
-    if (path.includes("INSTRUCTIONS")) return registry.EMBEDDED_INSTRUCTIONS;
+    if (path === "ARCHITECTURE") return registry.EMBEDDED_ARCHITECTURE;
+    if (path === "INSTRUCTIONS") return registry.EMBEDDED_INSTRUCTIONS;
     throw new Error(`Unknown embedded file: ${path}`);
   }
 }

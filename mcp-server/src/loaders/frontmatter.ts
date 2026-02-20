@@ -13,7 +13,7 @@ export function parseFrontmatter<T>(content: string): { meta: T; body: string } 
     meta = YAML.parse(match[1]) as T;
   } catch {
     // Fallback: parse key-value pairs manually for YAML with unquoted special chars
-    const result: Record<string, string> = {};
+    const result: Record<string, string> = Object.create(null);
     for (const line of match[1].split("\n")) {
       const idx = line.indexOf(":");
       if (idx > 0) {
