@@ -1,0 +1,592 @@
+[
+  {
+    "name": "api-patterns",
+    "description": "API design principles and decision-making. REST vs GraphQL vs tRPC selection, response formats, versioning, pagination.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/api-patterns/SKILL.md"
+  },
+  {
+    "name": "app-builder",
+    "description": "Main application building orchestrator. Creates full-stack applications from natural language requests. Determines project type, selects tech stack, coordinates agents.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash",
+      "Agent"
+    ],
+    "file": ".agents/skills/app-builder/SKILL.md"
+  },
+  {
+    "name": "architecture",
+    "description": "Architectural decision-making framework. Requirements analysis, trade-off evaluation, ADR documentation. Use when making architecture decisions or analyzing system design.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/architecture/SKILL.md"
+  },
+  {
+    "name": "bash-linux",
+    "description": "Bash/Linux terminal patterns. Critical commands, piping, error handling, scripting. Use when working on macOS or Linux systems.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/bash-linux/SKILL.md"
+  },
+  {
+    "name": "behavioral-modes",
+    "description": "AI operational modes (brainstorm, implement, debug, review, teach, ship, orchestrate). Use to adapt behavior based on task type.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/behavioral-modes/SKILL.md"
+  },
+  {
+    "name": "brainstorming",
+    "description": "Socratic questioning protocol + user communication. MANDATORY for complex requests, new features, or unclear requirements. Includes progress reporting and error handling.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/brainstorming/SKILL.md"
+  },
+  {
+    "name": "clean-code",
+    "description": "Pragmatic coding standards - concise, direct, no over-engineering, no unnecessary comments",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit"
+    ],
+    "file": ".agents/skills/clean-code/SKILL.md",
+    "version": "2.0",
+    "priority": "CRITICAL"
+  },
+  {
+    "name": "code-review-checklist",
+    "description": "Code review guidelines covering code quality, security, and best practices.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/code-review-checklist/SKILL.md"
+  },
+  {
+    "name": "database-design",
+    "description": "Database design principles and decision-making. Schema design, indexing strategy, ORM selection, serverless databases.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/database-design/SKILL.md"
+  },
+  {
+    "name": "deployment-procedures",
+    "description": "Production deployment principles and decision-making. Safe deployment workflows, rollback strategies, and verification. Teaches thinking, not scripts.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/deployment-procedures/SKILL.md"
+  },
+  {
+    "name": "doc-review",
+    "description": "Documentation review framework for consistency, completeness, traceability, and quality assurance across project planning documents. Use when reviewing /define workflow outputs or validating documentation quality.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/doc-review/SKILL.md"
+  },
+  {
+    "name": "documentation-templates",
+    "description": "Documentation templates and structure guidelines. README, API docs, code comments, and AI-friendly documentation.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/documentation-templates/SKILL.md"
+  },
+  {
+    "name": "frontend-design",
+    "description": "Design thinking and decision-making for web UI. Use when designing components, layouts, color schemes, typography, or creating aesthetic interfaces. Teaches principles, not fixed values.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/frontend-design/SKILL.md"
+  },
+  {
+    "name": "game-development",
+    "description": "Game development orchestrator. Routes to platform-specific skills based on project needs.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/game-development/SKILL.md"
+  },
+  {
+    "name": "gap-analysis",
+    "description": "Framework for GAP Analysis (AS-IS vs TO-BE) across product, technology, UX, design, and infrastructure dimensions. Provides structured templates for identifying and documenting gaps in each project dimension.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/gap-analysis/SKILL.md"
+  },
+  {
+    "name": "geo-fundamentals",
+    "description": "Generative Engine Optimization for AI search engines (ChatGPT, Claude, Perplexity).",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/geo-fundamentals/SKILL.md"
+  },
+  {
+    "name": "i18n-localization",
+    "description": "Internationalization and localization patterns. Detecting hardcoded strings, managing translations, locale files, RTL support.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/i18n-localization/SKILL.md"
+  },
+  {
+    "name": "intelligent-routing",
+    "description": "Automatic agent selection and intelligent task routing. Analyzes user requests and automatically selects the best specialist agent(s) without requiring explicit user mentions.",
+    "tools": [],
+    "file": ".agents/skills/intelligent-routing/SKILL.md",
+    "version": "1.0.0"
+  },
+  {
+    "name": "lint-and-validate",
+    "description": "Automatic quality control, linting, and static analysis procedures. Use after every code modification to ensure syntax correctness and project standards. Triggers onKeywords: lint, format, check, validate, types, static analysis.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/lint-and-validate/SKILL.md"
+  },
+  {
+    "name": "mcp-builder",
+    "description": "MCP (Model Context Protocol) server building principles. Tool design, resource patterns, best practices.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/mcp-builder/SKILL.md"
+  },
+  {
+    "name": "mobile-design",
+    "description": "Mobile-first design thinking and decision-making for iOS and Android apps. Touch interaction, performance patterns, platform conventions. Teaches principles, not fixed values. Use when building React Native, Flutter, or native mobile apps.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/mobile-design/SKILL.md"
+  },
+  {
+    "name": "nextjs-react-expert",
+    "description": "React and Next.js performance optimization from Vercel Engineering. Use when building React components, optimizing performance, eliminating waterfalls, reducing bundle size, reviewing code for performance issues, or implementing server/client-side optimizations.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/nextjs-react-expert/SKILL.md"
+  },
+  {
+    "name": "nodejs-best-practices",
+    "description": "Node.js development principles and decision-making. Framework selection, async patterns, security, and architecture. Teaches thinking, not copying.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/nodejs-best-practices/SKILL.md"
+  },
+  {
+    "name": "parallel-agents",
+    "description": "Multi-agent orchestration patterns. Use when multiple independent tasks can run with different domain expertise or when comprehensive analysis requires multiple perspectives.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/parallel-agents/SKILL.md"
+  },
+  {
+    "name": "performance-profiling",
+    "description": "Performance profiling principles. Measurement, analysis, and optimization techniques.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/performance-profiling/SKILL.md"
+  },
+  {
+    "name": "plan-writing",
+    "description": "Structured task planning with clear breakdowns, dependencies, and verification criteria. Use when implementing features, refactoring, or any multi-step work.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/plan-writing/SKILL.md"
+  },
+  {
+    "name": "powershell-windows",
+    "description": "PowerShell Windows patterns. Critical pitfalls, operator syntax, error handling.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/powershell-windows/SKILL.md"
+  },
+  {
+    "name": "python-patterns",
+    "description": "Python development principles and decision-making. Framework selection, async patterns, type hints, project structure. Teaches thinking, not copying.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/python-patterns/SKILL.md"
+  },
+  {
+    "name": "red-team-tactics",
+    "description": "Red team tactics principles based on MITRE ATT&CK. Attack phases, detection evasion, reporting.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/red-team-tactics/SKILL.md"
+  },
+  {
+    "name": "seo-fundamentals",
+    "description": "SEO fundamentals, E-E-A-T, Core Web Vitals, and Google algorithm principles.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/seo-fundamentals/SKILL.md"
+  },
+  {
+    "name": "server-management",
+    "description": "Server management principles and decision-making. Process management, monitoring strategy, and scaling decisions. Teaches thinking, not commands.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/server-management/SKILL.md"
+  },
+  {
+    "name": "stitch-ui-design",
+    "description": "Knowledge on how to use Stitch MCP to generate high-fidelity UI designs from textual wireframes. Integrates with UX Concept and Design System workflows.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/stitch-ui-design/SKILL.md"
+  },
+  {
+    "name": "system-design",
+    "description": "System architecture design with C4 diagrams, infrastructure patterns, scalability planning, ADR documentation, and integration mapping. Use when designing system architecture or documenting technical decisions.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/system-design/SKILL.md"
+  },
+  {
+    "name": "systematic-debugging",
+    "description": "4-phase systematic debugging methodology with root cause analysis and evidence-based verification. Use when debugging complex issues.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/systematic-debugging/SKILL.md"
+  },
+  {
+    "name": "tailwind-patterns",
+    "description": "Tailwind CSS v4 principles. CSS-first configuration, container queries, modern patterns, design token architecture.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/tailwind-patterns/SKILL.md"
+  },
+  {
+    "name": "tdd-workflow",
+    "description": "Test-Driven Development workflow principles. RED-GREEN-REFACTOR cycle.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/tdd-workflow/SKILL.md"
+  },
+  {
+    "name": "testing-patterns",
+    "description": "Testing patterns and principles. Unit, integration, mocking strategies.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/testing-patterns/SKILL.md"
+  },
+  {
+    "name": "ux-research",
+    "description": "UX Research methodology for information architecture, user flows, wireframing, heuristic evaluation, and usability analysis. Use when designing user experiences, mapping journeys, or evaluating interface usability.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/ux-research/SKILL.md"
+  },
+  {
+    "name": "vulnerability-scanner",
+    "description": "Advanced vulnerability analysis principles. OWASP 2025, Supply Chain Security, attack surface mapping, risk prioritization.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/vulnerability-scanner/SKILL.md"
+  },
+  {
+    "name": "web-design-guidelines",
+    "description": "Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\".",
+    "tools": [],
+    "file": ".agents/skills/web-design-guidelines/SKILL.md",
+    "version": "\"1.0.0\""
+  },
+  {
+    "name": "webapp-testing",
+    "description": "Web application testing principles. E2E, Playwright, deep audit strategies.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/webapp-testing/SKILL.md"
+  },
+  {
+    "name": "templates",
+    "description": "Project scaffolding templates for new applications. Use when creating new projects from scratch. Contains 12 templates for various tech stacks.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/app-builder/templates/SKILL.md",
+    "parent": "app-builder"
+  },
+  {
+    "name": "2d-games",
+    "description": "2D game development principles. Sprites, tilemaps, physics, camera.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/2d-games/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "3d-games",
+    "description": "3D game development principles. Rendering, shaders, physics, cameras.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/3d-games/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "game-art",
+    "description": "Game art principles. Visual style selection, asset pipeline, animation workflow.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/game-art/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "game-audio",
+    "description": "Game audio principles. Sound design, music integration, adaptive audio systems.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/game-audio/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "game-design",
+    "description": "Game design principles. GDD structure, balancing, player psychology, progression.",
+    "tools": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/game-design/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "mobile-games",
+    "description": "Mobile game development principles. Touch input, battery, performance, app stores.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/mobile-games/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "multiplayer",
+    "description": "Multiplayer game development principles. Architecture, networking, synchronization.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash"
+    ],
+    "file": ".agents/skills/game-development/multiplayer/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "pc-games",
+    "description": "PC and console game development principles. Engine selection, platform features, optimization strategies.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/pc-games/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "vr-ar",
+    "description": "VR/AR development principles. Comfort, interaction, performance requirements.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/vr-ar/SKILL.md",
+    "parent": "game-development"
+  },
+  {
+    "name": "web-games",
+    "description": "Web browser game development principles. Framework selection, WebGPU, optimization, PWA.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/game-development/web-games/SKILL.md",
+    "parent": "game-development"
+  }
+]

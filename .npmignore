@@ -1,0 +1,39 @@
+# Python artifacts
+**/__pycache__/
+**/__pycache__
+*.pyc
+**/*.pyc
+
+# Local settings
+.claude/settings.local.json
+
+# Development directories
+tests/
+docs/
+web/
+.github/
+
+# Markdown files (keep only essential ones)
+*.md
+!README.md
+!CLAUDE.md
+!AGENTS.md
+!GEMINI.md
+!CHANGELOG.md
+!LICENSE
+
+# Agent runtime artifacts
+.agents/locks/
+.agents/.shared/
+.agents/.shared
+
+# OS files
+.DS_Store
+**/.DS_Store
+
+# Dependencies
+node_modules/
+
+# Symlink directories (local dev only)
+.claude/
+.codex/

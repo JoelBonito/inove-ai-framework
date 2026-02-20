@@ -1,0 +1,39 @@
+{
+  "name": "@inove-ai/inove-ai-framework",
+  "version": "1.0.1",
+  "description": "Inove AI Framework - Multi-Agent AI Development Kit",
+  "bin": {
+    "inove-ai-framework": "./bin/cli.js"
+  },
+  "files": [
+    ".agents/**",
+    "!.agents/.shared/**",
+    "!.agents/locks/**",
+    "!**/__pycache__/**",
+    "!**/*.pyc",
+    "bin",
+    "CLAUDE.md",
+    "AGENTS.md",
+    "GEMINI.md"
+  ],
+  "scripts": {
+    "test": "python3 -m pytest tests/ -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoelBonito/inove-ai-framework.git"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "framework",
+    "inove",
+    "claude",
+    "gemini"
+  ],
+  "author": "JoelBonito",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

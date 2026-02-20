@@ -1,0 +1,402 @@
+[
+  {
+    "name": "backend-specialist",
+    "description": "Expert backend architect for Node.js, Python, and modern serverless/edge systems. Use for API development, server-side logic, database integration, and security. Triggers on backend, server, api, endpoint, database, auth.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "nodejs-best-practices",
+      "python-patterns",
+      "api-patterns",
+      "database-design",
+      "mcp-builder",
+      "lint-and-validate",
+      "powershell-windows",
+      "bash-linux"
+    ],
+    "file": ".agents/agents/backend-specialist.md"
+  },
+  {
+    "name": "code-archaeologist",
+    "description": "Expert in legacy code, refactoring, and understanding undocumented systems. Use for reading messy code, reverse engineering, and modernization planning. Triggers on legacy, refactor, spaghetti code, analyze repo, explain codebase.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "code-review-checklist"
+    ],
+    "file": ".agents/agents/code-archaeologist.md"
+  },
+  {
+    "name": "database-architect",
+    "description": "Expert database architect for schema design, query optimization, migrations, and modern serverless databases. Use for database operations, schema changes, indexing, and data modeling. Triggers on database, sql, schema, migration, query, postgres, index, table.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "database-design"
+    ],
+    "file": ".agents/agents/database-architect.md"
+  },
+  {
+    "name": "debugger",
+    "description": "Expert in systematic debugging, root cause analysis, and crash investigation. Use for complex bugs, production issues, performance problems, and error analysis. Triggers on bug, error, crash, not working, broken, investigate, fix.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "systematic-debugging"
+    ],
+    "file": ".agents/agents/debugger.md"
+  },
+  {
+    "name": "devops-engineer",
+    "description": "Expert in deployment, server management, CI/CD, and production operations. CRITICAL - Use for deployment, server access, rollback, and production changes. HIGH RISK operations. Triggers on deploy, production, server, pm2, ssh, release, rollback, ci/cd.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "deployment-procedures",
+      "server-management",
+      "powershell-windows",
+      "bash-linux"
+    ],
+    "file": ".agents/agents/devops-engineer.md"
+  },
+  {
+    "name": "documentation-writer",
+    "description": "Expert in technical documentation. Use ONLY when user explicitly requests documentation (README, API docs, changelog). DO NOT auto-invoke during normal development.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "documentation-templates"
+    ],
+    "file": ".agents/agents/documentation-writer.md"
+  },
+  {
+    "name": "explorer-agent",
+    "description": "Advanced codebase discovery, deep architectural analysis, and proactive research agent. The eyes and ears of the framework. Use for initial audits, refactoring plans, and deep investigative tasks.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash"
+    ],
+    "skills": [
+      "clean-code",
+      "architecture",
+      "plan-writing",
+      "brainstorming",
+      "systematic-debugging"
+    ],
+    "file": ".agents/agents/explorer-agent.md"
+  },
+  {
+    "name": "frontend-specialist",
+    "description": "Senior Frontend Architect who builds maintainable React/Next.js systems with performance-first mindset. Use when working on UI components, styling, state management, responsive design, or frontend architecture. Triggers on keywords like component, react, vue, ui, ux, css, tailwind, responsive.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "nextjs-react-expert",
+      "web-design-guidelines",
+      "tailwind-patterns",
+      "frontend-design",
+      "stitch-ui-design",
+      "lint-and-validate",
+      "gap-analysis"
+    ],
+    "file": ".agents/agents/frontend-specialist.md"
+  },
+  {
+    "name": "game-developer",
+    "description": "Game development across all platforms (PC, Web, Mobile, VR/AR). Use when building games with Unity, Godot, Unreal, Phaser, Three.js, or any game engine. Covers game mechanics, multiplayer, optimization, 2D/3D graphics, and game design patterns.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "skills": [
+      "clean-code",
+      "game-development"
+    ],
+    "file": ".agents/agents/game-developer.md"
+  },
+  {
+    "name": "mobile-developer",
+    "description": "Expert in React Native and Flutter mobile development. Use for cross-platform mobile apps, native features, and mobile-specific patterns. Triggers on mobile, react native, flutter, ios, android, app store, expo.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "mobile-design"
+    ],
+    "file": ".agents/agents/mobile-developer.md"
+  },
+  {
+    "name": "orchestrator",
+    "description": "Multi-agent coordination and task orchestration. Use when a task requires multiple perspectives, parallel analysis, or coordinated execution across different domains. Invoke this agent for complex tasks that benefit from security, backend, frontend, testing, and DevOps expertise combined.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Write",
+      "Edit",
+      "Agent"
+    ],
+    "skills": [
+      "clean-code",
+      "parallel-agents",
+      "behavioral-modes",
+      "plan-writing",
+      "brainstorming",
+      "architecture",
+      "lint-and-validate",
+      "powershell-windows",
+      "bash-linux"
+    ],
+    "file": ".agents/agents/orchestrator.md"
+  },
+  {
+    "name": "penetration-tester",
+    "description": "Expert in offensive security, penetration testing, red team operations, and vulnerability exploitation. Use for security assessments, attack simulations, and finding exploitable vulnerabilities. Triggers on pentest, exploit, attack, hack, breach, pwn, redteam, offensive.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "vulnerability-scanner",
+      "red-team-tactics",
+      "api-patterns"
+    ],
+    "file": ".agents/agents/penetration-tester.md"
+  },
+  {
+    "name": "performance-optimizer",
+    "description": "Expert in performance optimization, profiling, Core Web Vitals, and bundle optimization. Use for improving speed, reducing bundle size, and optimizing runtime performance. Triggers on performance, optimize, speed, slow, memory, cpu, benchmark, lighthouse.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "performance-profiling"
+    ],
+    "file": ".agents/agents/performance-optimizer.md"
+  },
+  {
+    "name": "product-manager",
+    "description": "Expert in product requirements, user stories, and acceptance criteria. Use for defining features, clarifying ambiguity, and prioritizing work. Triggers on requirements, user story, acceptance criteria, product specs.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash"
+    ],
+    "skills": [
+      "plan-writing",
+      "brainstorming",
+      "clean-code"
+    ],
+    "file": ".agents/agents/product-manager.md"
+  },
+  {
+    "name": "product-owner",
+    "description": "Strategic facilitator bridging business needs and technical execution. Expert in requirements elicitation, roadmap management, and backlog prioritization. Triggers on requirements, user story, backlog, MVP, PRD, stakeholder.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "plan-writing",
+      "brainstorming",
+      "gap-analysis",
+      "doc-review",
+      "clean-code"
+    ],
+    "file": ".agents/agents/product-owner.md"
+  },
+  {
+    "name": "project-planner",
+    "description": "Smart project planning agent. Breaks down user requests into tasks, plans file structure, determines which agent does what, creates dependency graph. Use when starting new projects or planning major features.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash"
+    ],
+    "skills": [
+      "clean-code",
+      "app-builder",
+      "plan-writing",
+      "brainstorming",
+      "architecture",
+      "system-design",
+      "gap-analysis"
+    ],
+    "file": ".agents/agents/project-planner.md"
+  },
+  {
+    "name": "qa-automation-engineer",
+    "description": "Specialist in test automation infrastructure and E2E testing. Focuses on Playwright, Cypress, CI pipelines, and breaking the system. Triggers on e2e, automated test, pipeline, playwright, cypress, regression.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "webapp-testing",
+      "testing-patterns",
+      "clean-code",
+      "lint-and-validate"
+    ],
+    "file": ".agents/agents/qa-automation-engineer.md"
+  },
+  {
+    "name": "security-auditor",
+    "description": "Elite cybersecurity expert. Think like an attacker, defend like an expert. OWASP 2025, supply chain security, zero trust architecture. Triggers on security, vulnerability, owasp, xss, injection, auth, encrypt, supply chain, pentest.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "vulnerability-scanner",
+      "red-team-tactics",
+      "api-patterns",
+      "gap-analysis"
+    ],
+    "file": ".agents/agents/security-auditor.md"
+  },
+  {
+    "name": "seo-specialist",
+    "description": "SEO and GEO (Generative Engine Optimization) expert. Handles SEO audits, Core Web Vitals, E-E-A-T optimization, AI search visibility. Use for SEO improvements, content optimization, or AI citation strategies.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "seo-fundamentals",
+      "geo-fundamentals"
+    ],
+    "file": ".agents/agents/seo-specialist.md"
+  },
+  {
+    "name": "test-engineer",
+    "description": "Expert in testing, TDD, and test automation. Use for writing tests, improving coverage, debugging test failures. Triggers on test, spec, coverage, jest, pytest, playwright, e2e, unit test.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "testing-patterns",
+      "tdd-workflow",
+      "webapp-testing",
+      "code-review-checklist",
+      "lint-and-validate"
+    ],
+    "file": ".agents/agents/test-engineer.md"
+  },
+  {
+    "name": "ux-researcher",
+    "description": "UX Research specialist for information architecture, user flows, wireframing, heuristic evaluation, friction mapping, and accessibility audits. Use when designing user experiences, mapping journeys, evaluating usability, or creating UX Concept documents. Triggers on UX, user flow, wireframe, journey, usability, friction, accessibility, information architecture.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash"
+    ],
+    "skills": [
+      "ux-research",
+      "frontend-design",
+      "stitch-ui-design",
+      "gap-analysis",
+      "clean-code"
+    ],
+    "file": ".agents/agents/ux-researcher.md"
+  }
+]

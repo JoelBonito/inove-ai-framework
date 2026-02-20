@@ -1,0 +1,128 @@
+[
+  {
+    "cmd": "/brainstorm",
+    "name": "brainstorm",
+    "description": "Structured brainstorming for projects and features. Explores multiple options before implementation.",
+    "file": ".agents/workflows/brainstorm.md"
+  },
+  {
+    "cmd": "/context",
+    "name": "context",
+    "description": "Cria documento de Project Context que cristaliza padrões técnicos, convenções e regras do projeto para garantir consistência.",
+    "file": ".agents/workflows/context.md"
+  },
+  {
+    "cmd": "/create",
+    "name": "create",
+    "description": "Create new application command. Triggers App Builder skill and starts interactive dialogue with user.",
+    "file": ".agents/workflows/create.md"
+  },
+  {
+    "cmd": "/debug",
+    "name": "debug",
+    "description": "Debugging command. Activates DEBUG mode for systematic problem investigation.",
+    "file": ".agents/workflows/debug.md"
+  },
+  {
+    "cmd": "/define",
+    "name": "define",
+    "description": "Cria documentacao de projeto estruturada em 9 etapas (Brief, PRD, UX Concept, Architecture, Security, Stack, Design System, Backlog) com GAP Analysis integrada usando agentes especializados.",
+    "file": ".agents/workflows/define.md"
+  },
+  {
+    "cmd": "/deploy",
+    "name": "deploy",
+    "description": "Deployment command for production releases. Pre-flight checks and deployment execution.",
+    "file": ".agents/workflows/deploy.md"
+  },
+  {
+    "cmd": "/enhance",
+    "name": "enhance",
+    "description": "Add or update features in existing application. Used for iterative development.",
+    "file": ".agents/workflows/enhance.md"
+  },
+  {
+    "cmd": "/finish",
+    "name": "finish",
+    "description": "Marca uma tarefa do backlog como concluída. Uso: /finish {ID}",
+    "file": ".agents/workflows/finish.md"
+  },
+  {
+    "cmd": "/journeys",
+    "name": "journeys",
+    "description": "Cria documentação detalhada de jornadas de usuário baseadas em personas, transformando requisitos abstratos em histórias concretas e memoráveis.",
+    "file": ".agents/workflows/journeys.md"
+  },
+  {
+    "cmd": "/log",
+    "name": "log",
+    "description": "Gerencia logs de sessão de trabalho. Sub-comandos: start, end, show. Registra atividades e gera resumo diário.",
+    "file": ".agents/workflows/log.md"
+  },
+  {
+    "cmd": "/orchestrate",
+    "name": "orchestrate",
+    "description": "Coordinate multiple agents for complex tasks. Use for multi-perspective analysis, comprehensive reviews, or tasks requiring different domain expertise.",
+    "file": ".agents/workflows/orchestrate.md"
+  },
+  {
+    "cmd": "/plan",
+    "name": "plan",
+    "description": "Create project plan using project-planner agent. No code writing - only plan file generation.",
+    "file": ".agents/workflows/plan.md"
+  },
+  {
+    "cmd": "/preview",
+    "name": "preview",
+    "description": "Preview server start, stop, and status check. Local development server management.",
+    "file": ".agents/workflows/preview.md"
+  },
+  {
+    "cmd": "/readiness",
+    "name": "readiness",
+    "description": "Valida se toda a documentação está completa e alinhada antes de iniciar implementação. Gera relatório de prontidão.",
+    "file": ".agents/workflows/readiness.md"
+  },
+  {
+    "cmd": "/release",
+    "name": "release",
+    "description": "Finaliza projeto e gera release. Valida conclusao, gera changelog e prepara artefatos de lancamento.",
+    "file": ".agents/workflows/release.md"
+  },
+  {
+    "cmd": "/review",
+    "name": "review",
+    "description": "Revisao de codigo pos-sprint. Aplica checklist de qualidade, seguranca e boas praticas ao codigo implementado.",
+    "file": ".agents/workflows/review.md"
+  },
+  {
+    "cmd": "/status",
+    "name": "status",
+    "description": "Exibe dashboard consolidado com progresso, sessões e métricas do projeto.",
+    "file": ".agents/workflows/status.md"
+  },
+  {
+    "cmd": "/test-book",
+    "name": "test-book",
+    "description": "Gera ou atualiza o Caderno de Testes a partir do backlog e codigo implementado. Cria cenarios de teste para validacao de MVP/producao.",
+    "file": ".agents/workflows/test-book.md"
+  },
+  {
+    "cmd": "/test",
+    "name": "test",
+    "description": "Test generation and test running command. Creates and executes tests for code.",
+    "file": ".agents/workflows/test.md"
+  },
+  {
+    "cmd": "/track",
+    "name": "track",
+    "description": "Analisa o backlog de tarefas e gera/atualiza a barra de progresso visual do projeto.",
+    "file": ".agents/workflows/track.md"
+  },
+  {
+    "cmd": "/ui-ux-pro-max",
+    "name": "ui-ux-pro-max",
+    "description": "AI-powered design intelligence with 50+ styles, 95+ color palettes, and automated design system generation",
+    "file": ".agents/workflows/ui-ux-pro-max.md"
+  }
+]

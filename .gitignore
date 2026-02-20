@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS
+.DS_Store
+
+# Agent state (temporary, do not version)
+.agents/locks/*.lock
+.agents/.session_state.json
+.agents/.reminder_state.json
+
+# Legacy (pre-migration artifacts)
+.temp_ag_kit/
+antigravity-doc
+
+# MCP config (contains API keys)
+.mcp.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
