@@ -49,6 +49,32 @@ npx @joelbonito/inove-ai-framework init
 
 This copies `.agents/` into your project (~15MB). The MCP server provides the same content without copying files.
 
+### Migrate from Legacy to MCP
+
+If your project was installed via `npx ... init` and has a local `.agents/` folder, migrate to the MCP approach:
+
+```bash
+npx @joelbonito/inove-ai-framework migrate
+```
+
+This will:
+- Remove `.agents/` (backed up to `.agents.bak/`)
+- Replace `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` with thin MCP-aware versions
+- Auto-configure MCP for Claude Code, Cursor, VS Code, and Gemini CLI
+
+Your project data (`docs/`, `squads/`) is never touched.
+
+```bash
+# Preview changes without applying
+npx @joelbonito/inove-ai-framework migrate --dry-run
+
+# Skip backup
+npx @joelbonito/inove-ai-framework migrate --no-backup
+
+# Non-interactive (CI-safe with override)
+npx @joelbonito/inove-ai-framework migrate --force
+```
+
 ## What's Included
 
 - **21 Specialized Agents** for different domains (frontend, backend, security, database, mobile, UX, game dev, etc.)

@@ -1,6 +1,6 @@
 {
   "name": "@joelbonito/mcp-server",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "MCP server for Inove AI Framework — agents, skills, and workflows as MCP resources, tools and prompts",
   "license": "MIT",
   "author": "Inove AI <hello@inove.ai>",

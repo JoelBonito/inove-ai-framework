@@ -1,6 +1,6 @@
 {
   "name": "@joelbonito/inove-ai-framework",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Inove AI Framework - Multi-Agent AI Development Kit",
   "bin": {
     "inove-ai-framework": "./bin/cli.js"

@@ -17,6 +17,7 @@ __pycache__/
 # Legacy (pre-migration artifacts)
 .temp_ag_kit/
 antigravity-doc
+.agents.bak/
 
 # MCP config (contains API keys)
 .mcp.json

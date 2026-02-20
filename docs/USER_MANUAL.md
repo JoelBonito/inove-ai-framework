@@ -15,14 +15,17 @@ claude mcp add inove-ai -- npx -y @joelbonito/mcp-server
 ```
 *Pronto! O Claude puxará a última versão sempre.*
 
-### 🖥️ Opção B: Usando Cursor IDE (Recomendado para Fullstack/UI)
+### 🖥️ Opção B: Usando Cursor IDE
 1. Abra as Configurações do Cursor (Settings > Features > MCP).
 2. Adicione um novo servidor MCP do tipo `command`.
 3. Nome: `inove-ai`
 4. Comando: `npx -y @joelbonito/mcp-server`
 5. Salve e recarregue a janela.
 
-*(Sempre que houver atualizações no nosso GitHub oficial, o `npx` garantirá que a versão cacheada mais recente e estável seja executada automaticamente).*
+### 🏄 Opção C: Usando Windsurf ou Cline
+Qualquer ferramenta compatível com MCP funciona. Basta apontar para o comando `npx -y @joelbonito/mcp-server` como um servidor **stdio**.
+
+*(Sempre que houver atualizações no nosso GitHub oficial, o `npx` garantirá que a versão cacheada mais recente e estável seja executada automaticamente em qualquer um desses editores).*
 
 ---
 
@@ -66,7 +69,38 @@ Esses comandos atualizam as caixas `[ ]` originais do Backlog, reatualizam a sua
 
 ---
 
-## 3. O Ciclo em Projetos Existentes & Legados
+## 3. Como Migrar Projetos Legados para o MCP Server
+
+Se você possui um projeto antigo rodando o framework na _versão 4 ou inferior_ (com aquela pasta pesada `.agents/` de 15MB copiada localmente), criamos um comando seguro para atualizar sua arquitetura para o novo paradigma **Thin Client (MCP)**.
+
+### 🛠️ O Comando `migrate`
+
+Abra o terminal na raiz do seu projeto antigo e execute:
+```bash
+npx @joelbonito/inove-ai-framework migrate
+```
+
+**O que o comando faz com segurança?**
+1. **Backup:** Cria uma pasta `.agents.bak/` com todos os seus arquivos (ignorada no git).
+2. **Deleção Cirúrgica:** Remove a pasta `.agents/` atual sem seguir symlinks (via `lstatSync`).
+3. **Limpeza de Symlinks:** Apaga referências órfãs (`.claude/agents`, `.codex/skills`, etc).
+4. **Injeção Thin Client:** Substitui os antigos `CLAUDE.md`, `GEMINI.md` e `AGENTS.md` de 500 linhas por versões enxutas (~40 linhas) que instruem a IA a buscar as "Tools via MCP".
+5. **Auto-Configuração:** Atualiza/Gera arquivos em `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` e `.gemini/mcp.json` blindando seus servidores anteriores (merge seguro).
+
+### ⚙️ Modos Avançados de Operação
+
+*   **Preview Seguro:** Veja o que será deletado e modificado antes (Dry Run).
+    > `npx @joelbonito/inove-ai-framework migrate --dry-run`
+*   **Modo Automático:** Migração sem perguntas `[Y/n]` interativas (bom para scripts).
+    > `npx @joelbonito/inove-ai-framework migrate --force`
+*   **Sem Backup:** Se quiser apagar o `.agents/` nativo permanentemente sem criar o `.bak/`.
+    > `npx @joelbonito/inove-ai-framework migrate --no-backup`
+
+Após concluir o comando, basta um commit: `git add -A && git commit -m "chore: migrate to MCP server"`.
+
+---
+
+## 4. O Ciclo em Projetos Existentes (Manutenção)
 
 Os agentes MCP não servem apenas para "projetos em branco". Se você acabou de abrir o MCP Server em um projeto que já existe (ou que herdou de alguém), siga estes workflows vitais:
 
@@ -92,7 +126,7 @@ Se quiser aplicar Design Patterns ou reformular funções:
 *   **Gerar Testes Inexistentes:** 
     > *"/test Implemente uma suíte de testes para toda a minha pasta legado `/utils`."*
     
-## 4. O Sistema Nervoso: Roteamento Inteligente & Agentes
+## 5. O Sistema Nervoso: Roteamento Inteligente & Agentes
 
 Uma das grandes magias do Inove AI Framework é que você **não precisa dar ordens complexas para as IAs adequadas**. O framework possui um sistema de *Intelligent Routing* (Roteamento Inteligente).
 
@@ -118,9 +152,9 @@ Aqui estão alguns dos seus "funcionários" e o que eles sabem fazer de melhor (
 
 ---
 
-## 5. O Squad Especializado em Automação: N8N
+## 6. O Squad Especializado em Automação: N8N
 
-Um "Squad" é uma "Empresa dentro da sua Empresa" focada em um nicho muito técnico. O Inove Framework já vem com um Squad dedicado ao **N8N** (A famosa ferramenta Node.js Open-Source de Automação de Workflows).
+Um "Squad" é uma "Empresa dentro da sua Empresa" focada em um nicho muito técnico. O Inove AI Framework já vem com um Squad dedicado ao **N8N** (A famosa ferramenta Node.js Open-Source de Automação de Workflows).
 
 ### 🛠️ Como usar o Squad n8n-automation?
 Se você precisa automatizar o Zapier/Make da sua vida, em vez de usar os agentes de web, você chama o esquadrão tático do n8n:
@@ -136,7 +170,7 @@ Depois de ativado, você ganha acesso a fluxos poderosíssimos especializados ne
 
 ---
 
-## 6. O Dicionário de Workflows (Slash Commands)
+## 7. O Dicionário de Workflows (Slash Commands)
 
 Tudo no framework se move através de "Workflows" (os chamados `/comandos`). Eles são pipelines padronizados. Segue a lista completa de ferramentas:
 
@@ -166,7 +200,7 @@ Tudo no framework se move através de "Workflows" (os chamados `/comandos`). Ele
 
 ---
 
-## 7. Resolvendo Problemas de "Contexto Lotado"
+## 8. Resolvendo Problemas de "Contexto Lotado"
 
 Se a sua conversa atual começar a ficar burra ou travar (erro de tokens estourados):
 1. Peça para fechar as horas dele: *"/log close"* e dë um *"/track"*

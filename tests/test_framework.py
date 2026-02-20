@@ -245,6 +245,80 @@ class TestPlatformCompat:
 # ===========================================================================
 
 
+# ===========================================================================
+# 6. CLI — Migrate command
+# ===========================================================================
+
+
+class TestMigrateCommand:
+    """Validate the migrate command in the CLI."""
+
+    @pytest.fixture
+    def cli_content(self, project_root):
+        return (project_root / "bin" / "cli.js").read_text(encoding="utf-8")
+
+    def test_cli_has_migrate_command(self, cli_content):
+        """cli.js must contain the migrate command handler."""
+        assert "case 'migrate'" in cli_content
+
+    def test_cli_has_migrate_function(self, cli_content):
+        """cli.js must define the migrate function."""
+        assert "async function migrate" in cli_content
+
+    def test_thin_templates_are_embedded(self, cli_content):
+        """Thin MCP templates must be embedded in cli.js."""
+        assert "CLAUDE_THIN_TEMPLATE" in cli_content
+        assert "AGENTS_THIN_TEMPLATE" in cli_content
+        assert "GEMINI_THIN_TEMPLATE" in cli_content
+
+    def test_templates_reference_mcp_tools(self, cli_content):
+        """Templates must reference MCP tool names."""
+        for tool in ["list_agents", "list_skills", "get_agent", "route_task", "search_content"]:
+            assert tool in cli_content, f"MCP tool '{tool}' not found in templates"
+
+    def test_mcp_config_targets_defined(self, cli_content):
+        """MCP configuration targets must include all editors."""
+        assert ".mcp.json" in cli_content
+        assert ".cursor/mcp.json" in cli_content
+        assert ".vscode/mcp.json" in cli_content
+        assert ".gemini/mcp.json" in cli_content
+
+    def test_safe_remove_dir_exists(self, cli_content):
+        """safeRemoveDir must use lstatSync (not statSync/rmSync)."""
+        assert "safeRemoveDir" in cli_content
+        assert "lstatSync" in cli_content
+
+    def test_dry_run_flag_supported(self, cli_content):
+        """Migrate must support --dry-run flag."""
+        assert "--dry-run" in cli_content
+
+    def test_no_backup_flag_supported(self, cli_content):
+        """Migrate must support --no-backup flag."""
+        assert "--no-backup" in cli_content
+
+    def test_ci_environment_blocked(self, cli_content):
+        """Migrate must block execution in CI environments."""
+        assert "process.env.CI" in cli_content
+
+    def test_symlink_cleanup_targets(self, cli_content):
+        """Migrate must clean up legacy symlinks."""
+        for target in [".claude/agents", ".claude/skills", ".codex/agents"]:
+            assert target in cli_content, f"Symlink cleanup target '{target}' not found"
+
+    def test_atomic_write_function(self, cli_content):
+        """Migrate must use atomic writes (.tmp + rename)."""
+        assert "atomicWrite" in cli_content
+
+    def test_dangerous_dirs_blocked(self, cli_content):
+        """Migrate must refuse to run in system directories."""
+        assert "os.homedir()" in cli_content
+
+
+# ===========================================================================
+# 7. Generated web data
+# ===========================================================================
+
+
 class TestGeneratedData:
     """Validate the generated JSON files used by the web app."""
 
