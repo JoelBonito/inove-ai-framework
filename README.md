@@ -1,5 +1,11 @@
 # Inove AI Framework
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@inove-ai/inove-ai-framework)](https://www.npmjs.com/package/@inove-ai/inove-ai-framework)
+[![Agents](https://img.shields.io/badge/Agents-21-green)](.agents/agents/)
+[![Skills](https://img.shields.io/badge/Skills-41-orange)](.agents/skills/)
+[![Workflows](https://img.shields.io/badge/Workflows-22-purple)](.agents/workflows/)
+
 > Multi-Agent AI Development Kit with Skills, Agents, and Workflows for Claude Code, Codex CLI, and Antigravity/Gemini.
 
 ## Quick Install
@@ -12,12 +18,14 @@ This installs the `.agents` folder containing all templates into your project, a
 
 ## What's Included
 
-- **21 Specialized Agents** for different domains (frontend, backend, security, database, etc.)
-- **41 Modular Skills** loaded on demand
+- **21 Specialized Agents** for different domains (frontend, backend, security, database, mobile, UX, game dev, etc.)
+- **41 Modular Skills** loaded on demand (clean-code, testing-patterns, api-patterns, tailwind, etc.)
 - **22 Workflows** (slash commands) for structured processes
 - **Squad System** — reusable agent+skill+workflow packages for custom domains
 - **Recovery System** — automatic retry and git checkpoint/rollback for resilient execution
+- **Stitch MCP Integration** — visual mockups for UI projects via `/define`, `/ui-ux-pro-max`, and `/readiness`
 - **Multi-Agent System** with lock synchronization and ownership
+- **Documentation Website** — Next.js site with full reference docs (`web/`)
 
 ## Usage
 
@@ -34,41 +42,83 @@ AI: Using @frontend-specialist...
 
 You: "Login returns 500 error"
 AI: Using @debugger for systematic analysis...
+
+You: "Design the onboarding flow"
+AI: Using @ux-researcher for user journey mapping...
 ```
+
+### Available Agents
+
+| Agent | Domain |
+|-------|--------|
+| `orchestrator` | Multi-agent coordination |
+| `project-planner` | Planning & discovery |
+| `product-manager` | Requirements & user stories |
+| `product-owner` | Backlog & MVP management |
+| `frontend-specialist` | React, UI/UX, Tailwind |
+| `backend-specialist` | APIs, Node.js, server logic |
+| `database-architect` | Schemas, queries, migrations |
+| `mobile-developer` | iOS, Android, React Native, Flutter |
+| `security-auditor` | Auth, OWASP, compliance |
+| `penetration-tester` | Security testing & red team |
+| `debugger` | Root cause analysis |
+| `devops-engineer` | CI/CD, Docker, infrastructure |
+| `test-engineer` | Test strategies |
+| `qa-automation-engineer` | E2E & automation |
+| `performance-optimizer` | Speed & optimization |
+| `seo-specialist` | SEO & visibility |
+| `ux-researcher` | User flows, wireframes, usability |
+| `documentation-writer` | Manuals & docs |
+| `code-archaeologist` | Legacy refactoring |
+| `game-developer` | Game logic & engines |
+| `explorer-agent` | Codebase analysis |
 
 ### Using Workflows
 
 Invoke workflows with slash commands:
 
-| Command          | Description                                    |
-| ---------------- | ---------------------------------------------- |
-| `/define`        | Full project planning in 9 phases with GAP Analysis |
-| `/brainstorm`    | Explore options before implementation          |
-| `/create`        | Create new features or apps                    |
-| `/debug`         | Systematic debugging                           |
-| `/deploy`        | Deploy application                             |
-| `/enhance`       | Improve existing code                          |
-| `/test`          | Generate and run tests                         |
-| `/orchestrate`   | Multi-agent coordination                       |
-| `/squad`         | Create and manage agent squads                 |
-| `/status`        | Check project status                           |
-| `/track`         | Update task progress                           |
+| Command | Description |
+|---------|-------------|
+| `/define` | Full project planning in 9 phases with GAP Analysis |
+| `/journeys` | Document user journeys |
+| `/context` | Create Project Context |
+| `/readiness` | Validate readiness for implementation |
+| `/brainstorm` | Explore options before implementation |
+| `/create` | Create new features or apps |
+| `/plan` | Quick task planning |
+| `/debug` | Systematic debugging |
+| `/enhance` | Improve existing code |
+| `/test` | Generate and run tests |
+| `/test-book` | Generate/update Test Book |
+| `/deploy` | Deploy application |
+| `/preview` | Manage dev server (start/stop/restart) |
+| `/orchestrate` | Multi-agent coordination |
+| `/review` | Post-sprint code review |
+| `/ui-ux-pro-max` | Advanced design system with data-driven palettes |
+| `/track` | Update task progress |
+| `/status` | Check project status |
+| `/log` | Record work sessions |
+| `/finish` | Mark tasks as complete |
+| `/release` | Finalize project and generate release |
+| `/squad` | Create and manage agent squads |
 
 Example:
 
 ```
+/define Task management app
 /brainstorm authentication system
 /create landing page with hero section
 /debug why login fails
+/squad create mobile-team
 ```
 
 ## Multi-Platform Support
 
-| Tool             | Instruction File | How it works                     |
-| ---------------- | ---------------- | -------------------------------- |
-| Claude Code      | `CLAUDE.md`      | Loaded automatically per session |
-| Codex CLI        | `AGENTS.md`      | Bridge to `.agents/INSTRUCTIONS.md` |
-| Antigravity/Gemini | `GEMINI.md`    | Platform-specific rules          |
+| Tool | Instruction File | How it works |
+|------|-----------------|--------------|
+| Claude Code | `CLAUDE.md` | Loaded automatically per session |
+| Codex CLI | `AGENTS.md` | Bridge to `.agents/INSTRUCTIONS.md` |
+| Antigravity/Gemini | `GEMINI.md` | Platform-specific rules |
 
 All platforms share the same canonical source in `.agents/`.
 
@@ -80,11 +130,55 @@ All platforms share the same canonical source in `.agents/`.
 | **Flow B** | Gemini (planning) + Codex (implementation) | Team separation of concerns |
 | **Standalone** | Any single tool | Each tool works independently with graceful fallbacks |
 
+### Stitch MCP (UI Projects)
+
+For projects with visual interfaces, Stitch MCP provides high-fidelity mockup generation:
+
+- `/define` Phase 3.5 — Visual mockups are **mandatory**
+- `/ui-ux-pro-max` Step 2c — Visual preview is **mandatory**
+- `/readiness` — Validates mockup existence
+
+> Backend-only, API, or CLI projects: Stitch is skipped automatically.
+
+## Squad System
+
+Squads are reusable packages of agents + skills + workflows for specific domains.
+
+```bash
+/squad create mobile-team      # Create a new squad
+/squad list                    # List available squads
+/squad activate mobile-team    # Activate squad in framework
+/squad validate mobile-team    # Validate integrity
+```
+
+Squads live in `squads/<name>/` with a `squad.yaml` manifest. See [squads/README.md](squads/README.md) for details.
+
+## Project Structure
+
+```
+.agents/
+├── agents/           # 21 specialized agents
+├── skills/           # 41 knowledge modules
+├── workflows/        # 22 workflows (slash commands)
+├── scripts/          # Python automation (22 scripts)
+├── config/           # Per-platform configuration
+├── .shared/          # Shared data (UI/UX databases)
+└── ARCHITECTURE.md   # Technical documentation
+
+squads/               # Reusable agent+skill+workflow packages
+tests/                # Framework tests
+web/                  # Documentation website (Next.js)
+docs/                 # Project docs, backlog, logs
+```
+
 ## Documentation
 
 - **Architecture:** [.agents/ARCHITECTURE.md](.agents/ARCHITECTURE.md)
+- **Full Instructions:** [.agents/INSTRUCTIONS.md](.agents/INSTRUCTIONS.md)
 - **Skills:** `.agents/skills/*/SKILL.md`
 - **Agents:** `.agents/agents/*.md`
+- **Workflows:** `.agents/workflows/*.md`
+- **Website:** `web/` (run with `cd web && npm run dev`)
 
 ## Based on
 
