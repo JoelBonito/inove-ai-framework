@@ -303,6 +303,7 @@ Automation scripts in `.agents/scripts/` for task management, validation, and se
 | `auto_finish.py` | Automated task completion protocol |
 | `progress_tracker.py` | Update and display progress bar |
 | `checklist.py` | Priority-based validation (security, lint, types, tests, UX, SEO) |
+| `shard_epic.py` | Split backlog into individual story files (shard/sync/status/clean) |
 
 ### Session Management
 

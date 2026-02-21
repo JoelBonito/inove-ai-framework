@@ -235,7 +235,7 @@ def cmd_suggest():
     print("💡 Use: python auto_finish.py --mark <task_id>")
 
 
-def cmd_check_context():
+def cmd_check_context(assume_yes: bool = False):
     """Comando: Verifica contexto atual e sugere auto-conclusão."""
     backlog = find_backlog()
     if not backlog:
@@ -279,7 +279,11 @@ def cmd_check_context():
     print()
 
     # Pergunta se deve marcar automaticamente
-    response = input("Marcar como concluída? (s/N): ").strip().lower()
+    if assume_yes:
+        print("⚡ Modo não-interativo: Auto-confirmando marcação.")
+        response = 's'
+    else:
+        response = input("Marcar como concluída? (s/N): ").strip().lower()
 
     if response == 's':
         for task_id, _ in candidates:
@@ -347,16 +351,18 @@ def main():
         print()
         print("Opções:")
         print("  --force             Força marcação mesmo com aviso de ownership")
+        print("  --yes               Auto-confirma prompts (para uso não-interativo)")
         sys.exit(0)
 
     cmd = sys.argv[1].lower()
     force = "--force" in sys.argv
+    assume_yes = "--yes" in sys.argv
 
     if cmd == "--suggest":
         cmd_suggest()
 
     elif cmd == "--check-context":
-        cmd_check_context()
+        cmd_check_context(assume_yes)
 
     elif cmd == "--mark":
         if len(sys.argv) < 3:

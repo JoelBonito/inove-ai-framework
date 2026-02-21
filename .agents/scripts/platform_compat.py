@@ -168,6 +168,118 @@ def get_scripts_path() -> Path:
     return get_agent_root() / "scripts"
 
 
+# ---------------------------------------------------------------------------
+# Log Parsing Utilities (used by dashboard.py, sync_tracker.py)
+# ---------------------------------------------------------------------------
+
+import re
+from datetime import datetime, timedelta
+from typing import List, Dict, NamedTuple
+
+
+class Session(NamedTuple):
+    """Represents a work session parsed from daily log files."""
+    date: str
+    project: str
+    start: str
+    end: str
+    duration_minutes: int
+    activities: List[str]
+    agent_source: str = "unknown"
+
+
+def _parse_duration(duration_str: str) -> int:
+    """Converts 'HH:MM' to minutes."""
+    match = re.match(r"(\d{1,2}):(\d{2})", duration_str)
+    if match:
+        return int(match.group(1)) * 60 + int(match.group(2))
+    return 0
+
+
+def parse_log_file(filepath: Path) -> List[Session]:
+    """Extracts sessions from a daily log markdown file."""
+    content = filepath.read_text(encoding="utf-8")
+
+    date_match = re.search(r"LOG DI[AÁ]RIO\s*[—–-]\s*(\d{4}-\d{2}-\d{2})", content)
+    project_match = re.search(r"- Projeto:\s*(.+)", content)
+
+    if not date_match:
+        return []
+
+    date = date_match.group(1)
+    project = project_match.group(1).strip() if project_match else "Unknown"
+
+    sessions: List[Session] = []
+    session_pattern = re.compile(
+        r"^\d+\.\s+(\d{1,2}:\d{2})\s*[—–-]\s*(\d{1,2}:\d{2})\s*\((\d{1,2}:\d{2})\)\s*(?:\[.*?([a-z_]+)\])?",
+        re.MULTILINE | re.IGNORECASE,
+    )
+
+    for match in session_pattern.finditer(content):
+        start_pos = match.end()
+        next_match = session_pattern.search(content, start_pos)
+        end_pos = next_match.start() if next_match else len(content)
+        section = content[start_pos:end_pos]
+        activities = re.findall(r"^\s+-\s+(.+)$", section, re.MULTILINE)
+
+        sessions.append(Session(
+            date=date,
+            project=project,
+            start=match.group(1),
+            end=match.group(2),
+            duration_minutes=_parse_duration(match.group(3)),
+            activities=activities,
+            agent_source=match.group(4) or "unknown",
+        ))
+
+    return sessions
+
+
+def get_logs_in_range(logs_dir: Path, start_date: datetime, end_date: datetime) -> List[Session]:
+    """Returns all sessions in a date range."""
+    all_sessions: List[Session] = []
+    for year_dir in logs_dir.iterdir():
+        if not year_dir.is_dir():
+            continue
+        for log_file in year_dir.glob("*.md"):
+            try:
+                file_date = datetime.strptime(log_file.stem, "%Y-%m-%d")
+            except ValueError:
+                continue
+            if start_date.date() <= file_date.date() <= end_date.date():
+                all_sessions.extend(parse_log_file(log_file))
+    return sorted(all_sessions, key=lambda s: (s.date, s.start))
+
+
+def get_last_activity_by_agent(logs_dir: Path, days_back: int = 7) -> Dict[str, dict]:
+    """Returns last activity per agent over the last N days."""
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=days_back)
+    sessions = get_logs_in_range(logs_dir, start_date, end_date)
+
+    agent_stats: Dict[str, dict] = {}
+    for session in sessions:
+        agent = session.agent_source
+        if agent not in agent_stats:
+            agent_stats[agent] = {
+                "last_session": session,
+                "last_activity": session.activities[-1] if session.activities else "No activity",
+                "total_time_week": 0,
+                "sessions_count": 0,
+            }
+        current = agent_stats[agent]
+        if session.date > current["last_session"].date or (
+            session.date == current["last_session"].date
+            and session.start > current["last_session"].start
+        ):
+            current["last_session"] = session
+            current["last_activity"] = session.activities[-1] if session.activities else "No activity"
+        current["total_time_week"] += session.duration_minutes
+        current["sessions_count"] += 1
+
+    return agent_stats
+
+
 # For backwards compatibility
 AGENT_ROOT = get_agent_root()
 AGENT_SOURCE = get_agent_source()

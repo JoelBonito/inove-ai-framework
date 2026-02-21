@@ -219,19 +219,45 @@ CORRETO: Ler contexto (HANDOFF/BACKLOG/docs) → Ler agente → Entender PORQUÊ
 
 ## Auto-Finish Protocol (OBRIGATÓRIO)
 
+Após completar QUALQUER tarefa do `docs/BACKLOG.md`:
+
 ```bash
 python .agents/scripts/finish_task.py "{task_id}"
 python .agents/scripts/progress_tracker.py
 ```
 
+Informar ao usuário:
+```
+Task {task_id} marcada como completa
+Progresso atualizado: {percentual}%
+Próxima tarefa: {nome_proxima_tarefa}
+```
+
+> **Regra:** Você é RESPONSÁVEL por atualizar o status no backlog. Não peça ao usuário para fazer isso.
+
 ---
 
-## Registro de Sessões (OBRIGATÓRIO)
+## Registro de Sessões de Trabalho (OBRIGATÓRIO)
+
+### Objetivo
+Rastrear sessões de trabalho e gerar um relatório diário consolidado em Markdown.
+
+### Regras de Operação
+1. **Fonte Única:** SEMPRE use `auto_session.py` para gerir sessões. NUNCA edite os logs manualmente.
+2. **Abertura:** Use o comando start no início de cada sessão de trabalho.
+3. **Encerramento:** Ao concluir entregas ou terminar a interação, use o comando end passando a lista exata do que construiu/modificou.
+4. **Fechamento Automático:** O script cuida do cabeçalho, cálculo do resumo do dia e índice do README.
+
+### Comandos
 
 ```bash
-python .agents/scripts/auto_session.py start --agent codex
-python .agents/scripts/auto_session.py end --activities "ativ1; ativ2"
+python .agents/scripts/auto_session.py start --agent codex             # Abrir sessão
+python .agents/scripts/auto_session.py end --activities "ativ1; ativ2" # Fechar sessão
+python .agents/scripts/auto_session.py status                          # Ver sessão ativa
 ```
+
+### Critérios de Qualidade
+A saída da descrição das atividades enviadas à flag `--activities` deve ser curta e objetiva. Abstê-se de logar dados sensíveis.
 
 ### Tratamento de Idioma
 
@@ -263,6 +289,7 @@ python .agents/scripts/checklist.py . --url <URL>
 | Checklist | `python .agents/scripts/checklist.py .` | Auditoria do projeto |
 | Validar | `python .agents/scripts/validate_installation.py` | Verificar setup |
 | Squads | `python .agents/scripts/squad_manager.py list` | Gerenciar squads |
+| Shard Epic | `python .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
 
 ---
 

@@ -145,7 +145,6 @@ python3 .agents/.shared/ui-ux-pro-max/scripts/search.py "<keyword>" --stack html
 ```
 
 Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`, `react-native`, `flutter`, `shadcn`, `jetpack-compose`
-, `jetpack-compose`
 ---
 
 ## Search Reference

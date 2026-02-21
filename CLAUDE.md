@@ -1,7 +1,7 @@
 # CLAUDE.md - Instruções para Claude Code
 
 > Este arquivo é carregado automaticamente pelo Claude Code em cada conversa.
-> **Fonte canônica:** `.agents/INSTRUCTIONS.md` - mantenha sincronizado.
+> **Master para Claude Code.** Base compartilhada: `.agents/INSTRUCTIONS.md` (sem regras Claude-specific).
 
 ## Sobre Este Projeto
 
@@ -79,32 +79,72 @@
 
 ## Protocolo de Roteamento Inteligente (STEP 1)
 
-### 1. Detecção de Domínio (AUTOMÁTICO)
+> **O roteamento inteligente é o diferencial do framework.** Funciona como um Project Manager automático que analisa cada pedido e ativa o(s) agente(s) certo(s) sem o usuário precisar saber a arquitetura.
 
-| Palavras-chave | Domínio | Agente Primário |
-|----------------|---------|-----------------|
-| "UI", "componente", "página", "frontend" | Frontend | `frontend-specialist` |
-| "API", "endpoint", "backend", "servidor" | Backend | `backend-specialist` |
-| "database", "schema", "query", "migração" | Database | `database-architect` |
-| "mobile", "iOS", "Android", "React Native" | Mobile | `mobile-developer` |
-| "auth", "segurança", "vulnerabilidade" | Security | `security-auditor` |
-| "bug", "erro", "não funciona", "debug" | Debug | `debugger` |
-| "teste", "E2E", "CI/CD" | Testing | `qa-automation-engineer` |
-| "deploy", "docker", "infraestrutura" | DevOps | `devops-engineer` |
-| "requisitos", "user story", "backlog", "MVP" | Product | `product-owner` |
-| "UX", "user flow", "wireframe", "jornada", "usabilidade" | UX Research | `ux-researcher` |
+### 1. Detecção de Domínio (AUTOMÁTICO — TODOS os 21 agentes)
 
-### 2. Roteamento por Tipo de Projeto
-
-| Tipo                                   | Agente Primário       | Skills                        |
-| -------------------------------------- | --------------------- | ----------------------------- |
-| **MOBILE** (iOS, Android, RN, Flutter) | `mobile-developer`    | mobile-design                 |
-| **WEB** (Next.js, React web)           | `frontend-specialist` | frontend-design               |
-| **BACKEND** (API, server, DB)          | `backend-specialist`  | api-patterns, database-design |
+| Palavras-chave (PT + EN) | Domínio | Agente Primário |
+|---------------------------|---------|-----------------|
+| "UI", "componente", "página", "frontend", "component", "layout", "react", "tailwind" | Frontend | `frontend-specialist` |
+| "API", "endpoint", "backend", "servidor", "server", "express", "fastapi", "node" | Backend | `backend-specialist` |
+| "database", "schema", "query", "migração", "prisma", "sql", "tabela", "migration" | Database | `database-architect` |
+| "mobile", "iOS", "Android", "React Native", "Flutter", "expo", "app nativo" | Mobile | `mobile-developer` |
+| "auth", "segurança", "vulnerabilidade", "security", "jwt", "token", "OWASP" | Security | `security-auditor` |
+| "pentest", "red team", "exploit", "offensive", "auditoria ofensiva" | Offensive | `penetration-tester` |
+| "bug", "erro", "não funciona", "debug", "error", "crash", "broken" | Debug | `debugger` |
+| "unit test", "TDD", "cobertura", "jest", "vitest", "test coverage" | Unit Testing | `test-engineer` |
+| "e2e", "pipeline", "automação", "playwright", "cypress", "CI/CD", "regressão" | QA Automation | `qa-automation-engineer` |
+| "deploy", "docker", "infraestrutura", "kubernetes", "nginx", "pm2" | DevOps | `devops-engineer` |
+| "requisitos", "user story", "product discovery", "stakeholder", "PRD" | Product Mgmt | `product-manager` |
+| "backlog", "MVP", "priorização", "sprint", "GAP analysis", "roadmap" | Product Owner | `product-owner` |
+| "planejar", "arquitetura", "system design", "milestone", "task breakdown" | Planning | `project-planner` |
+| "UX", "user flow", "wireframe", "jornada", "usabilidade", "heurística" | UX Research | `ux-researcher` |
+| "performance", "lento", "otimizar", "bundle", "Lighthouse", "slow", "cache" | Performance | `performance-optimizer` |
+| "SEO", "meta tags", "sitemap", "robots", "E-E-A-T", "Core Web Vitals" | SEO | `seo-specialist` |
+| "documentação", "README", "changelog", "API docs", "manual" | Documentation | `documentation-writer` |
+| "legado", "refatorar", "modernizar", "legacy", "strangler fig", "código antigo" | Legacy | `code-archaeologist` |
+| "jogo", "game", "Unity", "Godot", "Phaser", "multiplayer", "game design" | Game Dev | `game-developer` |
+| "explorar codebase", "discovery", "mapeamento", "como funciona este código" | Exploration | `explorer-agent` |
+| MCP, "MCP server", "MCP tool", "protocol" | MCP Dev | `backend-specialist` (skill: mcp-builder) |
 
 > **Mobile + frontend-specialist = ERRADO.** Mobile = `mobile-developer` APENAS.
 
-### 3. Ativação de Agente (OBRIGATÓRIO)
+### 2. Avaliação de Complexidade (AUTOMÁTICO)
+
+| Complexidade | Critérios | Ação |
+|-------------|-----------|------|
+| **SIMPLES** | 1 domínio, tarefa clara, 1-2 ficheiros | Ativar agente único |
+| **MODERADA** | 2 domínios, requisitos claros, 2-5 ficheiros | Ativar 2-3 agentes em sequência |
+| **COMPLEXA** | 3+ domínios, decisões arquiteturais, requisitos vagos | Ativar `orchestrator` → Socratic Gate |
+
+### 3. Gatilhos Multi-Agente
+
+| Cenário | Keywords | Agentes Ativados |
+|---------|----------|-----------------|
+| Autenticação | "login", "auth", "signup" | `security-auditor` + `backend-specialist` |
+| Database + API | "CRUD", "modelo de dados" | `database-architect` + `backend-specialist` |
+| Revisão de Segurança | "security review", "auditoria" | `security-auditor` + `penetration-tester` |
+| Full-stack Feature | "feature completa", "build app" | `orchestrator` → coordena múltiplos |
+
+### 4. Auto-Ativação de Squads
+
+Se keywords correspondem a um squad ativo (ex: "n8n", "workflow automation"):
+
+```bash
+python .agents/scripts/squad_manager.py auto-activate <squad-name>
+```
+
+Executar **silenciosamente** antes de rotear ao agente do squad.
+
+### 5. Roteamento por Tipo de Projeto
+
+| Tipo | Agente Primário | Skills |
+|------|-----------------|--------|
+| **MOBILE** (iOS, Android, RN, Flutter) | `mobile-developer` | mobile-design |
+| **WEB** (Next.js, React web) | `frontend-specialist` | frontend-design |
+| **BACKEND** (API, server, DB) | `backend-specialist` | api-patterns, database-design |
+
+### 6. Ativação de Agente (OBRIGATÓRIO)
 
 Quando um domínio for detectado:
 
@@ -117,11 +157,12 @@ Quando um domínio for detectado:
 3. **Carregar skills** do frontmatter do agente
 4. **Aplicar persona e regras** do agente
 
-### 4. Regras de Ativação
+### 7. Regras de Ativação
 
 1. **Análise silenciosa**: Sem meta-comentários verbosos ("Estou analisando...").
 2. **Override explícito**: Se o usuário mencionar `@agent`, usar esse agente.
 3. **Tarefas complexas**: Para multi-domínio, usar `orchestrator` e fazer perguntas Socráticas primeiro.
+4. **Perguntas simples**: NÃO ativar agentes. Responder diretamente.
 
 ---
 
@@ -222,14 +263,14 @@ Próxima tarefa: {nome_proxima_tarefa}
 
 **Trigger:** Quando o usuário pede "verificações finais", "final checks", ou antes de deploy/release.
 
-**Comando principal:**
+**Checklist Core (framework + traceability):**
 
 ```bash
-python .agents/scripts/checklist.py .                   # Auditoria manual
-python .agents/scripts/checklist.py . --url <URL>       # Full Suite + Performance + E2E
+python .agents/scripts/checklist.py .                   # Core checks (installation + traceability)
+python .agents/scripts/checklist.py . --url <URL>       # Core + web checks (tsc, lint, build)
 ```
 
-**Ordem de execução prioritizada:**
+**Checklist Completo (agent-driven — executar manualmente na ordem):**
 
 | Prioridade | Etapa        | Script                                                                  | Quando Usar         |
 | ---------- | ------------ | ----------------------------------------------------------------------- | ------------------- |
@@ -253,81 +294,28 @@ python .agents/scripts/checklist.py . --url <URL>       # Full Suite + Performan
 
 ---
 
-## Registro de Sessões de Trabalho (OBRIGATÓRIO)
+## Registro de Sessoes de Trabalho (OBRIGATORIO)
 
 ### Objetivo
-Rastrear sessões de trabalho e gerar um relatório diário consolidado em Markdown.
+Rastrear sessoes de trabalho e gerar um relatorio diario consolidado em Markdown.
 
-### Local e Nome
-Salvar em `docs/08-Logs-Sessoes/{ANO}/{AAAA-MM-DD}.md` (ex.: `docs/08-Logs-Sessoes/2026/2026-02-13.md`).
-
-### Regras de Operação
-
-1. **Abertura de Sessão (Início):**
-   - Ao iniciar uma sessão, criar (ou abrir) o arquivo do dia.
-   - Se o arquivo não existir, criar com o cabeçalho diário (ver Modelo).
-   - Registrar hora de início no bloco "Sessões" com uma entrada provisória.
-
-2. **Encerramento de Sessão (Fim):**
-   - Ao encerrar, completar a entrada com hora de fim, calcular duração (fim - início).
-   - Descrever o que foi feito (bullet points objetivos).
-
-3. **Consolidação Diária (Resumo do Dia):**
-   - Atualizar o bloco "Resumo do Dia" contendo:
-     - Hora de início do dia (menor hora de início).
-     - Hora de fim do dia (maior hora de fim).
-     - Tempo total trabalhado (soma de todas as sessões).
-   - Atualizar ao final da última sessão do dia.
-
-4. **Limites e Bordas:**
-   - Se uma sessão ultrapassar 23:59, encerrar no dia D e abrir nova no dia D+1 às 00:00.
-   - Não registrar dados sensíveis ou tokens. Descrever apenas tarefas/artefatos técnicos.
-
-5. **Índice:**
-   - Manter/atualizar `docs/08-Logs-Sessoes/README.md` com links para cada arquivo diário.
-
-6. **Fonte Única:**
-   - SEMPRE usar `auto_session.py` para abrir/fechar sessões.
-   - NUNCA criar ou editar logs manualmente com Write/Edit.
-   - Se o script falhar, reportar o erro ao usuário em vez de criar log manual.
-
-### Modelo de Arquivo Diário
-
-```markdown
-# LOG DIARIO — AAAA-MM-DD
-- Projeto: <NOME_DO_PROJETO>
-- Fuso: America/Sao_Paulo
-
-## Sessoes
-1. HH:MM — HH:MM (HH:MM) [badge]
-   - Atividades: <bullets curtos e objetivos>
-
-2. HH:MM — HH:MM (HH:MM) [badge]
-   - Atividades: <...>
-
-## Resumo do Dia
-- Inicio do dia: HH:MM
-- Fim do dia: HH:MM
-- Tempo total: HH:MM
-```
+### Regras de Operacao
+1. **Fonte Unica:** SEMPRE use `auto_session.py` para gerir sessoes. NUNCA edite os logs manualmente.
+2. **Abertura:** Use o comando start no inicio de cada sessao de trabalho.
+3. **Encerramento:** Ao concluir entregas ou terminar a interacao, use o comando end passando a lista exata do que construiu/modificou.
+4. **Fechamento Automatico:** O script cuida do cabecalho, calculo do resumo do dia e indice do README.
 
 ### Comandos
 
 ```bash
-python .agents/scripts/auto_session.py start                      # Abrir sessão
-python .agents/scripts/auto_session.py start --agent antigravity  # Abrir com agente específico
-python .agents/scripts/auto_session.py end --activities "ativ1; ativ2"  # Fechar sessão
-python .agents/scripts/auto_session.py end --quick                # Fechar sem atividades
-python .agents/scripts/auto_session.py status                     # Ver sessão ativa
+python .agents/scripts/auto_session.py start                      # Abrir sessao
+python .agents/scripts/auto_session.py start --agent antigravity  # Abrir com agente especifico
+python .agents/scripts/auto_session.py end --activities "ativ1; ativ2"  # Fechar sessao
+python .agents/scripts/auto_session.py status                     # Ver sessao ativa
 ```
 
-### Critérios de Qualidade
-
-- PT-BR consistente. Sem código comentado/console.log em descrições de atividades.
-- Durações corretas e soma exata no resumo diário.
-- Nomes de arquivos e diretórios exatamente conforme especificação.
-- Formato: horários em 24h (HH:MM), data ISO (AAAA-MM-DD), duração em HH:MM.
-- Fuso horário: America/Sao_Paulo.
+### Criterios de Qualidade
+A saida da descricao das atividades enviadas a flag `--activities` deve ser curta e objetiva. Abste-se de logar dados sensiveis.
 
 ---
 
@@ -469,6 +457,7 @@ Formato no BACKLOG.md:
 | Verificar Tudo | `python .agents/scripts/verify_all.py .` | Verificação completa |
 | Squad Manager | `python .agents/scripts/squad_manager.py list` | Gerenciar squads |
 | Recovery | `python .agents/scripts/recovery.py checkpoint <label>` | Retry + rollback |
+| Shard Epic | `python .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
 
 ---
 

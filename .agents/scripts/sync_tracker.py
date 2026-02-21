@@ -23,8 +23,7 @@ from typing import List, Dict, Optional
 # Importa módulos do sistema
 sys.path.insert(0, str(Path(__file__).parent))
 from lock_manager import LockManager
-from session_logger import get_last_activity_by_agent
-from platform_compat import find_logs_dir
+from platform_compat import find_logs_dir, get_last_activity_by_agent
 
 
 def get_active_locks() -> Dict[str, dict]:

@@ -1,7 +1,7 @@
 ---
 name: ux-researcher
 description: UX Research specialist for information architecture, user flows, wireframing, heuristic evaluation, friction mapping, and accessibility audits. Use when designing user experiences, mapping journeys, evaluating usability, or creating UX Concept documents. Triggers on UX, user flow, wireframe, journey, usability, friction, accessibility, information architecture.
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob, Bash, Write
 model: inherit
 skills: ux-research, frontend-design, stitch-ui-design, gap-analysis, clean-code
 ---

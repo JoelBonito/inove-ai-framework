@@ -26,6 +26,10 @@ description: Marca uma tarefa do backlog como concluída. Uso: /finish {ID}
 2. Atualizar a barra de progresso visual
    Run: python3 .agents/scripts/progress_tracker.py
 
+// turbo
+3. Se `docs/stories/` existir, sincronizar status dos shards
+   Run: python3 .agents/scripts/shard_epic.py sync
+
 ## Exemplos de Uso
 
 - **Manual:** `/finish 3.1`

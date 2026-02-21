@@ -756,7 +756,7 @@ Por favor, revise o UX Concept e responda:
    - Se alguma tela da lista NAO tem prototipo: **GERAR** antes de prosseguir
    - Preencher tabela de cobertura no documento de output (ver template abaixo)
 
-5. **Documentar resultados**
+6. **Documentar resultados**
    - Criar arquivo de output com template abaixo
 
 ```markdown
@@ -1808,6 +1808,16 @@ Quando executado pelo Gemini CLI (Flow B), gerar automaticamente `docs/HANDOFF.m
 ```
 
 > **Regra:** O HANDOFF.md e gerado automaticamente. No Claude Code (Flow A), este passo e opcional pois o mesmo agente faz planning + implementacao.
+
+### Sharding Recomendado
+
+Apos gerar o BACKLOG.md, sugerir ao usuario:
+
+```bash
+python .agents/scripts/shard_epic.py shard
+```
+
+Isso divide o backlog em arquivos individuais por story em `docs/stories/`, permitindo que as IAs trabalhem com contexto focado.
 
 ### Resumo Final
 

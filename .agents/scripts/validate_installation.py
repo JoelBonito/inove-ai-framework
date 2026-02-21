@@ -16,7 +16,7 @@ from pathlib import Path
 EXPECTED_AGENTS = 21
 EXPECTED_SKILLS = 41  # top-level skill dirs with SKILL.md
 EXPECTED_WORKFLOWS = 22
-EXPECTED_SCRIPTS = 22
+EXPECTED_SCRIPTS = 21
 
 
 def check_exists(path: Path, label: str = "") -> tuple[bool, str]:
@@ -90,13 +90,15 @@ def validate_installation(verbose: bool = False):
     core_scripts = [
         "auto_session.py", "finish_task.py", "lock_manager.py",
         "progress_tracker.py", "dashboard.py", "checklist.py",
-        "platform_compat.py", "session_logger.py", "metrics.py",
+        "platform_compat.py", "metrics.py",
         "auto_preview.py", "auto_finish.py", "sync_tracker.py",
         "reminder_system.py", "notifier.py", "project_analyzer.py",
         "generate_web_data.py", "verify_all.py", "validate_traceability.py",
         "validate_installation.py", "_check_runner.py",
         # v5.0 additions
         "squad_manager.py", "recovery.py",
+        # v5.1 reintegration
+        "shard_epic.py",
     ]
 
     for name in core_scripts:

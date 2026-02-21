@@ -56,7 +56,7 @@
   {
     "cmd": "/log",
     "name": "log",
-    "description": "Gerencia logs de sessão de trabalho. Sub-comandos: start, end, show. Registra atividades e gera resumo diário.",
+    "description": "Gerencia logs de sessão de trabalho. Sub-comandos: start, end, show, summary. Delega ao auto_session.py para automação completa.",
     "file": ".agents/workflows/log.md"
   },
   {

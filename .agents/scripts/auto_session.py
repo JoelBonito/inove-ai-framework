@@ -259,6 +259,32 @@ def update_daily_log_end(session: dict):
     parsed = _parse_sessions(content)
     resumo = _build_resumo(parsed)
 
+    # Fetch progress tracking data
+    try:
+        from progress_tracker import find_backlog, parse_backlog
+        backlog_path = find_backlog()
+        if backlog_path and backlog_path.exists():
+            backlog_content = backlog_path.read_text(encoding="utf-8")
+            epics = parse_backlog(backlog_content)
+            
+            total = sum(e.total for e in epics)
+            done = sum(e.done for e in epics)
+            percent = (done / total * 100) if total > 0 else 0
+            
+            # Inject Burn-down into the Resumo do Dia
+            if resumo:
+                # Insert the velocity metric right before the end
+                resumo_lines = resumo.split('\n')
+                # Find the location of "- Tempo total: "
+                for i, line in enumerate(resumo_lines):
+                    if line.startswith("- Tempo total: "):
+                        resumo_lines.insert(i + 1, f"- Velocidade Atual (Burn-down): {percent:.1f}%")
+                        break
+                resumo = '\n'.join(resumo_lines)
+    except Exception as e:
+        # Silently fail or log to keep zero-breakage parity for Claude Code
+        print(f"Nota: Não foi possível anexar o Burn-down ao Log: {e}")
+
     content = content.rstrip('\n') + '\n'
     if resumo:
         content += resumo

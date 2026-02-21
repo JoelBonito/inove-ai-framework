@@ -156,31 +156,27 @@ Para requisições complexas, PERGUNTAR antes de implementar:
 
 ---
 
-## ⏱️ Registro de Sessão (OBRIGATÓRIO)
+## Registro de Sessoes de Trabalho (OBRIGATORIO)
 
-Assim como o Antigravity, você DEVE registrar suas sessões de trabalho para controle de horas e atividades.
+### Objetivo
+Rastrear sessões de trabalho e gerar um relatório diário consolidado em Markdown.
 
-### 1. Início de Sessão (Ao começar)
-Sempre que iniciar uma interação, execute imediatamente:
+### Regras de Operação
+1. **Fonte Única:** SEMPRE use `auto_session.py` para gerir sessões. NUNCA edite os logs manualmente.
+2. **Abertura:** Use o comando start no início de cada sessão de trabalho.
+3. **Encerramento:** Ao concluir entregas ou terminar a interação, use o comando end passando a lista exata do que construiu/modificou.
+4. **Fechamento Automático:** O script cuida do cabeçalho, cálculo do resumo do dia e índice do README.
+
+### Comandos
+
 ```bash
-python .agents/scripts/auto_session.py start --agent claude_code
+python .agents/scripts/auto_session.py start --agent <claude_code|codex|antigravity>  # Abrir sessão
+python .agents/scripts/auto_session.py end --activities "ativ1; ativ2"                 # Fechar sessão
+python .agents/scripts/auto_session.py status                                          # Ver sessão ativa
 ```
 
-### 2. Fim de Sessão (Ao terminar)
-Quando o usuário se despedir ou a tarefa for concluída, encerre a sessão registrando o que foi feito:
-```bash
-python .agents/scripts/auto_session.py end --activities "Resumo das atividades realizadas"
-```
-
-### 3. Fallback (Modo Manual)
-Se os scripts falharem, edite manualmente `docs/08-Logs-Sessoes/{ANO}/{DATA}.md` seguindo o padrão:
-```markdown
-## Sessões
-1. HH:MM — HH:MM (HH:MM) [🔵 claude_code]
-   - Atividades:
-     - Atividade 1
-     - Atividade 2
-```
+### Critérios de Qualidade
+A saída da descrição das atividades enviadas à flag `--activities` deve ser curta e objetiva. Abstê-se de logar dados sensíveis.
 
 ---
 
@@ -300,6 +296,7 @@ Formato no BACKLOG.md:
 | Verificar Tudo | `python .agents/scripts/verify_all.py .` | Verificação completa |
 | Squad Manager | `python .agents/scripts/squad_manager.py list` | Gerenciar squads |
 | Recovery | `python .agents/scripts/recovery.py checkpoint <label>` | Retry + rollback |
+| Shard Epic | `python .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
 
 ---
 

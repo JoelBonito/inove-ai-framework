@@ -59,11 +59,15 @@ Before responding to ANY request:
 ```javascript
 // Pseudo-code for decision tree
 function analyzeRequest(userMessage) {
+    // 0. Context-Aware Read (Silent)
+    // Read package.json, ARCHITECTURE.md or config files to define the Stack
+    const projectStack = detectContextDrivenStack();
+
     // 1. Classify request type
     const requestType = classifyRequest(userMessage);
 
-    // 2. Detect domains
-    const domains = detectDomains(userMessage);
+    // 2. Detect domains (Weighing in the projectStack)
+    const domains = detectDomains(userMessage, projectStack);
 
     // 3. Determine complexity
     const complexity = assessComplexity(domains);
@@ -246,6 +250,11 @@ User: "Add mobile support to the web app"
 - **Priority**: GEMINI.md rules > intelligent-routing
 - If GEMINI.md specifies explicit routing, follow it
 - Intelligent routing is the DEFAULT when no explicit rule exists
+
+## With Context-Aware Routing (Opção A)
+
+- **Step Zero**: The router must silently check context files (e.g., `package.json`, `ARCHITECTURE.md`) when determining domains.
+- If the project is exclusively a "Web Environment", the router avoids invoking `-mobile` or unrelated specific agents strictly by keyword matching.
 
 ## Testing the System
 

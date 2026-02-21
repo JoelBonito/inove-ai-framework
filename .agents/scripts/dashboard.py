@@ -16,9 +16,9 @@ from typing import Optional
 # Importar módulos necessários
 sys.path.insert(0, str(Path(__file__).parent))
 import progress_tracker
-import session_logger
 import auto_session
 from lock_manager import LockManager
+from platform_compat import find_logs_dir, get_logs_in_range, get_last_activity_by_agent
 
 
 def format_duration(minutes: int) -> str:
@@ -102,7 +102,7 @@ def load_progress() -> dict:
 
 def load_weekly_stats() -> dict:
     """Carrega estatísticas da semana."""
-    logs_dir = session_logger.find_logs_dir()
+    logs_dir = find_logs_dir()
 
     if not logs_dir:
         return {
@@ -115,7 +115,7 @@ def load_weekly_stats() -> dict:
     end_date = datetime.now()
     start_date = end_date - timedelta(days=7)
 
-    sessions = session_logger.get_logs_in_range(logs_dir, start_date, end_date)
+    sessions = get_logs_in_range(logs_dir, start_date, end_date)
 
     if not sessions:
         return {
@@ -136,13 +136,13 @@ def load_weekly_stats() -> dict:
 
 def load_sync_status() -> dict:
     """Carrega status de sincronização dos agentes."""
-    logs_dir = session_logger.find_logs_dir()
+    logs_dir = find_logs_dir()
 
     if not logs_dir:
         return {}
 
     try:
-        agent_stats = session_logger.get_last_activity_by_agent(logs_dir, days_back=7)
+        agent_stats = get_last_activity_by_agent(logs_dir, days_back=7)
     except Exception:
         return {}
 

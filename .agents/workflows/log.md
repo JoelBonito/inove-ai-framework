@@ -1,26 +1,27 @@
 ---
-description: Gerencia logs de sessão de trabalho. Sub-comandos: start, end, show. Registra atividades e gera resumo diário.
+description: Gerencia logs de sessão de trabalho. Sub-comandos: start, end, show, summary. Delega ao auto_session.py para automação completa.
 ---
 
 # Workflow: /log
 
-> **Propósito:** Registrar sessões de trabalho de forma manual e consistente, criando relatórios diários estruturados.
+> **Propósito:** Registrar sessões de trabalho de forma automatizada e consistente.
+> **Implementação:** Todas as operações delegam ao script `auto_session.py`.
 
 ## Regras Críticas
 
 1. **FUSO HORÁRIO** — Sempre usar America/Sao_Paulo para registro de horários.
-2. **AGUARDAR RESPOSTA** — No `/log end`, perguntar atividades e aguardar resposta do usuário antes de fechar.
-3. **ESTRUTURA CONSISTENTE** — Manter o formato padrão de log diário (data, sessões, resumo).
-4. **ARQUIVO POR DIA** — Um único arquivo por dia no formato `AAAA-MM-DD.md`.
+2. **FONTE ÚNICA** — SEMPRE usar `auto_session.py`. NUNCA criar/editar logs manualmente.
+3. **ARQUIVO POR DIA** — Um único arquivo por dia no formato `AAAA-MM-DD.md`.
+4. **AUTOMAÇÃO** — O script cuida do cabeçalho, cálculo de resumo e índice README.
 
 ## Sub-comandos
 
-| Comando | Descrição |
-|---------|-----------|
-| `/log start` | Inicia uma nova sessão de trabalho |
-| `/log end` | Encerra a sessão atual e registra atividades |
-| `/log show` | Exibe o log do dia atual |
-| `/log summary` | Gera resumo semanal/mensal |
+| Comando | Script Executado |
+|---------|-----------------|
+| `/log start` | `python .agents/scripts/auto_session.py start` |
+| `/log end` | `python .agents/scripts/auto_session.py end --activities "{atividades}"` |
+| `/log show` | `python .agents/scripts/auto_session.py status` |
+| `/log summary` | `python .agents/scripts/metrics.py weekly` |
 
 ---
 
@@ -29,59 +30,29 @@ description: Gerencia logs de sessão de trabalho. Sub-comandos: start, end, sho
 ```
 docs/
 └── 08-Logs-Sessoes/
-    ├── README.md           ← Índice de logs
+    ├── README.md           <- Índice de logs (auto-gerado)
     └── {ANO}/
-        └── {AAAA-MM-DD}.md ← Log diário
+        └── {AAAA-MM-DD}.md <- Log diário (auto-gerado)
 ```
 
 ---
 
 ## Fluxo: `/log start`
 
-### Passo 1: Obter Data/Hora Atual
-- Data: `AAAA-MM-DD`
-- Hora: `HH:MM` (24h, America/Sao_Paulo)
-
-### Passo 2: Verificar/Criar Arquivo do Dia
-- Caminho: `docs/08-Logs-Sessoes/{ANO}/{AAAA-MM-DD}.md`
-- Se não existir, criar com template:
-
-```markdown
-# LOG DIÁRIO — AAAA-MM-DD
-- Projeto: {nome do projeto}
-- Fuso: America/Sao_Paulo
-
-## Sessões
-
-1. HH:MM — ??:?? (??:??)
-   - Atividades:
-     - [sessão em andamento...]
-
-## Resumo do Dia
-- Início do dia: HH:MM
-- Fim do dia: ??:??
-- Tempo total: ??:??
+```bash
+python .agents/scripts/auto_session.py start
 ```
 
-### Passo 3: Adicionar Nova Sessão
-Se o arquivo já existe, adicionar nova entrada:
+O script automaticamente:
+1. Detecta data/hora atual
+2. Cria ou abre o arquivo do dia
+3. Adiciona nova entrada de sessão
+4. Reporta confirmação
 
-```markdown
-N. HH:MM — ??:?? (??:??)
-   - Atividades:
-     - [sessão em andamento...]
+**Confirmar ao usuário:**
 ```
-
-### Passo 4: Confirmar ao Usuário
-
-```markdown
-✅ **Sessão iniciada!**
-
-📅 Data: AAAA-MM-DD
-⏰ Início: HH:MM
-📄 Arquivo: docs/08-Logs-Sessoes/{ANO}/{AAAA-MM-DD}.md
-
-Quando terminar, use `/log end` para registrar as atividades.
+Sessao iniciada as HH:MM
+Arquivo: docs/08-Logs-Sessoes/{ANO}/{AAAA-MM-DD}.md
 ```
 
 ---
@@ -90,134 +61,74 @@ Quando terminar, use `/log end` para registrar as atividades.
 
 ### Passo 1: Perguntar Atividades
 
-```markdown
-📝 **O que foi feito nesta sessão?**
-
-Liste as atividades realizadas (pode ser em formato livre, vou estruturar):
+```
+O que foi feito nesta sessão?
+Liste as atividades realizadas:
 ```
 
-**AGUARDE** a resposta do usuário.
+**AGUARDAR** a resposta do usuário.
 
-### Passo 2: Atualizar Arquivo do Dia
+### Passo 2: Executar Script
 
-1. Localizar a sessão em andamento (última com `??:??`)
-2. Substituir hora de fim com hora atual
-3. Calcular duração (fim - início)
-4. Adicionar atividades formatadas como bullets
-
-### Passo 3: Atualizar Resumo do Dia
-
-```markdown
-## Resumo do Dia
-- Início do dia: {menor hora de início}
-- Fim do dia: {maior hora de fim}
-- Tempo total: {soma de todas as durações}
+```bash
+python .agents/scripts/auto_session.py end --activities "atividade1; atividade2; atividade3"
 ```
 
-### Passo 4: Seção Opcional de Arquivos
+O script automaticamente:
+1. Calcula hora de fim e duração
+2. Formata atividades como bullets
+3. Atualiza resumo do dia
+4. Atualiza índice README
 
-Se houver arquivos criados/modificados durante a sessão, adicionar:
+### Passo 3: Confirmar e Sugerir
 
-```markdown
-## Arquivos Criados/Modificados
-
-### Novos Arquivos:
-- `path/to/file1.tsx`
-- `path/to/file2.ts`
-
-### Arquivos Modificados:
-- `path/to/existing.tsx` - Descrição da mudança
 ```
+Sessao encerrada as HH:MM (duracao: XX:XX)
+Log atualizado: docs/08-Logs-Sessoes/{ANO}/{AAAA-MM-DD}.md
 
-### Passo 5: Confirmar ao Usuário
-
-```markdown
-✅ **Sessão encerrada!**
-
-📅 Data: AAAA-MM-DD
-⏰ Período: HH:MM — HH:MM (XX:XX)
-📊 Tempo total do dia: XX:XX
-
-📄 Log atualizado: docs/08-Logs-Sessoes/{ANO}/{AAAA-MM-DD}.md
+Dica: Execute /track para atualizar a barra de progresso.
 ```
 
 ---
 
 ## Fluxo: `/log show`
 
-Exibe o conteúdo do log do dia atual de forma resumida:
-
-```markdown
-📋 **Log de Hoje (AAAA-MM-DD)**
-
-**Sessões:**
-1. 09:00 — 11:30 (02:30) - Setup inicial, configuração de ambiente
-2. 14:00 — 16:45 (02:45) - Implementação do módulo de autenticação
-
-**Tempo Total:** 05:15
+```bash
+python .agents/scripts/auto_session.py status
 ```
+
+Exibe sessão ativa (se houver) e resumo do dia.
 
 ---
 
 ## Fluxo: `/log summary`
 
-Gera um resumo consolidado:
-
-```markdown
-📊 **Resumo Semanal (DD/MM — DD/MM)**
-
-| Dia | Sessões | Tempo |
-|-----|---------|-------|
-| Seg | 3 | 05:30 |
-| Ter | 2 | 04:15 |
-| Qua | 4 | 06:00 |
-| **Total** | **9** | **15:45** |
+```bash
+python .agents/scripts/metrics.py weekly
 ```
+
+Gera resumo semanal consolidado com tempo por dia e por agente.
 
 ---
 
-## Formato do Log Diário (Completo)
+## Formato do Log Diário (Referência)
 
 ```markdown
-# LOG DIÁRIO — AAAA-MM-DD
+# LOG DIARIO -- AAAA-MM-DD
 - Projeto: {nome}
 - Fuso: America/Sao_Paulo
 
-## Sessões
+## Sessoes
 
-1. HH:MM — HH:MM (HH:MM)
-   - Atividades:
-     - Atividade 1
-     - Atividade 2
-     - **FIX**: Descrição do bug corrigido
-     - **Início do Epic N:** Nome do Epic
-
-2. HH:MM — HH:MM (HH:MM)
-   - Atividades:
-     - Atividade 3
+1. HH:MM -- HH:MM (HH:MM) [agent_source]
+   - Atividade 1
+   - Atividade 2
 
 ## Resumo do Dia
-- Início do dia: HH:MM
-- Fim do dia: HH:MM
+- Inicio: HH:MM
+- Fim: HH:MM
 - Tempo total: HH:MM
-
-## Arquivos Criados/Modificados
-
-### Novos Arquivos:
-- `path/file.tsx`
-
-### Arquivos Modificados:
-- `path/file.tsx` - Descrição
-```
-
----
-
-## Integração com Outros Workflows
-
-Ao usar `/log end`, sugerir:
-
-```markdown
-💡 **Dica:** Execute `/track` para atualizar a barra de progresso do projeto.
+- Sessoes: N
 ```
 
 ---
@@ -225,17 +136,14 @@ Ao usar `/log end`, sugerir:
 ## Exemplo de Uso
 
 ```
-Usuário: /log start
-Agente: ✅ Sessão iniciada! (16:30)
+Usuario: /log start
+Claude:  Sessao iniciada as 16:30
 
 [... trabalho acontece ...]
 
-Usuário: /log end
-Agente: 📝 O que foi feito nesta sessão?
-
-Usuário: Implementei o login com Firebase, criei o componente AuthForm, e corrigi bug de validação
-
-Agente: ✅ Sessão encerrada! (18:45)
-        Duração: 02:15
-        Log atualizado.
+Usuario: /log end
+Claude:  O que foi feito nesta sessao?
+Usuario: Implementei login com Firebase; criei AuthForm; corrigi bug validacao
+Claude:  Sessao encerrada as 18:45 (duracao: 02:15)
+         Log atualizado.
 ```

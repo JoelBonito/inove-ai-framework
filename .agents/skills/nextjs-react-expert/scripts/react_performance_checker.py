@@ -12,17 +12,28 @@ from pathlib import Path
 from typing import List, Dict, Tuple
 
 class PerformanceChecker:
+    SOURCE_EXTENSIONS = ('*.ts', '*.tsx', '*.js', '*.jsx')
+    TSX_EXTENSIONS = ('*.ts', '*.tsx')
+
     def __init__(self, project_path: str):
         self.project_path = Path(project_path)
         self.issues = []
         self.warnings = []
         self.passed = []
 
+    def _find_files(self, extensions=None):
+        """Find source files matching extensions, skipping node_modules."""
+        exts = extensions or self.SOURCE_EXTENSIONS
+        for ext in exts:
+            for filepath in self.project_path.rglob(ext):
+                if 'node_modules' not in str(filepath):
+                    yield filepath
+
     def check_waterfalls(self):
         """Check for sequential await patterns (Section 1)"""
         print("\n[*] Checking for waterfalls (sequential awaits)...")
 
-        for filepath in self.project_path.rglob('*.{ts,tsx,js,jsx}'):
+        for filepath in self._find_files():
             if 'node_modules' in str(filepath):
                 continue
 
@@ -47,10 +58,7 @@ class PerformanceChecker:
         """Check for barrel imports (Section 2)"""
         print("[*] Checking for barrel imports...")
 
-        for filepath in self.project_path.rglob('*.{ts,tsx,js,jsx}'):
-            if 'node_modules' in str(filepath):
-                continue
-
+        for filepath in self._find_files():
             try:
                 content = filepath.read_text(encoding='utf-8')
 
@@ -73,10 +81,7 @@ class PerformanceChecker:
         """Check if large components use dynamic imports (Section 2)"""
         print("[*] Checking for missing dynamic imports...")
 
-        for filepath in self.project_path.rglob('*.{ts,tsx}'):
-            if 'node_modules' in str(filepath):
-                continue
-
+        for filepath in self._find_files(self.TSX_EXTENSIONS):
             try:
                 content = filepath.read_text(encoding='utf-8')
 
@@ -86,7 +91,7 @@ class PerformanceChecker:
                     filename = filepath.stem
 
                     # Search for static imports of this component
-                    for check_file in self.project_path.rglob('*.{ts,tsx}'):
+                    for check_file in self._find_files(self.TSX_EXTENSIONS):
                         if check_file == filepath or 'node_modules' in str(check_file):
                             continue
 
@@ -108,10 +113,7 @@ class PerformanceChecker:
         """Check for data fetching in useEffect (Section 4)"""
         print("[*] Checking for useEffect data fetching...")
 
-        for filepath in self.project_path.rglob('*.{ts,tsx}'):
-            if 'node_modules' in str(filepath):
-                continue
-
+        for filepath in self._find_files(self.TSX_EXTENSIONS):
             try:
                 content = filepath.read_text(encoding='utf-8')
 
@@ -132,9 +134,7 @@ class PerformanceChecker:
         """Check for missing React.memo, useMemo, useCallback (Section 5)"""
         print("[*] Checking for missing memoization...")
 
-        for filepath in self.project_path.rglob('*.{tsx}'):
-            if 'node_modules' in str(filepath):
-                continue
+        for filepath in self._find_files(('*.tsx',)):
 
             try:
                 content = filepath.read_text(encoding='utf-8')
@@ -159,9 +159,7 @@ class PerformanceChecker:
         """Check for unoptimized images (Section 6)"""
         print("[*] Checking for image optimization...")
 
-        for filepath in self.project_path.rglob('*.{ts,tsx,js,jsx}'):
-            if 'node_modules' in str(filepath):
-                continue
+        for filepath in self._find_files():
 
             try:
                 content = filepath.read_text(encoding='utf-8')
