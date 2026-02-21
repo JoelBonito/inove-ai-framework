@@ -712,26 +712,49 @@ Por favor, revise o UX Concept e responda:
 **Skills:** `stitch-ui-design`, `frontend-design`
 **Referencia:** Leia `01-product-brief.md` e `03-ux-concept.md`
 
+**GATE DE BLOQUEIO (INVIOLAVEL):**
+> Se HAS_UI=true, a Fase 4 (Architecture) esta **BLOQUEADA** ate que:
+> 1. O arquivo `docs/01-Planejamento/03.5-visual-mockups.md` exista E tenha conteudo
+> 2. **TODAS** as telas identificadas no UX Concept tenham prototipo correspondente
+> 3. O usuario aprove os mockups com "ok"
+>
+> **Cobertura total obrigatoria:** O agente NAO pode se contentar com prototipar 1 ou 2 telas.
+> Cada tela documentada na Section 4 do UX Concept DEVE ter seu prototipo gerado.
+
 **Processo:**
 
 1. **Verificar disponibilidade do Stitch MCP**
    - Invocar `mcp__stitch__list_projects` para confirmar conectividade
-   - Se falhar e HAS_UI=true: **PARAR** e informar usuario para configurar Stitch MCP antes de continuar
-   - Se falhar e HAS_UI=false: pular para Fase 4
+   - **Se Stitch DISPONIVEL:** Uso e OBRIGATORIO — gerar prototipos via Stitch para TODAS as telas
+   - **Se Stitch NAO DISPONIVEL e HAS_UI=true:** **PARAR** e informar usuario para configurar Stitch MCP antes de continuar
+   - Se HAS_UI=false: pular para Fase 4
 
-2. **Criar projeto Stitch**
+2. **Extrair lista completa de telas**
+   - Ler Section 4 do UX Concept (Descricoes de Tela / Wireframes Textuais)
+   - Ler Section 3 (User Flows) para identificar telas referenciadas nos fluxos
+   - Ler PRD Section 3 (Fluxos de Usuario) para telas de edge case
+   - **Montar lista exaustiva:** Cada tela = 1 item obrigatorio para prototipagem
+   - Incluir telas de estado: Empty, Error, Loading, Success (para telas criticas)
+   - Incluir telas de edge case: 404, Offline, Permission Denied (se documentadas)
+
+3. **Criar projeto Stitch**
    - Invocar `mcp__stitch__create_project` com titulo do projeto
    - Registrar Project ID
 
-3. **Converter wireframes em prompts**
-   - Ler Section 4 do UX Concept (wireframes textuais)
+4. **Converter wireframes em prompts**
    - Carregar skill `stitch-ui-design` → ler `wireframe-to-prompt.md`
-   - Aplicar algoritmo de conversao de 7 passos para cada tela
+   - Aplicar algoritmo de conversao de 7 passos para CADA tela da lista
 
-4. **Gerar telas**
+5. **Gerar TODAS as telas via Stitch**
    - Telas-chave (Dashboard, Landing, Onboarding): GEMINI_3_PRO + MOBILE + DESKTOP
    - Telas secundarias (Settings, Lists, Forms): GEMINI_3_FLASH + MOBILE
    - Respeitar regras anti-cliche do `@frontend-specialist`
+   - **NAO parar ate que todas as telas da lista estejam geradas**
+
+6. **Validar cobertura (OBRIGATORIO antes do checkpoint)**
+   - Comparar lista de telas extraida (passo 2) com telas geradas (passo 5)
+   - Se alguma tela da lista NAO tem prototipo: **GERAR** antes de prosseguir
+   - Preencher tabela de cobertura no documento de output (ver template abaixo)
 
 5. **Documentar resultados**
    - Criar arquivo de output com template abaixo
@@ -784,14 +807,21 @@ Por favor, revise o UX Concept e responda:
 ```markdown
 Documento gerado: docs/01-Planejamento/03.5-visual-mockups.md
 
+**Cobertura de Telas:**
+- Total de telas no UX Concept: [N]
+- Telas prototipadas via Stitch: [N]
+- Cobertura: [N/N] = [100%]
+
 Foram geradas [N] telas visuais via Stitch MCP.
 
 Por favor, revise os mockups e responda:
 - ok — Aprovar e continuar para Architecture
 - refinar [tela] — Regenerar tela especifica com feedback
+- faltou [tela] — Adicionar tela que nao foi prototipada
 - cancelar — Parar o workflow
 
-> **CHECKPOINT DE VALIDACAO:** Se HAS_UI=true e nenhum mockup foi gerado, BLOQUEAR avanco para Fase 4.
+> **GATE DE BLOQUEIO:** Se cobertura < 100%, BLOQUEAR avanco para Fase 4.
+> Gerar telas faltantes antes de pedir aprovacao.
 ```
 
 **AGUARDE** resposta antes de prosseguir.

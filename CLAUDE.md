@@ -496,10 +496,19 @@ Para detalhes: `squads/README.md`
 
 ### Stitch MCP (Projetos com UI)
 
-Para TODOS os projetos com interface visual:
-- `/define` Fase 3.5: Mockups visuais são OBRIGATÓRIOS
+Para TODOS os projetos com interface visual (HAS_UI=true):
+
+| Cenário | Comportamento |
+|---------|---------------|
+| Stitch MCP **disponível** + HAS_UI=true | **OBRIGATÓRIO** gerar protótipos via Stitch para **TODAS** as telas do sistema |
+| Stitch MCP **não disponível** + HAS_UI=true | **PARAR** e informar usuário para configurar Stitch antes de continuar |
+| HAS_UI=false | Fase 3.5 ignorada |
+
+**Regras de Cobertura Total:**
+- `/define` Fase 3.5: Prototipar **TODAS** as telas identificadas no UX Concept (não apenas 1 ou 2)
 - `/ui-ux-pro-max` Step 2c: Preview visual é OBRIGATÓRIO
-- `/readiness`: Valida existência de mockups
+- `/readiness`: Valida existência de mockups E cobertura completa
+- **Gate de Bloqueio:** Fase 4 (Architecture) é BLOQUEADA até cobertura 100% das telas
 
 Projetos sem UI (API, CLI, backend-only): Stitch é ignorado.
 

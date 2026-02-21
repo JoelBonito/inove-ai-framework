@@ -93,6 +93,22 @@ No modo standalone, além dos 14 agentes de implementação, ficam disponíveis 
 
 ---
 
+## Stitch MCP (OBRIGATÓRIO para UI)
+
+Para TODOS os projetos com interface visual (HAS_UI=true):
+
+| Cenário | Comportamento |
+|---------|---------------|
+| Stitch MCP **disponível** + HAS_UI=true | **OBRIGATÓRIO** gerar protótipos via Stitch para **TODAS** as telas do sistema |
+| Stitch MCP **não disponível** + HAS_UI=true | **PARAR** e informar usuário para configurar Stitch |
+| HAS_UI=false | Fase 3.5 ignorada |
+
+**Regras de Cobertura Total:**
+- `/define` Fase 3.5: Prototipar **TODAS** as telas do UX Concept (não apenas 1 ou 2)
+- **Gate de Bloqueio:** Fase 4 BLOQUEADA até cobertura 100%
+
+---
+
 ## Estrutura do Framework
 
 ```
