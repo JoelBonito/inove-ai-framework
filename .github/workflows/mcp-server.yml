@@ -141,7 +141,7 @@ jobs:
         run: npm run prebuild
 
       - name: Deploy to Workers
-        uses: cloudflare/wrangler-action@da0993d1f60a8a4de4f8c63e96e8f3cbc4043dde # v3
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: mcp-server
