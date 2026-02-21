@@ -45,40 +45,36 @@ describe("prompt message format", () => {
     const workflow = cache.workflows.get("define");
     expect(workflow).toBeDefined();
 
-    // Simulate what registerPrompts does
-    const topic = "App de gestao de tarefas";
+    // Simulate what registerPrompts does (no argsSchema, no topic arg)
     const messages = [
       { role: "assistant", content: { type: "text", text: workflow!.raw } },
-      { role: "user", content: { type: "text", text: `Execute /define for: ${topic}` } },
+      { role: "user", content: { type: "text", text: "Execute /define" } },
     ];
 
     expect(messages).toHaveLength(2);
     expect(messages[0].role).toBe("assistant");
     expect(messages[0].content.text).toContain("---");
     expect(messages[1].role).toBe("user");
-    expect(messages[1].content.text).toContain("/define");
-    expect(messages[1].content.text).toContain(topic);
+    expect(messages[1].content.text).toBe("Execute /define");
   });
 
-  it("prompt without topic produces Execute /name without 'for:'", () => {
+  it("prompt produces Execute /name format", () => {
     const workflow = cache.workflows.get("debug");
     expect(workflow).toBeDefined();
 
-    const topic = undefined;
-    const userMessage = topic
-      ? `Execute /debug for: ${topic}`
-      : "Execute /debug";
+    const userMessage = "Execute /debug";
 
     expect(userMessage).toBe("Execute /debug");
     expect(userMessage).not.toContain("for:");
   });
 
-  it("prompt with empty string topic behaves like no topic", () => {
-    const topic = "";
-    const userMessage = topic
-      ? `Execute /test for: ${topic}`
-      : "Execute /test";
+  it("prompts work without arguments (SDK compat fix)", () => {
+    // Ensures prompts don't require argsSchema, which caused
+    // MCP error -32602 when clients send undefined arguments
+    const workflow = cache.workflows.get("define");
+    expect(workflow).toBeDefined();
 
-    expect(userMessage).toBe("Execute /test");
+    const userMessage = "Execute /define";
+    expect(userMessage).toBe("Execute /define");
   });
 });
