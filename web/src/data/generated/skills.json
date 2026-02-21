@@ -231,6 +231,18 @@
     "file": ".agents/skills/mobile-design/SKILL.md"
   },
   {
+    "name": "n8n-orchestration",
+    "description": "n8n workflow automation principles, patterns, and validation. Expression syntax, node configuration, MCP tools usage, code node patterns.",
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "file": ".agents/skills/n8n-orchestration/SKILL.md"
+  },
+  {
     "name": "nextjs-react-expert",
     "description": "React and Next.js performance optimization from Vercel Engineering. Use when building React components, optimizing performance, eliminating waterfalls, reducing bundle size, reviewing code for performance issues, or implementing server/client-side optimizations.",
     "tools": [

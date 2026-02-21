@@ -1,108 +1,108 @@
-# Caderno de Testes - Inove AI Dev
+# Caderno de Testes Final - Inove AI Framework
 
-> **Versão:** 1.0
-> **Data:** 2026-02-19
-> **Gerado por:** Antigravity
-> **Baseado em:** docs/BACKLOG.md
+> **Versão:** 5.0
+> **Data:** 2026-02-21
+> **Gerado por:** Antigravity (Gemini CLI)
+> **Base:** Auditoria Estrutural e Comportamental do Inove AI Framework
 
 ---
 
-## Resumo de Cobertura
+## 📋 Resumo de Cobertura
 
 | Categoria | Total | Pendentes | Aprovados | Falhas | N/A |
 |-----------|-------|-----------|-----------|--------|-----|
-| Módulo Autenticação | 3 | 3 | 0 | 0 | 0 |
-| Módulo CRM (Pipeline) | 6 | 6 | 0 | 0 | 0 |
-| Módulo Projetos | 6 | 6 | 0 | 0 | 0 |
-| Módulo Assinaturas | 4 | 4 | 0 | 0 | 0 |
-| Módulo Financeiro | 3 | 3 | 0 | 0 | 0 |
-| Dashboard & Admin | 2 | 2 | 0 | 0 | 0 |
+| 1. Estrutura e Integridade | 8 | 8 | 0 | 0 | 0 |
+| 2. CLI/Multi-Platform | 4 | 4 | 0 | 0 | 0 |
+| 3. Agentes e Skills | 4 | 4 | 0 | 0 | 0 |
+| 4. Workflows e Slash Commands| 5 | 5 | 0 | 0 | 0 |
+| 5. Scripts de Validação | 3 | 3 | 0 | 0 | 0 |
 | **TOTAL** | **24** | **24** | **0** | **0** | **0** |
 
 ---
 
-## Story 1.2: Autenticação e Segurança (P0)
-> **Origem:** Epic 1
-> **Critérios de Aceite:** 3
+## 1. Estrutura e Integridade
 
-### Testes Funcionais
-| # | Cenário | Pré-condição | Passos | Resultado Esperado | Status |
-|---|---------|--------------|--------|-------------------|--------|
-| 1.2.1 | Login com sucesso | Usuário está registrado | 1. Acessar /login <br> 2. Inserir email/senha corretos | Redireciona p/ dashboard, sessão criada | [ ] |
-| 1.2.2 | Falha no login | Sem autenticação | 1. Acessar /login <br> 2. Inserir senha errada | Mostra toast de erro, permanece em /login | [ ] |
-| 1.2.3 | Acesso não autorizado | Sessão expirada | 1. Tentar acessar /dashboard direto | Redireciona forçadamente para /login | [ ] |
+### 1.1 Arquivos e Diretórios (P0)
+Verifica se as raízes do framework estão intactas.
 
----
+| # | Teste | Comando/Ação | Esperado | Status |
+|---|-------|--------------|----------|--------|
+| 1.1.1 | Diretório Core existe | `test -d .agents` | OK | [ ] |
+| 1.1.2 | Diretórios de Plugins/Agents | `test -d .agents/agents && test -d .agents/skills` | OK | [ ] |
+| 1.1.3 | INSTRUCTIONS base | `test -f .agents/INSTRUCTIONS.md` | OK | [ ] |
+| 1.1.4 | ARCHITECTURE documentado | `test -f .agents/ARCHITECTURE.md` | OK | [ ] |
 
-## Story 2.1 & 2.2: Pipeline e CRM (P0)
-> **Origem:** Epic 2
-> **Critérios de Aceite:** 5
+### 1.2 Symlinks de Compatibilidade (P0)
+Deve haver symlinks corretos para as multiplataformas.
 
-### Testes Funcionais
-| # | Cenário | Pré-condição | Passos | Resultado Esperado | Status |
-|---|---------|--------------|--------|-------------------|--------|
-| 2.1.1 | Criar Lead | Logado no sistema | 1. Acessar CRM <br> 2. Preencher form novo deal | Card surge na coluna inicial do Kanban | [ ] |
-| 2.1.2 | Form incomum | Logado no sistema | 1. Criar novo deal <br> 2. Omitir campo obrigatório | Validação falha (linha vermelha/toast) | [ ] |
-| 2.2.1 | Mover deal | Deal existe | 1. Arrastar deal X para coluna Qualificação | Deal persiste na nova coluna após F5 | [ ] |
-| 2.2.2 | Fechar Negócio | Deal existe | 1. Mover deal para Ganho | Abre Modal "Criar Projeto" magicamente | [ ] |
-| 2.2.3 | Herdar dados | Modal aberto | 1. Checar campos pré-preenchidos no modal | Traz Nome e Empresa do Lead original | [ ] |
+| # | Teste | Comando/Ação | Esperado | Status |
+|---|-------|--------------|----------|--------|
+| 1.2.1 | Claude symlinks | `ls -la .claude/agents` | Aponta para `.agents/agents` | [ ] |
+| 1.2.2 | Codex symlinks | `ls -la .codex/agents` | Aponta para `.agents/agents` | [ ] |
+| 1.2.3 | Codex workflows | `ls -la .codex/prompts` | Aponta para `.agents/workflows` | [ ] |
+| 1.2.4 | Gemini mappings | Ler configurações no `.gemini/` | Configuradas corretamente | [ ] |
 
 ---
 
-## Story 3.1 & 3.3: Gestão de Projetos (P0)
-> **Origem:** Epic 3
-> **Critérios de Aceite:** 5
+## 2. CLI / Multi-Platform Support
 
-### Testes Funcionais
-| # | Cenário | Pré-condição | Passos | Resultado Esperado | Status |
-|---|---------|--------------|--------|-------------------|--------|
-| 3.1.1 | Criar Projeto Pós-Ganho | Deal está na calha de Venda | 1. Preencher formulário de sucesso no modal | Projeto aparece na tab de Projetos Ativos | [ ] |
-| 3.1.2 | Editar Specs | Projeto criado | 1. Abrir tabs "Specs" <br> 2. Editar documento markdown | Salva corretamente. O texto visualiza renderizado | [ ] |
-| 3.1.3 | Gravar Arquitetura | Projeto criado | 1. Ir em Aba "Arquitetura" <br> 2. Escolher Stack e Guardar | A aba sinaliza sucesso, os labels aparecem | [ ] |
+### 2.1 Compatibilidade de Agentes Base (P0)
 
----
-
-## Story 3.4 & Epic 4: Transição Meu SaaS (P1)
-> **Origem:** Epic 3 e Epic 4
-> **Critérios de Aceite:** 5
-
-### Testes Funcionais
-| # | Cenário | Pré-condição | Passos | Resultado Esperado | Status |
-|---|---------|--------------|--------|-------------------|--------|
-| 3.4.1 | Fechar projeto e virar contrato | Projeto 100% | 1. Clicar "Tranferir p/ SaaS"<br>2. Setar MRR de $100 | Desaparece do Kanban de Build | [ ] |
-| 4.1.1 | Listar Contrato | Contrato existe | 1. Navegar p/ Aba Meu SaaS | O contrato deve listar MRR de $100 e Vencimento | [ ] |
-| 4.2.1 | Atualizar contrato | Contrato selecionado | 1. Editar MRR de $100 p/ $150 | Valor reflete instantaneamente na lista | [ ] |
-| 4.2.2 | Cálculo de MRR global | Tela Meu SaaS | 1. Checar o topo da interface | Deve somar o valor agregado de todos contratos ativos | [ ] |
+| # | Teste | Comando/Ação | Esperado | Status |
+|---|-------|--------------|----------|--------|
+| 2.1.1 | Claude Code inicializa | Invocar modelo Claude Code (e.g. `claude`) | Lê CLAUDE.md s/ erro | [ ] |
+| 2.1.2 | Codex CLI inicializa | Executar `codex` | Lê AGENTS.md s/ erro | [ ] |
+| 2.1.3 | Antigravity GEMINI | Executar Gemini | Lê GEMINI.md s/ erro | [ ] |
+| 2.1.4 | Respeito à Regra Zero | Instruir agent a editar arquivo random | Agent exige aprovação | [ ] |
 
 ---
 
-## Epic 5: Motor Financeiro (P1)
-> **Origem:** Epic 5
-> **Critérios de Aceite:** 4
+## 3. Agentes e Skills
 
-### Testes Funcionais
-| # | Cenário | Pré-condição | Passos | Resultado Esperado | Status |
-|---|---------|--------------|--------|-------------------|--------|
-| 5.1.1 | Inserir Lançamento Cashflow | Admin Acesso | 1. Ir p/ Aba Finance <br> 2. Lançar 100 EUR e 100 BRL | A grid deve refletir o lançamento simultaneamente | [ ] |
-| 5.1.2 | Taxas de Conversão Exata | Taxa preestabelecida na config | 1. Inserir 2 Euros e observar grid BR | A cell exibe o calculado perfeitamente  | [ ] |
-| 5.1.3 | Replicação Mensal | Existir mes preenchido | 1. Ir para Mês Anterior<br>2. Clicar "Clonar p/ Atual" | Toda grade deve copiar mantendo tags  | [ ] |
+### 3.1 Definições dos Agentes (P1)
+
+| # | Teste | Comando/Ação | Esperado | Status |
+|---|-------|--------------|----------|--------|
+| 3.1.1 | Lista de Agentes | Contar `.agents/agents/*.md` | Retorna exatamente 21 | [ ] |
+| 3.1.2 | Frontmatter Agentes | `cat .agents/agents/backend-specialist.md` | Contém nome e description | [ ] |
+| 3.1.3 | Mapeamento de Skills | Verificar keys `skills:` no frontmatter | Lista válida no dir de skills | [ ] |
+
+### 3.2 Estrutura das Skills (P1)
+
+| # | Teste | Comando/Ação | Esperado | Status |
+|---|-------|--------------|----------|--------|
+| 3.2.1 | Diretório e SKILL.md | `test -f .agents/skills/clean-code/SKILL.md` | OK | [ ] |
 
 ---
 
-## Epic 6: Configurações & Dashboard Principal (P2)
-> **Origem:** Epic 6
-> **Critérios de Aceite:** 4
+## 4. Workflows e Slash Commands
 
-### Testes Funcionais
-| # | Cenário | Pré-condição | Passos | Resultado Esperado | Status |
-|---|---------|--------------|--------|-------------------|--------|
-| 6.1.1 | Salvar Chave N8N/Gemini | Master View | 1. Configurações -> API Keys <br> 2. Digitar fake key e Salvar | O firestore deve gravar de modo seguro  | [ ] |
-| 6.2.1 | Consistência do Painel Home | Leads e Projetos cadastrados | 1. Subir a Home <br> 2. Ler os 3 cards do topo | MRR e Projetos batem com os logs das abas secundárias | [ ] |
+### 4.1 Invocações (P1)
+
+| # | Teste | Comando/Ação | Esperado | Status |
+|---|-------|--------------|----------|--------|
+| 4.1.1 | /debug workflow | Executar `/debug` via prompt | Entra em modo debug | [ ] |
+| 4.1.2 | /readiness workflow | Executar `/readiness` via prompt | Verifica pendências | [ ] |
+| 4.1.3 | /test-book workflow | Executar `/test-book` | Gera caderno de base | [ ] |
+| 4.1.4 | /context workflow | Executar `/context` | Gera arquivo PROJECT_STATUS | [ ] |
+| 4.1.5 | /log workflow (GEMINI) | Testar comandos de log diário | Log salvo com sucesso | [ ] |
+
+---
+
+## 5. Scripts de Validação Mestre
+
+### 5.1 Verificação Python (P0)
+
+| # | Teste | Comando/Ação | Esperado | Status |
+|---|-------|--------------|----------|--------|
+| 5.1.1 | Master Checklist Exec | `python3 .agents/scripts/checklist.py .` | Retorna sucesso/falhas claras | [ ] |
+| 5.1.2 | Validate Installation | `python3 .agents/scripts/validate_installation.py` | "PASSED - All components" | [ ] |
+| 5.1.3 | Test Framework Exect | `python3 -m pytest tests/` | Todos os testes passam | [ ] |
 
 ---
 
 ## Histórico de Execução
 
-| Data | Executor | Pass | Fail | N/A | Notas |
-|------|----------|------|------|-----|-------|
-| 2026-02-19 | Antigravity | 0 | 0 | 0 | Geração inicial do caderno. |
+| Data | Agente Executor | Pass | Fail | N/A | Notas |
+|------|-----------------|------|------|-----|-------|
+| 2026-02-21 | Antigravity | - | - | - | Elaboração do Caderno e Setup Audit |

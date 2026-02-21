@@ -60,6 +60,24 @@
     "file": ".agents/workflows/log.md"
   },
   {
+    "cmd": "/n8n-debug",
+    "name": "n8n-debug",
+    "description": "Investigates and fixes buggy n8n nodes, execution errors or false validation positives.",
+    "file": ".agents/workflows/n8n-debug.md"
+  },
+  {
+    "cmd": "/n8n-scaffold",
+    "name": "n8n-scaffold",
+    "description": "Scaffolds a new n8n workflow from scratch based on user requirements.",
+    "file": ".agents/workflows/n8n-scaffold.md"
+  },
+  {
+    "cmd": "/n8n-setup",
+    "name": "n8n-setup",
+    "description": "Configures the n8n MCP server (Cloud or Local/Docker) securely inside the workspace MCP config.",
+    "file": ".agents/workflows/n8n-setup.md"
+  },
+  {
     "cmd": "/orchestrate",
     "name": "orchestrate",
     "description": "Coordinate multiple agents for complex tasks. Use for multi-perspective analysis, comprehensive reviews, or tasks requiring different domain expertise.",
@@ -94,6 +112,12 @@
     "name": "review",
     "description": "Revisao de codigo pos-sprint. Aplica checklist de qualidade, seguranca e boas praticas ao codigo implementado.",
     "file": ".agents/workflows/review.md"
+  },
+  {
+    "cmd": "/squad",
+    "name": "squad",
+    "description": "Manage squads - reusable packages of agents, skills, and workflows for specific domains.",
+    "file": ".agents/workflows/squad.md"
   },
   {
     "cmd": "/status",
