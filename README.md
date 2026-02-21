@@ -1,12 +1,20 @@
-# Inove AI Framework
+<p align="center">
+  <img src="assets/logo.jpg" alt="Inove AI Framework" width="200">
+</p>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/@joelbonito/mcp-server)](https://www.npmjs.com/package/@joelbonito/mcp-server)
-[![Agents](https://img.shields.io/badge/Agents-21-green)](.agents/agents/)
-[![Skills](https://img.shields.io/badge/Skills-41-orange)](.agents/skills/)
-[![Workflows](https://img.shields.io/badge/Workflows-22-purple)](.agents/workflows/)
+<h1 align="center">Inove AI Framework</h1>
 
-> Multi-Agent AI Development Kit with Skills, Agents, and Workflows for Claude Code, Codex CLI, and Antigravity/Gemini.
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://www.npmjs.com/package/@joelbonito/mcp-server"><img src="https://img.shields.io/npm/v/@joelbonito/mcp-server" alt="npm version"></a>
+  <a href=".agents/agents/"><img src="https://img.shields.io/badge/Agents-21-green" alt="Agents"></a>
+  <a href=".agents/skills/"><img src="https://img.shields.io/badge/Skills-41-orange" alt="Skills"></a>
+  <a href=".agents/workflows/"><img src="https://img.shields.io/badge/Workflows-22-purple" alt="Workflows"></a>
+</p>
+
+<p align="center">
+  <strong>Multi-Agent AI Development Kit with Skills, Agents, and Workflows for Claude Code, Codex CLI, and Antigravity/Gemini.</strong>
+</p>
 
 ## Quick Install
 

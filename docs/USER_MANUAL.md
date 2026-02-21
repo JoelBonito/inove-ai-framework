@@ -1,4 +1,9 @@
-# 📖 Manual de Uso Oficial - Inove AI Framework (Edição MCP)
+<p align="center">
+  <img src="../assets/logo.jpg" alt="Inove AI Framework" width="180">
+</p>
+
+<h1 align="center">Manual de Uso Oficial — Inove AI Framework</h1>
+<h3 align="center">Edição MCP</h3>
 
 > **Nota v5+:** Este manual descreve o fluxo de trabalho utilizando o **Inove AI MCP Server**. Com essa arquitetura, você **não precisa mais ter a pasta `.agents` pesada dentro de cada projeto**. O "cérebro" do framework vive globalmente no seu computador e injeta inteligência de forma invisível nos seus workspaces.
 

@@ -1,9 +1,17 @@
-# @joelbonito/mcp-server
+<p align="center">
+  <img src="../assets/logo.jpg" alt="Inove AI Framework" width="160">
+</p>
 
-[![npm version](https://img.shields.io/npm/v/@joelbonito/mcp-server)](https://www.npmjs.com/package/@joelbonito/mcp-server)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/JoelBonito/inove-ai-framework/blob/main/LICENSE)
+<h1 align="center">@joelbonito/mcp-server</h1>
 
-MCP server for **Inove AI Framework** — 21 agents, 41 skills, and 22 workflows served via the Model Context Protocol.
+<p align="center">
+  <a href="https://www.npmjs.com/package/@joelbonito/mcp-server"><img src="https://img.shields.io/npm/v/@joelbonito/mcp-server" alt="npm version"></a>
+  <a href="https://github.com/JoelBonito/inove-ai-framework/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+</p>
+
+<p align="center">
+  MCP server for <strong>Inove AI Framework</strong> — 21 agents, 41 skills, and 22 workflows served via the Model Context Protocol.
+</p>
 
 Zero disk usage per project. Auto-updates on every run. Setup in 30 seconds.
 
