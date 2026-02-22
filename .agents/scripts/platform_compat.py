@@ -4,10 +4,12 @@ Inove AI Framework - Platform Compatibility Helper
 Provides utilities for multi-platform support (Claude Code + Codex CLI + Antigravity/Gemini)
 
 Usage:
-    from platform_compat import get_agent_root, get_agent_source
+    from platform_compat import get_agent_root, get_agent_source, resolve_doc_path, resolve_doc_file
 
     root = get_agent_root()  # Returns Path to .agents/
     source = get_agent_source()  # Returns 'claude_code', 'codex', 'antigravity', or 'unknown'
+    plan_dir = resolve_doc_path("planejamento")  # docs/01-Planejamento OR docs/planning
+    arch_file = resolve_doc_file("planejamento", "04-architecture.md")  # first match
 
 Supported Platforms:
     - Claude Code: CLAUDE.md → .agents/
@@ -69,6 +71,90 @@ def get_agent_source() -> str:
     return os.environ.get("AGENT_SOURCE", "unknown")
 
 
+# ---------------------------------------------------------------------------
+# Doc Path Resolution — maps logical names to official + fallback paths
+# ---------------------------------------------------------------------------
+
+# Official (created by /define) → Legacy/alternative aliases
+DOC_PATHS = {
+    "planejamento":  ["docs/01-Planejamento",  "docs/planning"],
+    "contexto":      ["docs/00-Contexto",      "docs/context"],
+    "requisitos":    ["docs/02-Requisitos",     "docs/requirements"],
+    "arquitetura":   ["docs/03-Arquitetura",    "docs/architecture"],
+    "api":           ["docs/04-API",            "docs/api"],
+    "logs":          ["docs/08-Logs-Sessoes",   "docs/logs"],
+}
+
+
+def resolve_doc_path(
+    logical_name: str,
+    root_path: Optional[Path] = None,
+    create: bool = False,
+) -> Optional[Path]:
+    """
+    Resolves a logical doc folder name to the first existing path on disk.
+
+    Tries the official path first, then falls back to known aliases.
+    If *create* is True and no path exists, creates the official (first) path.
+
+    Args:
+        logical_name: Key in DOC_PATHS (e.g. "planejamento", "arquitetura").
+        root_path: Project root. Defaults to current directory.
+        create: Create the official path when nothing exists.
+
+    Returns:
+        Path to the resolved directory, or None if not found and create=False.
+    """
+    base = root_path or Path(".")
+    candidates = DOC_PATHS.get(logical_name)
+    if not candidates:
+        return None
+
+    for rel in candidates:
+        full = base / rel
+        if full.exists() and full.is_dir():
+            return full
+
+    if create:
+        official = base / candidates[0]
+        official.mkdir(parents=True, exist_ok=True)
+        return official
+
+    return None
+
+
+def resolve_doc_file(
+    logical_name: str,
+    filename: str,
+    root_path: Optional[Path] = None,
+) -> Optional[Path]:
+    """
+    Resolves a specific file inside a logical doc folder.
+
+    Example:
+        resolve_doc_file("planejamento", "04-architecture.md")
+        # returns docs/01-Planejamento/04-architecture.md  OR
+        #         docs/planning/04-architecture.md
+
+    Args:
+        logical_name: Key in DOC_PATHS.
+        filename: File name inside the folder.
+        root_path: Project root.
+
+    Returns:
+        Path to the file if found, else None.
+    """
+    base = root_path or Path(".")
+    candidates = DOC_PATHS.get(logical_name, [])
+
+    for rel in candidates:
+        full = base / rel / filename
+        if full.exists():
+            return full
+
+    return None
+
+
 def find_backlog(root_path: Optional[Path] = None) -> Optional[Path]:
     """
     Finds the backlog file in known locations.
@@ -83,8 +169,13 @@ def find_backlog(root_path: Optional[Path] = None) -> Optional[Path]:
     candidates = [
         base / "docs" / "BACKLOG.md",
         base / "BACKLOG.md",
-        base / "docs" / "planning" / "BACKLOG.md",
     ]
+
+    # Add all DOC_PATHS folders as potential backlog locations
+    for paths in DOC_PATHS.values():
+        for rel in paths:
+            candidates.append(base / rel / "BACKLOG.md")
+
     # Also search for alternative names
     docs_path = base / "docs"
     if docs_path.exists():
@@ -280,6 +371,160 @@ def get_last_activity_by_agent(logs_dir: Path, days_back: int = 7) -> Dict[str, 
     return agent_stats
 
 
+# ---------------------------------------------------------------------------
+# Bootstrap: ensure docs structure exists (idempotent)
+# ---------------------------------------------------------------------------
+
+import subprocess as _subprocess
+
+
+def _get_git_branch() -> str:
+    """Returns current git branch or 'unknown' if git is unavailable."""
+    try:
+        return _subprocess.check_output(
+            ["git", "branch", "--show-current"],
+            text=True, stderr=_subprocess.DEVNULL,
+        ).strip() or "unknown"
+    except (FileNotFoundError, _subprocess.CalledProcessError):
+        return "unknown"
+
+
+def _get_git_available() -> bool:
+    """Returns True if we are inside a git repository."""
+    try:
+        _subprocess.run(
+            ["git", "rev-parse", "--git-dir"],
+            capture_output=True, check=True,
+        )
+        return True
+    except (FileNotFoundError, _subprocess.CalledProcessError):
+        return False
+
+
+_BACKLOG_TEMPLATE = """\
+# Backlog
+
+## Epic 1: Placeholder
+- [ ] **Story 1.1:** Definir primeira tarefa real do projeto
+"""
+
+_PROJECT_STATUS_TEMPLATE = """\
+# Project Status (Context State)
+
+> **AUTO-GENERATED:** Le este arquivo para se situar no projeto.
+
+**Ultima Atualizacao:** {timestamp}
+
+**Branch Atual:** `{branch}`
+
+## Progresso Atual
+
+- **Global:** 0.0% (0/0 tarefas)
+
+## Proxima Tarefa no Foco
+
+- Nenhum epic ativo
+
+## Ultimos Commits
+
+```bash
+(nenhum commit registrado)
+```
+"""
+
+
+def ensure_backlog(create_if_missing: bool = True) -> dict:
+    """
+    Finds or creates docs/BACKLOG.md.
+
+    Args:
+        create_if_missing: If True, creates a minimal backlog when absent.
+
+    Returns:
+        dict with keys: path (str|None), created (bool), existed (bool)
+    """
+    existing = find_backlog()
+    if existing:
+        return {"path": str(existing), "created": False, "existed": True}
+
+    if not create_if_missing:
+        return {"path": None, "created": False, "existed": False}
+
+    target = Path("docs/BACKLOG.md")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(_BACKLOG_TEMPLATE, encoding="utf-8")
+    return {"path": str(target), "created": True, "existed": False}
+
+
+def ensure_project_status(create_if_missing: bool = True) -> dict:
+    """
+    Finds or creates docs/PROJECT_STATUS.md.
+
+    Args:
+        create_if_missing: If True, creates a minimal status file when absent.
+
+    Returns:
+        dict with keys: path (str|None), created (bool), existed (bool)
+    """
+    target = Path("docs/PROJECT_STATUS.md")
+    if target.exists():
+        return {"path": str(target), "created": False, "existed": True}
+
+    if not create_if_missing:
+        return {"path": None, "created": False, "existed": False}
+
+    branch = _get_git_branch()
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(
+        _PROJECT_STATUS_TEMPLATE.format(timestamp=timestamp, branch=branch),
+        encoding="utf-8",
+    )
+    return {"path": str(target), "created": True, "existed": False}
+
+
+def ensure_docs_structure(create_if_missing: bool = True) -> dict:
+    """
+    Ensures docs/ baseline exists (BACKLOG.md + PROJECT_STATUS.md).
+
+    Idempotent: never overwrites existing files.
+
+    Args:
+        create_if_missing: If True (default), creates missing files.
+                           If False, only detects and reports.
+
+    Returns:
+        dict with keys: created (list[str]), existing (list[str]),
+                        missing (list[str]), warnings (list[str]),
+                        git (dict with available, branch)
+    """
+    result = {
+        "created": [],
+        "existing": [],
+        "missing": [],
+        "warnings": [],
+        "git": {
+            "available": _get_git_available(),
+            "branch": _get_git_branch(),
+        },
+    }
+
+    for label, fn in [("BACKLOG", ensure_backlog), ("PROJECT_STATUS", ensure_project_status)]:
+        info = fn(create_if_missing=create_if_missing)
+        if info["existed"]:
+            result["existing"].append(info["path"])
+        elif info["created"]:
+            result["created"].append(info["path"])
+        else:
+            result["missing"].append(f"docs/{label}.md")
+
+    if not result["git"]["available"]:
+        result["warnings"].append("Git not available — branch set to 'unknown'")
+
+    return result
+
+
 # For backwards compatibility
 AGENT_ROOT = get_agent_root()
 AGENT_SOURCE = get_agent_source()
@@ -295,3 +540,13 @@ if __name__ == "__main__":
     print(f"Agents Path: {get_agents_path()}")
     print(f"Workflows Path: {get_workflows_path()}")
     print(f"Config Path: {get_config_path()}")
+    print()
+    print("Doc path resolution:")
+    for name in DOC_PATHS:
+        resolved = resolve_doc_path(name)
+        status = str(resolved) if resolved else "(not found)"
+        print(f"  {name}: {status}")
+    print()
+    print("Bootstrap check (detect-only):")
+    import json as _json
+    print(_json.dumps(ensure_docs_structure(create_if_missing=False), indent=2))

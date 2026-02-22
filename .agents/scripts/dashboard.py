@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import progress_tracker
 import auto_session
 from lock_manager import LockManager
-from platform_compat import find_logs_dir, get_logs_in_range, get_last_activity_by_agent
+from platform_compat import find_logs_dir, get_logs_in_range, get_last_activity_by_agent, ensure_docs_structure
 
 
 def format_duration(minutes: int) -> str:
@@ -175,6 +175,12 @@ def format_next_tasks(tasks: list) -> str:
 
 def generate_dashboard() -> str:
     """Gera dashboard consolidado."""
+
+    # 0. Detect docs structure (never creates — detect only)
+    bootstrap = ensure_docs_structure(create_if_missing=False)
+    if bootstrap["missing"]:
+        for m in bootstrap["missing"]:
+            print(f"   Aviso: {m} ausente. Use 'auto_session.py start' para criar baseline.")
 
     # 1. Carregar dados
     progress = load_progress()

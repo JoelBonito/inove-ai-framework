@@ -25,11 +25,13 @@ Execute `/readiness` APÓS completar o `/define` e ANTES de começar a implement
 
 Verifique a existência de todos os documentos obrigatórios:
 
+> **Resolução de caminhos:** Procurar primeiro em `docs/01-Planejamento/`. Se não existir, procurar em `docs/planning/` (alias aceito). Em scripts Python, usar `resolve_doc_file("planejamento", "<ficheiro>")` de `platform_compat.py`.
+
 ```markdown
 ## 📋 Inventário de Documentos
 
 ### Documentos Core (Obrigatórios)
-| Documento | Path | Status |
+| Documento | Path (oficial / alias) | Status |
 |-----------|------|--------|
 | Product Brief | `docs/01-Planejamento/01-product-brief.md` | ✅ Encontrado / ❌ Faltando |
 | PRD | `docs/01-Planejamento/02-prd.md` | ✅ / ❌ |
@@ -41,14 +43,14 @@ Verifique a existência de todos os documentos obrigatórios:
 | Backlog | `docs/BACKLOG.md` | ✅ / ❌ |
 
 ### Documentos Condicionais
-| Documento | Path | Obrigatorio | Status |
+| Documento | Path (oficial / alias) | Obrigatorio | Status |
 |-----------|------|-------------|--------|
 | Visual Mockups | `docs/01-Planejamento/03.5-visual-mockups.md` | Se HAS_UI | ✅ / ❌ |
 
 > **Regra:** Se o projeto tem interface visual (HAS_UI=true) e o ficheiro de mockups nao existe, o status e **NAO PRONTO**. Resolver antes de avancar.
 
 ### Documentos Complementares (Recomendados)
-| Documento | Path | Status |
+| Documento | Path (oficial / alias) | Status |
 |-----------|------|--------|
 | User Journeys | `docs/01-Planejamento/user-journeys.md` | ✅ / ❌ / ⚠️ Não criado |
 | Project Context | `docs/PROJECT-CONTEXT.md` | ✅ / ❌ / ⚠️ Não criado |
@@ -316,7 +318,7 @@ Gere o relatório consolidado:
 | {YYYY-MM-DD} | 1.0 | Relatório inicial |
 ```
 
-**Output:** Salvar em `docs/01-Planejamento/IMPLEMENTATION-READINESS.md`
+**Output:** Salvar em `docs/01-Planejamento/IMPLEMENTATION-READINESS.md` (ou `docs/planning/` se alias ativo)
 
 ---
 
@@ -325,7 +327,7 @@ Gere o relatório consolidado:
 ```markdown
 ## Relatório de Prontidão Gerado!
 
-📄 Arquivo: `docs/01-Planejamento/IMPLEMENTATION-READINESS.md`
+📄 Arquivo: `docs/01-Planejamento/IMPLEMENTATION-READINESS.md` (ou `docs/planning/`)
 
 ### Resultado: [STATUS]
 

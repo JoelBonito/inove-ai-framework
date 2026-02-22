@@ -25,9 +25,9 @@ description: Cria documentação detalhada de jornadas de usuário baseadas em p
 
 ### Fase 0: Coleta de Contexto
 
-Antes de criar jornadas, leia:
-1. `docs/01-Planejamento/01-product-brief.md` (Personas)
-2. `docs/01-Planejamento/02-prd.md` (Requisitos Funcionais)
+Antes de criar jornadas, leia (procurar em `docs/01-Planejamento/` ou fallback `docs/planning/`):
+1. `01-product-brief.md` (Personas)
+2. `02-prd.md` (Requisitos Funcionais)
 
 Pergunte ao usuário se necessário:
 ```markdown
@@ -48,7 +48,7 @@ Pergunte ao usuário se necessário:
 
 ### Fase 1: Estrutura do Documento
 
-**Output:** `docs/01-Planejamento/user-journeys.md`
+**Output:** `docs/01-Planejamento/user-journeys.md` (ou `docs/planning/user-journeys.md` se alias ativo)
 
 ```markdown
 # User Journeys: {Nome do Projeto}
@@ -442,7 +442,7 @@ Para jornadas menores ou variações:
 ```markdown
 ## 📋 User Journeys Criadas!
 
-**Arquivo:** `docs/01-Planejamento/user-journeys.md`
+**Arquivo:** `docs/01-Planejamento/user-journeys.md` (ou `docs/planning/`)
 
 ### Resumo
 - **Jornadas criadas:** {N}

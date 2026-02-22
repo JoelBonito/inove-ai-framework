@@ -50,6 +50,8 @@ mkdir -p docs/00-Contexto docs/01-Planejamento docs/02-Requisitos docs/03-Arquit
 echo "# Documentacao de Planejamento" > docs/01-Planejamento/README.md
 ```
 
+> **Nota:** O `/define` cria a estrutura numerada (`docs/01-Planejamento/`). Projetos que nao passaram pelo `/define` podem usar `docs/planning/`. Ambos sao aceitos — ver tabela de aliases em `INSTRUCTIONS.md`.
+
 **Estrutura Alvo:**
 - `docs/00-Contexto/` (Context, Readiness)
 - `docs/01-Planejamento/` (Brief, PRD, UX Concept, Architecture, Stack, Design System)

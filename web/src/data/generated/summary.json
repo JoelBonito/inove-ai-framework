@@ -1,5 +1,5 @@
 {
-  "agents_count": 21,
+  "agents_count": 22,
   "skills_count": 53,
   "workflows_count": 25,
   "agent_names": [
@@ -13,6 +13,7 @@
     "frontend-specialist",
     "game-developer",
     "mobile-developer",
+    "n8n-specialist",
     "orchestrator",
     "penetration-tester",
     "performance-optimizer",

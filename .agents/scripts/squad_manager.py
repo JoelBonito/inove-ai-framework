@@ -10,6 +10,7 @@ Usage:
     python .agents/scripts/squad_manager.py validate <name>
     python .agents/scripts/squad_manager.py activate <name>
     python .agents/scripts/squad_manager.py deactivate <name>
+    python .agents/scripts/squad_manager.py repair <name> [--apply]
     python .agents/scripts/squad_manager.py info <name>
     python .agents/scripts/squad_manager.py export <name>
 """
@@ -112,6 +113,82 @@ def _get_components(manifest: dict) -> dict:
     }
 
 
+def _check_symlink(link_path: Path, squad_dir: Path) -> str:
+    """Check a single symlink status. Returns: 'ok', 'missing', 'drift', 'core'."""
+    if not link_path.exists() and not link_path.is_symlink():
+        return "missing"
+    if link_path.is_symlink():
+        try:
+            target = link_path.resolve()
+            if str(squad_dir.resolve()) in str(target):
+                return "ok"
+            else:
+                return "drift"
+        except OSError:
+            return "drift"
+    # Exists but is NOT a symlink = core file, not ours
+    return "core"
+
+
+def _compute_squad_status(squad_dir: Path, components: dict) -> dict:
+    """Compute granular squad status by checking ALL components.
+
+    Returns dict with:
+        state: 'inactive' | 'partial' | 'active' | 'drift'
+        total: int (expected symlinks, excluding core-blocked)
+        linked: int (correctly linked)
+        missing: list of missing component paths
+        drifted: list of drifted component paths
+        core_blocked: list of components blocked by core files
+    """
+    missing = []
+    drifted = []
+    core_blocked = []
+    linked = 0
+    total = 0
+
+    checks = []
+    for agent_name in components["agents"]:
+        checks.append(("agents", agent_name, AGENTS_DIR / "agents" / f"{agent_name}.md"))
+    for skill_name in components["skills"]:
+        checks.append(("skills", skill_name, AGENTS_DIR / "skills" / skill_name))
+    for wf_name in components["workflows"]:
+        checks.append(("workflows", wf_name, AGENTS_DIR / "workflows" / f"{wf_name}.md"))
+
+    for comp_type, comp_name, link_path in checks:
+        status = _check_symlink(link_path, squad_dir)
+        if status == "core":
+            core_blocked.append(f"{comp_type}/{comp_name}")
+            continue
+        total += 1
+        if status == "ok":
+            linked += 1
+        elif status == "missing":
+            missing.append(f"{comp_type}/{comp_name}")
+        elif status == "drift":
+            drifted.append(f"{comp_type}/{comp_name}")
+
+    if drifted:
+        state = "drift"
+    elif total == 0:
+        state = "active" if core_blocked else "inactive"
+    elif linked == total:
+        state = "active"
+    elif linked == 0:
+        state = "inactive"
+    else:
+        state = "partial"
+
+    return {
+        "state": state,
+        "total": total,
+        "linked": linked,
+        "missing": missing,
+        "drifted": drifted,
+        "core_blocked": core_blocked,
+    }
+
+
 def cmd_create(name: str, template: str = "basic"):
     """Create a new squad from template."""
     squad_dir = _get_squad_dir(name)
@@ -158,13 +235,13 @@ def cmd_list():
         print(f"\nCreate one with: python .agents/scripts/squad_manager.py create <name>")
         return
 
-    print(f"{'Name':<25} {'Version':<10} {'Components':<20} {'Status':<10}")
-    print("-" * 65)
+    print(f"{'Name':<25} {'Version':<10} {'Components':<20} {'Status':<15}")
+    print("-" * 70)
 
     for squad_dir in sorted(squads):
         manifest_path = squad_dir / "squad.yaml"
         if not manifest_path.exists():
-            print(f"{squad_dir.name:<25} {'?':<10} {'No manifest':<20} {'invalid':<10}")
+            print(f"{squad_dir.name:<25} {'?':<10} {'No manifest':<20} {'invalid':<15}")
             continue
 
         manifest = _parse_yaml(manifest_path)
@@ -174,19 +251,17 @@ def cmd_list():
         n_workflows = len(components["workflows"])
         comp_str = f"{n_agents}A {n_skills}S {n_workflows}W"
 
-        # Check if active (any symlinks pointing to this squad)
-        is_active = False
-        for agent_name in components["agents"]:
-            link_path = AGENTS_DIR / "agents" / f"{agent_name}.md"
-            if link_path.is_symlink():
-                target = link_path.resolve()
-                if str(squad_dir) in str(target):
-                    is_active = True
-                    break
+        info = _compute_squad_status(squad_dir, components)
+        state = info["state"]
+        if state == "partial":
+            status_str = f"partial ({info['linked']}/{info['total']})"
+        elif state == "drift":
+            status_str = f"drift ({len(info['drifted'])})"
+        else:
+            status_str = state
 
-        status = "active" if is_active else "inactive"
         version = manifest.get("version", "?")
-        print(f"{squad_dir.name:<25} {version:<10} {comp_str:<20} {status:<10}")
+        print(f"{squad_dir.name:<25} {version:<10} {comp_str:<20} {status_str:<15}")
 
 
 def cmd_validate(name: str):
@@ -322,36 +397,44 @@ def cmd_activate(name: str):
     else:
         print(f"Squad '{name}': no symlinks created (components may already exist as core).")
 
+    # Post-activation validation
+    info = _compute_squad_status(squad_dir, components)
+    if info["state"] != "active":
+        print(f"\n  WARNING: Post-activation state is {info['state'].upper()}, not ACTIVE.")
+        if info["missing"]:
+            print(f"  Missing: {', '.join(info['missing'])}")
+        if info["drifted"]:
+            print(f"  Drifted: {', '.join(info['drifted'])}")
+        if info["core_blocked"]:
+            print(f"  Core-blocked: {', '.join(info['core_blocked'])}")
+        print(f"  Run: python .agents/scripts/squad_manager.py repair {name}")
+    else:
+        print(f"\n  Status: ACTIVE ({info['linked']}/{info['total']} components linked)")
+
 
 def cmd_auto_activate(name: str):
-    """Silently activate squad if not already active."""
+    """Silently activate squad if not fully active (handles partial state)."""
     squad_dir = _get_squad_dir(name)
     if not squad_dir.exists():
         sys.exit(0)
 
     manifest = _get_manifest(name)
     components = _get_components(manifest)
-    
-    is_active = False
-    if components["agents"]:
-        for agent_name in components["agents"]:
-            link_path = AGENTS_DIR / "agents" / f"{agent_name}.md"
-            if link_path.is_symlink():
-                target = link_path.resolve()
-                if str(squad_dir) in str(target):
-                    is_active = True
-                    break
+    info = _compute_squad_status(squad_dir, components)
 
-    if not is_active:
-        import io
-        old_stdout = sys.stdout
-        sys.stdout = io.StringIO()
-        try:
-            cmd_activate(name)
-        except Exception:
-            pass
-        finally:
-            sys.stdout = old_stdout
+    # Only skip if fully active; partial/inactive/drift all need repair
+    if info["state"] == "active":
+        return
+
+    import io
+    old_stdout = sys.stdout
+    sys.stdout = io.StringIO()
+    try:
+        cmd_activate(name)
+    except Exception:
+        pass
+    finally:
+        sys.stdout = old_stdout
 
 
 def cmd_deactivate(name: str):
@@ -430,16 +513,20 @@ def cmd_info(name: str):
         exists = (squad_dir / "workflows" / f"{w}.md").exists()
         print(f"    {'[OK]' if exists else '[!!]'} {w}")
 
-    # Check activation status
-    is_active = False
-    for agent_name in components["agents"]:
-        link_path = AGENTS_DIR / "agents" / f"{agent_name}.md"
-        if link_path.is_symlink():
-            target = link_path.resolve()
-            if str(squad_dir) in str(target):
-                is_active = True
-                break
-    print(f"\nStatus: {'ACTIVE' if is_active else 'INACTIVE'}")
+    # Check activation status (granular)
+    info = _compute_squad_status(squad_dir, components)
+    state = info["state"].upper()
+    if info["state"] == "partial":
+        state = f"PARTIAL ({info['linked']}/{info['total']})"
+    elif info["state"] == "drift":
+        state = f"DRIFT ({len(info['drifted'])} drifted)"
+    print(f"\nStatus: {state}")
+    if info["missing"]:
+        print(f"  Missing: {', '.join(info['missing'])}")
+    if info["drifted"]:
+        print(f"  Drifted: {', '.join(info['drifted'])}")
+    if info["core_blocked"]:
+        print(f"  Core-blocked: {', '.join(info['core_blocked'])}")
 
     # Show dependencies
     deps = manifest.get("dependencies", {})
@@ -454,6 +541,114 @@ def cmd_info(name: str):
         supported = [p for p, v in platforms.items() if v]
         if supported:
             print(f"Platforms: {', '.join(supported)}")
+
+
+def cmd_repair(name: str, apply: bool = False):
+    """Compare manifest with actual symlinks and fix discrepancies.
+
+    Default is --dry-run (show what would change). Use --apply to execute.
+    """
+    squad_dir = _get_squad_dir(name)
+    if not squad_dir.exists():
+        print(f"Error: Squad '{name}' not found at {squad_dir}")
+        sys.exit(1)
+
+    manifest = _get_manifest(name)
+    components = _get_components(manifest)
+    info = _compute_squad_status(squad_dir, components)
+
+    mode = "APPLY" if apply else "DRY-RUN"
+    print(f"Repair squad '{name}' [{mode}]")
+    print(f"Current state: {info['state'].upper()}", end="")
+    if info["state"] == "partial":
+        print(f" ({info['linked']}/{info['total']})")
+    else:
+        print()
+    print()
+
+    if info["state"] == "active":
+        print("Nothing to repair — squad is fully active.")
+        return
+
+    actions = []
+
+    # Build repair plan for missing symlinks
+    for comp_path in info["missing"]:
+        comp_type, comp_name = comp_path.split("/", 1)
+        if comp_type == "agents":
+            src = squad_dir / "agents" / f"{comp_name}.md"
+            dst = AGENTS_DIR / "agents" / f"{comp_name}.md"
+        elif comp_type == "skills":
+            src = squad_dir / "skills" / comp_name
+            dst = AGENTS_DIR / "skills" / comp_name
+        elif comp_type == "workflows":
+            src = squad_dir / "workflows" / f"{comp_name}.md"
+            dst = AGENTS_DIR / "workflows" / f"{comp_name}.md"
+        else:
+            continue
+
+        if src.exists():
+            actions.append(("create", comp_path, src, dst))
+        else:
+            actions.append(("src_missing", comp_path, src, dst))
+
+    # Build repair plan for drifted symlinks
+    for comp_path in info["drifted"]:
+        comp_type, comp_name = comp_path.split("/", 1)
+        if comp_type == "agents":
+            src = squad_dir / "agents" / f"{comp_name}.md"
+            dst = AGENTS_DIR / "agents" / f"{comp_name}.md"
+        elif comp_type == "skills":
+            src = squad_dir / "skills" / comp_name
+            dst = AGENTS_DIR / "skills" / comp_name
+        elif comp_type == "workflows":
+            src = squad_dir / "workflows" / f"{comp_name}.md"
+            dst = AGENTS_DIR / "workflows" / f"{comp_name}.md"
+        else:
+            continue
+
+        if src.exists():
+            actions.append(("relink", comp_path, src, dst))
+        else:
+            actions.append(("src_missing", comp_path, src, dst))
+
+    if not actions:
+        print("No actionable repairs found.")
+        if info["core_blocked"]:
+            print(f"\nCore-blocked (cannot repair): {', '.join(info['core_blocked'])}")
+        return
+
+    # Show/execute plan
+    for action, comp_path, src, dst in actions:
+        if action == "create":
+            rel_src = os.path.relpath(src, dst.parent)
+            print(f"  + CREATE  .agents/{comp_path}  ->  {rel_src}")
+            if apply:
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                os.symlink(rel_src, dst)
+        elif action == "relink":
+            old_target = dst.resolve() if dst.is_symlink() else "?"
+            rel_src = os.path.relpath(src, dst.parent)
+            print(f"  ~ RELINK  .agents/{comp_path}  ->  {rel_src}  (was: {old_target})")
+            if apply:
+                dst.unlink()
+                os.symlink(rel_src, dst)
+        elif action == "src_missing":
+            print(f"  ! SKIP    .agents/{comp_path}  (source file not found in squad)")
+
+    if info["core_blocked"]:
+        print(f"\n  Core-blocked (skipped): {', '.join(info['core_blocked'])}")
+
+    # Post-repair status
+    if apply:
+        new_info = _compute_squad_status(squad_dir, components)
+        print(f"\nPost-repair state: {new_info['state'].upper()}", end="")
+        if new_info["state"] == "partial":
+            print(f" ({new_info['linked']}/{new_info['total']})")
+        else:
+            print()
+    else:
+        print(f"\nRun with --apply to execute these repairs.")
 
 
 def cmd_export(name: str):
@@ -478,20 +673,24 @@ def main():
         epilog="""
 Commands:
   create <name>          Create new squad from template
-  list                   List all squads
+  list                   List all squads (with granular status)
   validate <name>        Validate squad integrity
   activate <name>        Activate squad (create symlinks)
   deactivate <name>      Deactivate squad (remove symlinks)
+  repair <name>          Repair partial/drift state (--dry-run default)
   info <name>            Show squad details
   export <name>          Export squad as .tar.gz
         """
     )
     parser.add_argument("command", choices=[
-        "create", "list", "validate", "activate", "deactivate", "auto-activate", "info", "export"
+        "create", "list", "validate", "activate", "deactivate",
+        "auto-activate", "info", "export", "repair"
     ])
     parser.add_argument("name", nargs="?", help="Squad name")
     parser.add_argument("--template", default="basic", choices=["basic", "specialist"],
                         help="Template to use for create (default: basic)")
+    parser.add_argument("--apply", action="store_true", default=False,
+                        help="Execute repair actions (default: dry-run)")
 
     args = parser.parse_args()
 
@@ -500,7 +699,8 @@ Commands:
 
     if args.command == "list":
         cmd_list()
-    elif args.command in ("validate", "activate", "auto-activate", "deactivate", "info", "export", "create"):
+    elif args.command in ("validate", "activate", "auto-activate", "deactivate",
+                          "info", "export", "create", "repair"):
         if not args.name:
             print(f"Error: '{args.command}' requires a squad name.")
             sys.exit(1)
@@ -518,6 +718,8 @@ Commands:
             cmd_info(args.name)
         elif args.command == "export":
             cmd_export(args.name)
+        elif args.command == "repair":
+            cmd_repair(args.name, apply=args.apply)
 
 
 if __name__ == "__main__":

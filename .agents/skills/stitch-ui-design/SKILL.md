@@ -52,13 +52,13 @@ allowed-tools: Read, Glob, Grep
 ## Screen Generation Protocol
 
 ### Step 1: Read UX Concept
-Read `docs/01-Planejamento/03-ux-concept.md` (or equivalent). Extract:
+Read `docs/01-Planejamento/03-ux-concept.md` (fallback: `docs/planning/03-ux-concept.md`). Extract:
 - Section 4: Screen Descriptions (wireframes)
 - Section 1: UX Strategy (experience vision, principles)
 - Section 2: Information Architecture (navigation pattern)
 
 ### Step 2: Read Brief for Brand Context
-Read `docs/01-Planejamento/01-product-brief.md`. Extract:
+Read `docs/01-Planejamento/01-product-brief.md` (fallback: `docs/planning/01-product-brief.md`). Extract:
 - Product name and category
 - Target audience and their expectations
 - Tone and personality
@@ -137,7 +137,7 @@ Create the output document with all screen IDs, project ID, and coverage mapping
 
 When generating mockups, create:
 
-**File:** `docs/01-Planejamento/03.5-visual-mockups.md`
+**File:** `docs/01-Planejamento/03.5-visual-mockups.md` (or `docs/planning/03.5-visual-mockups.md`)
 
 ```markdown
 # Visual Mockups: {Project Name}

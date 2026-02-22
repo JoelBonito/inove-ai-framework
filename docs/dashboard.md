@@ -1,9 +1,9 @@
-# 📊 Dashboard - 2026-02-21 19:43
+# 📊 Dashboard - 2026-02-21 20:58
 
 ## 🎯 Progresso do Projeto
 
-N/A 0.0%
-Tarefas: 0/0
+░░░░░░░░░░░░░░░░░░░░ 0.0%
+Tarefas: 0/1
 
 ## ⏱️ Sessão Atual
 
@@ -27,6 +27,10 @@ Tarefas: 0/0
 
 **Conflitos:** Nenhum ✅
 
+
+## 🔥 Próximas Tarefas
+
+1. Placeholder
 
 ---
 

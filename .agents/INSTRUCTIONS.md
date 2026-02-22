@@ -40,7 +40,8 @@
 | "mobile", "iOS", "Android", "React Native" | Mobile | `mobile-developer` |
 | "auth", "segurança", "vulnerabilidade" | Security | `security-auditor` |
 | "bug", "erro", "não funciona", "debug" | Debug | `debugger` |
-| "teste", "E2E", "CI/CD" | Testing | `qa-automation-engineer` |
+| "unit test", "TDD", "cobertura", "jest", "vitest", "pytest" | Unit/Integration Testing | `test-engineer` |
+| "e2e", "playwright", "cypress", "pipeline", "regressão", "automated test" | E2E/QA Pipeline | `qa-automation-engineer` |
 | "deploy", "docker", "infraestrutura" | DevOps | `devops-engineer` |
 | "requisitos", "user story", "backlog", "MVP" | Product | `product-owner` |
 | "UX", "user flow", "wireframe", "jornada", "usabilidade" | UX Research | `ux-researcher` |
@@ -182,7 +183,9 @@ A saída da descrição das atividades enviadas à flag `--activities` deve ser 
 
 ## 📂 Organização de Documentação (OBRIGATÓRIO)
 
-A documentação DEVE seguir estritamente esta estrutura de pastas. Não crie arquivos soltos na raiz de `docs/` (exceto BACKLOG.md).
+A documentação DEVE seguir esta estrutura de pastas. Não crie arquivos soltos na raiz de `docs/` (exceto BACKLOG.md).
+
+**Padrão oficial** (criado pelo `/define`):
 
 ```bash
 docs/
@@ -207,6 +210,19 @@ docs/
 │   └── {ANO}/{DATA}.md # Logs diários
 └── BACKLOG.md          # Backlog Mestre (Raiz)
 ```
+
+**Aliases aceitos** (fallback legado / projetos sem `/define`):
+
+| Oficial (padrão)     | Alias aceito          |
+|----------------------|-----------------------|
+| `docs/01-Planejamento/` | `docs/planning/`   |
+| `docs/00-Contexto/`     | `docs/context/`    |
+| `docs/02-Requisitos/`   | `docs/requirements/` |
+| `docs/03-Arquitetura/`  | `docs/architecture/` |
+| `docs/04-API/`          | `docs/api/`        |
+| `docs/08-Logs-Sessoes/` | `docs/logs/`       |
+
+> **Resolução:** Ao procurar documentos, tente primeiro o caminho oficial. Se não existir, tente o alias. Use `resolve_doc_path()` / `resolve_doc_file()` de `platform_compat.py` em scripts Python.
 
 **Regra:** Ao criar documentos, sempre verifique se a pasta existe. Se não existir, crie-a.
 

@@ -29,7 +29,7 @@ O Codex CLI é primariamente um **implementador de código**. Quando usado junto
 ```
 
 ### O Que NÃO Fazer (quando HANDOFF.md existir)
-- **NÃO** alterar documentos de planejamento em `docs/01-Planejamento/`
+- **NÃO** alterar documentos de planejamento em `docs/01-Planejamento/` (ou `docs/planning/`)
 - **NÃO** replanear ou refazer decisões já tomadas no HANDOFF.md
 - **NÃO** alterar o `docs/BACKLOG.md` manualmente (usar scripts)
 
@@ -49,6 +49,7 @@ O Codex CLI é primariamente um **implementador de código**. Quando usado junto
    - `06-stack.md` para stack e dependências
    - `07-design-system.md` para UI (se aplicável)
    - `05-security.md` para requisitos de segurança
+   - **Fallback:** Se `docs/01-Planejamento/` não existir, procurar em `docs/planning/`
 
 > **Regra:** O HANDOFF.md enriquece o contexto mas **NÃO é bloqueante**. Se não existir, usar o que estiver disponível.
 
@@ -59,7 +60,7 @@ O Codex CLI é primariamente um **implementador de código**. Quando usado junto
 Quando o Codex CLI é usado **sem o Gemini** (sem `docs/HANDOFF.md`):
 
 1. **Se `docs/BACKLOG.md` existir:** Ler e implementar a próxima tarefa
-2. **Se `docs/01-Planejamento/` existir:** Usar os documentos como contexto
+2. **Se `docs/01-Planejamento/` existir:** Usar os documentos como contexto (fallback: `docs/planning/`)
 3. **Se nenhum existir:** Usar o Socratic Gate para descobrir requisitos com o usuário, depois implementar
 
 ### Agentes Adicionais (Standalone)
@@ -186,7 +187,8 @@ CORRETO: Ler contexto (HANDOFF/BACKLOG/docs) → Ler agente → Entender PORQUÊ
 | "mobile", "iOS", "Android", "React Native" | Mobile | `mobile-developer` |
 | "auth", "segurança", "vulnerabilidade" | Security | `security-auditor` |
 | "bug", "erro", "não funciona", "debug" | Debug | `debugger` |
-| "teste", "E2E", "CI/CD" | Testing | `qa-automation-engineer` |
+| "unit test", "TDD", "cobertura", "jest", "vitest", "pytest" | Unit/Integration Testing | `test-engineer` |
+| "e2e", "playwright", "cypress", "pipeline", "regressão", "automated test" | E2E/QA Pipeline | `qa-automation-engineer` |
 | "deploy", "docker", "infraestrutura" | DevOps | `devops-engineer` |
 
 ---

@@ -43,7 +43,8 @@ graph TD
 | **API Endpoint**    | "endpoint", "route", "API", "POST", "GET"  | `backend-specialist`                        | ✅ YES       |
 | **Database**        | "schema", "migration", "query", "table"    | `database-architect` + `backend-specialist` | ✅ YES       |
 | **Bug Fix**         | "error", "bug", "not working", "broken"    | `debugger`                                  | ✅ YES       |
-| **Test**            | "test", "coverage", "unit", "e2e"          | `test-engineer`                             | ✅ YES       |
+| **Unit/Integration Test** | "test", "unit test", "coverage", "TDD", "jest", "vitest", "pytest", "mock" | `test-engineer`              | ✅ YES       |
+| **E2E/QA Pipeline** | "e2e", "playwright", "cypress", "pipeline", "regression", "automated test" | `qa-automation-engineer`     | ✅ YES       |
 | **Deployment**      | "deploy", "production", "CI/CD", "docker"  | `devops-engineer`                           | ✅ YES       |
 | **Security Review** | "security", "vulnerability", "exploit"     | `security-auditor` + `penetration-tester`   | ✅ YES       |
 | **Performance**     | "slow", "optimize", "performance", "speed" | `performance-optimizer`                     | ✅ YES       |
@@ -110,7 +111,8 @@ function analyzeRequest(userMessage) {
 | **Backend**     | api, server, express, fastapi, node        | `backend-specialist`    |
 | **Mobile**      | react native, flutter, ios, android, expo  | `mobile-developer`      |
 | **Database**    | prisma, sql, mongodb, schema, migration    | `database-architect`    |
-| **Testing**     | test, jest, vitest, playwright, cypress    | `test-engineer`         |
+| **Unit/Integration** | test, unit test, jest, vitest, pytest, coverage, TDD, mock, integration | `test-engineer` |
+| **E2E/QA Pipeline**  | e2e, playwright, cypress, pipeline, regression, automated test | `qa-automation-engineer` |
 | **DevOps**      | docker, kubernetes, ci/cd, pm2, nginx      | `devops-engineer`       |
 | **Debug**       | error, bug, crash, not working, issue      | `debugger`              |
 | **Performance** | slow, lag, optimize, cache, performance    | `performance-optimizer` |
@@ -245,11 +247,22 @@ User: "Add mobile support to the web app"
 - If task is unclear, still ask questions first
 - Then route to appropriate agent
 
-### With GEMINI.md Rules
+### Platform Priority Rules
 
-- **Priority**: GEMINI.md rules > intelligent-routing
-- If GEMINI.md specifies explicit routing, follow it
-- Intelligent routing is the DEFAULT when no explicit rule exists
+- **Priority**: Platform instruction file > intelligent-routing skill
+  - **Claude Code**: CLAUDE.md rules take priority
+  - **Codex CLI**: AGENTS.md rules take priority
+  - **Gemini CLI**: GEMINI.md rules take priority
+- If the platform file specifies explicit routing, follow it
+- Intelligent routing is the DEFAULT when no explicit platform rule exists
+
+### Mixed-Keyword Precedence
+
+When a request contains keywords from multiple testing domains:
+- `"test"` + any E2E keyword (playwright, cypress, e2e, pipeline) → `qa-automation-engineer` wins
+- `"CI/CD"` in test/pipeline context → `qa-automation-engineer`
+- `"CI/CD"` in deploy/infra context → `devops-engineer`
+- `"test"` alone (no E2E context) → `test-engineer` (default)
 
 ## With Context-Aware Routing (Opção A)
 
@@ -322,7 +335,7 @@ still mention agents explicitly with `@agent-name` if you prefer.
 
 ### Enable Debug Mode (for development)
 
-Add to GEMINI.md temporarily:
+Add to the platform instruction file temporarily:
 
 ```markdown
 ## DEBUG: Intelligent Routing
@@ -347,6 +360,3 @@ Show selection reasoning:
 
 **Result**: User gets specialist-level responses without needing to know the system architecture.
 
----
-
-**Next Steps**: Integrate this skill into GEMINI.md TIER 0 rules.

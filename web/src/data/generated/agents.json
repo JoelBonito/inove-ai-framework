@@ -187,6 +187,25 @@
     "file": ".agents/agents/mobile-developer.md"
   },
   {
+    "name": "n8n-specialist",
+    "description": "Expert in n8n workflow automation, node configuration, and integrations. Designs, builds, validates and manages n8n workflows. Triggers on n8n, workflow automation, automation, n8n workflow, integrations automation.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "Edit",
+      "Write"
+    ],
+    "skills": [
+      "clean-code",
+      "n8n-orchestration",
+      "api-patterns",
+      "mcp-builder"
+    ],
+    "file": ".agents/agents/n8n-specialist.md"
+  },
+  {
     "name": "orchestrator",
     "description": "Multi-agent coordination and task orchestration. Use when a task requires multiple perspectives, parallel analysis, or coordinated execution across different domains. Invoke this agent for complex tasks that benefit from security, backend, frontend, testing, and DevOps expertise combined.",
     "tools": [
@@ -363,7 +382,7 @@
   },
   {
     "name": "test-engineer",
-    "description": "Expert in testing, TDD, and test automation. Use for writing tests, improving coverage, debugging test failures. Triggers on test, spec, coverage, jest, pytest, playwright, e2e, unit test.",
+    "description": "Expert in testing, TDD, and test automation. Use for writing tests, improving coverage, debugging test failures. Triggers on test, spec, coverage, jest, pytest, vitest, unit test, integration, TDD, mock.",
     "tools": [
       "Read",
       "Grep",

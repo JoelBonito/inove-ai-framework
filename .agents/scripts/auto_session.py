@@ -4,7 +4,7 @@ Auto Session Manager - Inove AI Framework
 Gerencia sessoes automaticamente com deteccao inteligente.
 
 Uso:
-    python .agents/scripts/auto_session.py start [--agent antigravity|claude_code]
+    python .agents/scripts/auto_session.py start [--agent antigravity|claude_code] [--no-bootstrap]
     python .agents/scripts/auto_session.py end [--quick] [--activities "..."]
     python .agents/scripts/auto_session.py status
 """
@@ -17,7 +17,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from platform_compat import get_agent_source, find_logs_dir
+from platform_compat import get_agent_source, find_logs_dir, ensure_docs_structure
 
 SESSION_FILE = Path(".agents/.session_state.json")
 
@@ -292,7 +292,7 @@ def update_daily_log_end(session: dict):
     log_file.write_text(content, encoding='utf-8')
 
 
-def start_session(agent_override: str = None) -> bool:
+def start_session(agent_override: str = None, bootstrap: bool = True) -> bool:
     """Inicia nova sessao."""
     existing = load_session()
     if existing and not existing.get("ended"):
@@ -300,6 +300,15 @@ def start_session(agent_override: str = None) -> bool:
         print(f"   Agente: {existing['agent']}")
         print(f"   Use 'auto_session.py status' para ver detalhes")
         return False
+
+    # Bootstrap: ensure docs baseline exists
+    if bootstrap:
+        result = ensure_docs_structure(create_if_missing=True)
+        if result["created"]:
+            for path in result["created"]:
+                print(f"   Bootstrap: criado {path}")
+        for warning in result["warnings"]:
+            print(f"   Bootstrap: {warning}")
 
     now = datetime.now()
     agent = agent_override if agent_override else get_agent_source()
@@ -403,7 +412,8 @@ def main():
             idx = sys.argv.index("--agent")
             if idx + 1 < len(sys.argv):
                 agent_override = sys.argv[idx + 1]
-        start_session(agent_override)
+        bootstrap = "--no-bootstrap" not in sys.argv
+        start_session(agent_override, bootstrap=bootstrap)
 
     elif cmd == "end":
         quick = "--quick" in sys.argv
