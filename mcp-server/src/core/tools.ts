@@ -101,6 +101,58 @@ export function registerTools(server: McpServer, cache: ContentCache): void {
     },
   );
 
+  // execute_workflow — simulates /slash invocation for MCP clients
+  server.tool(
+    "execute_workflow",
+    "Execute a framework workflow (slash command). Returns the full workflow instructions for the AI to follow. Use this instead of typing /define, /debug, etc.",
+    {
+      name: z.string().min(1).max(100).describe("Workflow name without slash (e.g. 'define', 'debug', 'create')"),
+      arguments: z.string().max(10000).optional().describe("Arguments to pass to the workflow (e.g. 'App de gestao de tarefas')"),
+    },
+    ({ name, arguments: args }) => {
+      const workflow = cache.workflows.get(name);
+      if (!workflow) {
+        const available = [...cache.workflows.keys()].join(", ");
+        return { content: [{ type: "text" as const, text: `Workflow "${name}" not found. Available: ${available}` }], isError: true };
+      }
+
+      const header = `# Executing /${name}${args ? ` ${args}` : ""}\n\n> Follow the instructions below to execute this workflow.\n\n---\n\n`;
+      const footer = args ? `\n\n---\n\n## Arguments Provided\n\n\`\`\`\n${args}\n\`\`\`\n\nApply the workflow above using these arguments.` : "";
+
+      return { content: [{ type: "text" as const, text: header + workflow.raw + footer }] };
+    },
+  );
+
+  // activate_agent — loads agent persona, rules and skills for MCP clients
+  server.tool(
+    "activate_agent",
+    "Activate a specialist agent. Returns the agent's full persona, rules and loaded skills. Use this to adopt agent behavior (e.g. @frontend-specialist, @debugger).",
+    {
+      name: z.string().min(1).max(100).describe("Agent name (e.g. 'frontend-specialist', 'debugger', 'security-auditor')"),
+    },
+    ({ name }) => {
+      const agent = cache.agents.get(name);
+      if (!agent) {
+        const available = [...cache.agents.keys()].join(", ");
+        return { content: [{ type: "text" as const, text: `Agent "${name}" not found. Available: ${available}` }], isError: true };
+      }
+
+      // Load all skills referenced by the agent
+      const skillContents = agent.meta.skills
+        .map((skillName) => {
+          const skill = cache.skills.get(skillName);
+          if (!skill) return null;
+          return `\n---\n\n## Skill: ${skillName}\n\n${skill.raw}`;
+        })
+        .filter(Boolean)
+        .join("\n");
+
+      const header = `# Agent Activated: @${name}\n\n> You are now operating as **${name}**. Follow the persona, rules and skills below.\n> Loaded ${agent.meta.skills.length} skill(s): ${agent.meta.skills.join(", ")}\n\n---\n\n`;
+
+      return { content: [{ type: "text" as const, text: header + agent.raw + skillContents }] };
+    },
+  );
+
   // search_content
   server.tool(
     "search_content",
