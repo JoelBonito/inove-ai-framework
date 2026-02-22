@@ -4,9 +4,9 @@ Metrics System - Inove AI Framework
 Sistema de métricas e análise de produtividade.
 
 Uso:
-    python .agents/scripts/metrics.py collect [--days N]
-    python .agents/scripts/metrics.py weekly
-    python .agents/scripts/metrics.py insights
+    python3 .agents/scripts/metrics.py collect [--days N]
+    python3 .agents/scripts/metrics.py weekly
+    python3 .agents/scripts/metrics.py insights
 
 Métricas coletadas:
     - Tempo por Epic/Story

@@ -33,7 +33,7 @@ Se não encontrar, informe:
 ### Passo 2: Executar Script
 
 ```bash
-python .agents/scripts/progress_tracker.py
+python3 .agents/scripts/progress_tracker.py
 ```
 
 O script irá:

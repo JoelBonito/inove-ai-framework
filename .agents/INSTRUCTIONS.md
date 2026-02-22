@@ -102,8 +102,8 @@ Quando um domínio for detectado:
 Após completar QUALQUER tarefa do `docs/BACKLOG.md`:
 
 ```bash
-python .agents/scripts/finish_task.py "{task_id}"
-python .agents/scripts/progress_tracker.py
+python3 .agents/scripts/finish_task.py "{task_id}"
+python3 .agents/scripts/progress_tracker.py
 ```
 
 Informar ao usuário:
@@ -171,9 +171,9 @@ Rastrear sessões de trabalho e gerar um relatório diário consolidado em Markd
 ### Comandos
 
 ```bash
-python .agents/scripts/auto_session.py start --agent <claude_code|codex|antigravity>  # Abrir sessão
-python .agents/scripts/auto_session.py end --activities "ativ1; ativ2"                 # Fechar sessão
-python .agents/scripts/auto_session.py status                                          # Ver sessão ativa
+python3 .agents/scripts/auto_session.py start --agent <claude_code|codex|antigravity>  # Abrir sessão
+python3 .agents/scripts/auto_session.py end --activities "ativ1; ativ2"                 # Fechar sessão
+python3 .agents/scripts/auto_session.py status                                          # Ver sessão ativa
 ```
 
 ### Critérios de Qualidade
@@ -277,8 +277,8 @@ export AGENT_SOURCE=codex
 
 ### Lock Manager
 ```bash
-python .agents/scripts/lock_manager.py list      # Ver locks ativos
-python .agents/scripts/lock_manager.py cleanup   # Limpar locks expirados
+python3 .agents/scripts/lock_manager.py list      # Ver locks ativos
+python3 .agents/scripts/lock_manager.py cleanup   # Limpar locks expirados
 ```
 
 ### Ownership e Modelo Preferencial de Epics
@@ -299,20 +299,20 @@ Formato no BACKLOG.md:
 
 | Script | Comando | Descrição |
 |--------|---------|-----------|
-| Dashboard | `python .agents/scripts/dashboard.py` | Visão consolidada |
-| Progresso | `python .agents/scripts/progress_tracker.py` | Atualizar barra |
-| Sessão | `python .agents/scripts/auto_session.py start` | Iniciar sessão |
-| Finish | `python .agents/scripts/finish_task.py "Epic-1"` | Marcar completo |
-| Métricas | `python .agents/scripts/metrics.py` | Insights |
-| Validar | `python .agents/scripts/validate_installation.py` | Verificar setup |
-| Rastreabilidade | `python .agents/scripts/validate_traceability.py` | Validar cobertura |
-| Projeto | `python .agents/scripts/project_analyzer.py status` | Analisar tech stack |
-| Web Data | `python .agents/scripts/generate_web_data.py` | Gerar JSONs do site |
-| Checklist | `python .agents/scripts/checklist.py .` | Validação incremental |
-| Verificar Tudo | `python .agents/scripts/verify_all.py .` | Verificação completa |
-| Squad Manager | `python .agents/scripts/squad_manager.py list` | Gerenciar squads |
-| Recovery | `python .agents/scripts/recovery.py checkpoint <label>` | Retry + rollback |
-| Shard Epic | `python .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
+| Dashboard | `python3 .agents/scripts/dashboard.py` | Visão consolidada |
+| Progresso | `python3 .agents/scripts/progress_tracker.py` | Atualizar barra |
+| Sessão | `python3 .agents/scripts/auto_session.py start` | Iniciar sessão |
+| Finish | `python3 .agents/scripts/finish_task.py "Epic-1"` | Marcar completo |
+| Métricas | `python3 .agents/scripts/metrics.py` | Insights |
+| Validar | `python3 .agents/scripts/validate_installation.py` | Verificar setup |
+| Rastreabilidade | `python3 .agents/scripts/validate_traceability.py` | Validar cobertura |
+| Projeto | `python3 .agents/scripts/project_analyzer.py status` | Analisar tech stack |
+| Web Data | `python3 .agents/scripts/generate_web_data.py` | Gerar JSONs do site |
+| Checklist | `python3 .agents/scripts/checklist.py .` | Validação incremental |
+| Verificar Tudo | `python3 .agents/scripts/verify_all.py .` | Verificação completa |
+| Squad Manager | `python3 .agents/scripts/squad_manager.py list` | Gerenciar squads |
+| Recovery | `python3 .agents/scripts/recovery.py checkpoint <label>` | Retry + rollback |
+| Shard Epic | `python3 .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
 
 ---
 
@@ -416,7 +416,7 @@ Toda conversa começa com:
 3. 📖 Carregando skills: vulnerability-scanner, api-patterns
 4. [Implementa código seguindo regras dos agentes]
 5. ✅ Implementação completa
-6. 🔧 Executando: `python .agents/scripts/finish_task.py "Epic 1"`
+6. 🔧 Executando: `python3 .agents/scripts/finish_task.py "Epic 1"`
 7. 📊 Progresso: 25% (1/4 epics concluídos)
 
 **Usuário:** `/define App de gestão de tarefas`

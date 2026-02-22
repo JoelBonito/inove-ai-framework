@@ -4,11 +4,11 @@ Notifier - Inove AI Framework
 Sistema de notificações nativas para macOS.
 
 Uso:
-    python .agents/scripts/notifier.py "Título" "Mensagem" [--sound]
-    python .agents/scripts/notifier.py session-start
-    python .agents/scripts/notifier.py session-end
-    python .agents/scripts/notifier.py task-complete "3.1"
-    python .agents/scripts/notifier.py reminder "Mensagem"
+    python3 .agents/scripts/notifier.py "Título" "Mensagem" [--sound]
+    python3 .agents/scripts/notifier.py session-start
+    python3 .agents/scripts/notifier.py session-end
+    python3 .agents/scripts/notifier.py task-complete "3.1"
+    python3 .agents/scripts/notifier.py reminder "Mensagem"
 
 Casos de uso:
     - Sessão iniciada/encerrada

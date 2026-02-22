@@ -1816,7 +1816,7 @@ Quando executado pelo Gemini CLI (Flow B), gerar automaticamente `docs/HANDOFF.m
 Apos gerar o BACKLOG.md, sugerir ao usuario:
 
 ```bash
-python .agents/scripts/shard_epic.py shard
+python3 .agents/scripts/shard_epic.py shard
 ```
 
 Isso divide o backlog em arquivos individuais por story em `docs/stories/`, permitindo que as IAs trabalhem com contexto focado.

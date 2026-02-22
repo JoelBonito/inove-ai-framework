@@ -5,14 +5,14 @@ Squad Manager - Inove AI Framework
 Manages squads: reusable packages of agents + skills + workflows.
 
 Usage:
-    python .agents/scripts/squad_manager.py create <name> [--template basic|specialist]
-    python .agents/scripts/squad_manager.py list
-    python .agents/scripts/squad_manager.py validate <name>
-    python .agents/scripts/squad_manager.py activate <name>
-    python .agents/scripts/squad_manager.py deactivate <name>
-    python .agents/scripts/squad_manager.py repair <name> [--apply]
-    python .agents/scripts/squad_manager.py info <name>
-    python .agents/scripts/squad_manager.py export <name>
+    python3 .agents/scripts/squad_manager.py create <name> [--template basic|specialist]
+    python3 .agents/scripts/squad_manager.py list
+    python3 .agents/scripts/squad_manager.py validate <name>
+    python3 .agents/scripts/squad_manager.py activate <name>
+    python3 .agents/scripts/squad_manager.py deactivate <name>
+    python3 .agents/scripts/squad_manager.py repair <name> [--apply]
+    python3 .agents/scripts/squad_manager.py info <name>
+    python3 .agents/scripts/squad_manager.py export <name>
 """
 
 import sys
@@ -215,8 +215,8 @@ def cmd_create(name: str, template: str = "basic"):
     print(f"\nNext steps:")
     print(f"  1. Edit squads/{name}/squad.yaml")
     print(f"  2. Add agents, skills, workflows")
-    print(f"  3. Run: python .agents/scripts/squad_manager.py validate {name}")
-    print(f"  4. Run: python .agents/scripts/squad_manager.py activate {name}")
+    print(f"  3. Run: python3 .agents/scripts/squad_manager.py validate {name}")
+    print(f"  4. Run: python3 .agents/scripts/squad_manager.py activate {name}")
 
 
 def cmd_list():
@@ -232,7 +232,7 @@ def cmd_list():
 
     if not squads:
         print("No squads found.")
-        print(f"\nCreate one with: python .agents/scripts/squad_manager.py create <name>")
+        print(f"\nCreate one with: python3 .agents/scripts/squad_manager.py create <name>")
         return
 
     print(f"{'Name':<25} {'Version':<10} {'Components':<20} {'Status':<15}")
@@ -407,7 +407,7 @@ def cmd_activate(name: str):
             print(f"  Drifted: {', '.join(info['drifted'])}")
         if info["core_blocked"]:
             print(f"  Core-blocked: {', '.join(info['core_blocked'])}")
-        print(f"  Run: python .agents/scripts/squad_manager.py repair {name}")
+        print(f"  Run: python3 .agents/scripts/squad_manager.py repair {name}")
     else:
         print(f"\n  Status: ACTIVE ({info['linked']}/{info['total']} components linked)")
 

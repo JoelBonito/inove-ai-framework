@@ -9,9 +9,9 @@ Modes:
     --mode strict           extras/broken/shadowed are FAIL, exit 1
 
 Usage:
-    python .agents/scripts/validate_installation.py
-    python .agents/scripts/validate_installation.py --verbose
-    python .agents/scripts/validate_installation.py --mode strict
+    python3 .agents/scripts/validate_installation.py
+    python3 .agents/scripts/validate_installation.py --verbose
+    python3 .agents/scripts/validate_installation.py --mode strict
 """
 
 import json

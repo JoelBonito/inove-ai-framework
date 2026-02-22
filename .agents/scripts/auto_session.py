@@ -4,9 +4,9 @@ Auto Session Manager - Inove AI Framework
 Gerencia sessoes automaticamente com deteccao inteligente.
 
 Uso:
-    python .agents/scripts/auto_session.py start [--agent antigravity|claude_code] [--no-bootstrap]
-    python .agents/scripts/auto_session.py end [--quick] [--activities "..."]
-    python .agents/scripts/auto_session.py status
+    python3 .agents/scripts/auto_session.py start [--agent antigravity|claude_code] [--no-bootstrap]
+    python3 .agents/scripts/auto_session.py end [--quick] [--activities "..."]
+    python3 .agents/scripts/auto_session.py status
 """
 
 import os
@@ -19,29 +19,48 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from platform_compat import get_agent_source, find_logs_dir, ensure_docs_structure
 
-SESSION_FILE = Path(".agents/.session_state.json")
+SESSION_PATHS = [
+    Path(".agents/.session_state.json"),
+    Path("docs/.session_state.json"),
+]
+
+
+def _session_paths():
+    """Retorna paths de sessao em ordem de prioridade."""
+    return SESSION_PATHS
 
 
 def load_session():
-    """Carrega estado da sessao atual."""
-    if SESSION_FILE.exists():
-        try:
-            return json.loads(SESSION_FILE.read_text())
-        except json.JSONDecodeError:
-            return None
+    """Carrega estado da sessao atual (tenta todos os paths)."""
+    for path in _session_paths():
+        if path.exists():
+            try:
+                return json.loads(path.read_text())
+            except json.JSONDecodeError:
+                continue
     return None
 
 
 def save_session(data):
-    """Salva estado da sessao."""
-    SESSION_FILE.parent.mkdir(parents=True, exist_ok=True)
-    SESSION_FILE.write_text(json.dumps(data, indent=2))
+    """Salva estado da sessao (fallback se sem permissao)."""
+    for path in _session_paths():
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(data, indent=2))
+            return
+        except PermissionError:
+            continue
+    print("   Erro: sem permissao para gravar sessao em nenhum path.")
 
 
 def clear_session():
-    """Limpa sessao atual."""
-    if SESSION_FILE.exists():
-        SESSION_FILE.unlink()
+    """Limpa sessao atual (remove de todos os paths)."""
+    for path in _session_paths():
+        if path.exists():
+            try:
+                path.unlink()
+            except PermissionError:
+                pass
 
 
 def get_project_name() -> str:
@@ -376,7 +395,7 @@ def get_status():
     if not session or session.get("ended"):
         print("Nenhuma sessao ativa.")
         print()
-        print("Para iniciar: python .agents/scripts/auto_session.py start")
+        print("Para iniciar: python3 .agents/scripts/auto_session.py start")
         return None
 
     now = datetime.now()
@@ -394,7 +413,7 @@ def get_status():
     print(f"   Inicio: {session['start_time']}")
     print(f"   Tempo decorrido: {hours:02d}:{minutes:02d}")
     print()
-    print("Para encerrar: python .agents/scripts/auto_session.py end")
+    print("Para encerrar: python3 .agents/scripts/auto_session.py end")
 
     return session
 

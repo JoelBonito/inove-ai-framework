@@ -114,7 +114,7 @@ Se a tarefa já estava marcada como `[x]`, o hook exibirá um aviso mas não fal
 Se outro agente estiver editando o BACKLOG simultaneamente, o hook esperará até 30 segundos. Se não conseguir, emitirá mensagem e você pode reexecutar:
 
 ```bash
-python .agents/scripts/finish_task.py 3.1
+python3 .agents/scripts/finish_task.py 3.1
 ```
 
 ## Desinstalação

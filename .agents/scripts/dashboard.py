@@ -4,7 +4,7 @@ Dashboard Unificado - Inove AI Framework
 Combina progresso, sessões e métricas em uma única visualização.
 
 Uso:
-    python .agents/scripts/dashboard.py
+    python3 .agents/scripts/dashboard.py
 """
 
 import sys
@@ -216,7 +216,7 @@ def generate_dashboard() -> str:
         ])
     else:
         lines.append("🔴 Nenhuma sessão ativa")
-        lines.append("   💡 Use: python .agents/scripts/auto_session.py start")
+        lines.append("   💡 Use: python3 .agents/scripts/auto_session.py start")
 
     lines.extend(["", ""])
 
@@ -281,11 +281,11 @@ def generate_dashboard() -> str:
         "---",
         "",
         "**Comandos disponíveis:**",
-        "- `python .agents/scripts/auto_session.py start` - Iniciar sessão",
-        "- `python .agents/scripts/auto_session.py end` - Encerrar sessão",
-        "- `python .agents/scripts/finish_task.py <id>` - Marcar tarefa como concluída",
-        "- `python .agents/scripts/progress_tracker.py` - Atualizar progresso",
-        "- `python .agents/scripts/lock_manager.py list` - Ver locks ativos",
+        "- `python3 .agents/scripts/auto_session.py start` - Iniciar sessão",
+        "- `python3 .agents/scripts/auto_session.py end` - Encerrar sessão",
+        "- `python3 .agents/scripts/finish_task.py <id>` - Marcar tarefa como concluída",
+        "- `python3 .agents/scripts/progress_tracker.py` - Atualizar progresso",
+        "- `python3 .agents/scripts/lock_manager.py list` - Ver locks ativos",
     ])
 
     return "\n".join(lines)

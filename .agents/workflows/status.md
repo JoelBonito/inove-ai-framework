@@ -19,7 +19,7 @@ description: Exibe dashboard consolidado com progresso, sessões e métricas do 
 Executa o dashboard consolidado que integra todas as fontes de dados:
 
 ```bash
-python .agents/scripts/dashboard.py
+python3 .agents/scripts/dashboard.py
 ```
 
 **O dashboard automaticamente:**
@@ -72,12 +72,12 @@ Tarefas: 35/47
 ---
 
 **Comandos disponíveis:**
-- `python .agents/scripts/auto_session.py start` - Iniciar sessão
-- `python .agents/scripts/auto_session.py end` - Encerrar sessão
-- `python .agents/scripts/finish_task.py <id>` - Marcar tarefa
-- `python .agents/scripts/auto_finish.py --suggest` - Sugerir conclusões
-- `python .agents/scripts/metrics.py weekly` - Gerar insights
-- `python .agents/scripts/notifier.py test` - Testar notificações
+- `python3 .agents/scripts/auto_session.py start` - Iniciar sessão
+- `python3 .agents/scripts/auto_session.py end` - Encerrar sessão
+- `python3 .agents/scripts/finish_task.py <id>` - Marcar tarefa
+- `python3 .agents/scripts/auto_finish.py --suggest` - Sugerir conclusões
+- `python3 .agents/scripts/metrics.py weekly` - Gerar insights
+- `python3 .agents/scripts/notifier.py test` - Testar notificações
 ```
 
 ---
@@ -87,33 +87,33 @@ Tarefas: 35/47
 Além do dashboard principal, você pode usar:
 
 ### Gestão de Sessões
-- `python .agents/scripts/auto_session.py start` - Iniciar sessão
-- `python .agents/scripts/auto_session.py status` - Ver sessão atual
-- `python .agents/scripts/auto_session.py end` - Encerrar sessão
+- `python3 .agents/scripts/auto_session.py start` - Iniciar sessão
+- `python3 .agents/scripts/auto_session.py status` - Ver sessão atual
+- `python3 .agents/scripts/auto_session.py end` - Encerrar sessão
 
 ### Tracking de Tarefas
-- `python .agents/scripts/finish_task.py 3.1` - Marcar Story 3.1 completa
-- `python .agents/scripts/auto_finish.py --suggest` - Ver candidatas
-- `python .agents/scripts/auto_finish.py --check-context` - Auto-detectar
+- `python3 .agents/scripts/finish_task.py 3.1` - Marcar Story 3.1 completa
+- `python3 .agents/scripts/auto_finish.py --suggest` - Ver candidatas
+- `python3 .agents/scripts/auto_finish.py --check-context` - Auto-detectar
 
 ### Métricas e Analytics
-- `python .agents/scripts/metrics.py collect` - Coletar métricas
-- `python .agents/scripts/metrics.py weekly` - Relatório semanal
-- `python .agents/scripts/metrics.py insights` - Ver insights
+- `python3 .agents/scripts/metrics.py collect` - Coletar métricas
+- `python3 .agents/scripts/metrics.py weekly` - Relatório semanal
+- `python3 .agents/scripts/metrics.py insights` - Ver insights
 
 ### Lembretes
-- `python .agents/scripts/reminder_system.py check` - Verificar lembretes
-- `python .agents/scripts/reminder_system.py end-of-day` - Lembrete de fim de dia
+- `python3 .agents/scripts/reminder_system.py check` - Verificar lembretes
+- `python3 .agents/scripts/reminder_system.py end-of-day` - Lembrete de fim de dia
 
 ### Notificações
-- `python .agents/scripts/notifier.py test` - Testar notificações
-- `python .agents/scripts/notifier.py session-start` - Notificar início
-- `python .agents/scripts/notifier.py task-complete 3.1` - Notificar conclusão
+- `python3 .agents/scripts/notifier.py test` - Testar notificações
+- `python3 .agents/scripts/notifier.py session-start` - Notificar início
+- `python3 .agents/scripts/notifier.py task-complete 3.1` - Notificar conclusão
 
 ### Sync e Locks
-- `python .agents/scripts/sync_tracker.py` - Ver sync status
-- `python .agents/scripts/sync_tracker.py --check-conflicts` - Ver conflitos
-- `python .agents/scripts/lock_manager.py list` - Locks ativos
+- `python3 .agents/scripts/sync_tracker.py` - Ver sync status
+- `python3 .agents/scripts/sync_tracker.py --check-conflicts` - Ver conflitos
+- `python3 .agents/scripts/lock_manager.py list` - Locks ativos
 
 ---
 

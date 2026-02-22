@@ -8,8 +8,8 @@ Usage as module:
     from recovery import with_retry, safe_execute, git_checkpoint, git_rollback
 
 Usage standalone:
-    python .agents/scripts/recovery.py checkpoint <label>
-    python .agents/scripts/recovery.py rollback <label>
+    python3 .agents/scripts/recovery.py checkpoint <label>
+    python3 .agents/scripts/recovery.py rollback <label>
 """
 
 import sys

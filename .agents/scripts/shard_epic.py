@@ -4,10 +4,10 @@ Shard Epic - Inove AI Framework
 Splits BACKLOG.md into individual story files in docs/stories/.
 
 Usage:
-    python .agents/scripts/shard_epic.py shard      # Full sharding (default)
-    python .agents/scripts/shard_epic.py sync       # Incremental sync
-    python .agents/scripts/shard_epic.py status     # Shard health report
-    python .agents/scripts/shard_epic.py clean      # Remove orphan shards
+    python3 .agents/scripts/shard_epic.py shard      # Full sharding (default)
+    python3 .agents/scripts/shard_epic.py sync       # Incremental sync
+    python3 .agents/scripts/shard_epic.py status     # Shard health report
+    python3 .agents/scripts/shard_epic.py clean      # Remove orphan shards
 
 Options:
     --epic N          Process only Epic N

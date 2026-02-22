@@ -18,10 +18,10 @@ description: Gerencia logs de sessão de trabalho. Sub-comandos: start, end, sho
 
 | Comando | Script Executado |
 |---------|-----------------|
-| `/log start` | `python .agents/scripts/auto_session.py start` |
-| `/log end` | `python .agents/scripts/auto_session.py end --activities "{atividades}"` |
-| `/log show` | `python .agents/scripts/auto_session.py status` |
-| `/log summary` | `python .agents/scripts/metrics.py weekly` |
+| `/log start` | `python3 .agents/scripts/auto_session.py start` |
+| `/log end` | `python3 .agents/scripts/auto_session.py end --activities "{atividades}"` |
+| `/log show` | `python3 .agents/scripts/auto_session.py status` |
+| `/log summary` | `python3 .agents/scripts/metrics.py weekly` |
 
 ---
 
@@ -40,7 +40,7 @@ docs/
 ## Fluxo: `/log start`
 
 ```bash
-python .agents/scripts/auto_session.py start
+python3 .agents/scripts/auto_session.py start
 ```
 
 O script automaticamente:
@@ -71,7 +71,7 @@ Liste as atividades realizadas:
 ### Passo 2: Executar Script
 
 ```bash
-python .agents/scripts/auto_session.py end --activities "atividade1; atividade2; atividade3"
+python3 .agents/scripts/auto_session.py end --activities "atividade1; atividade2; atividade3"
 ```
 
 O script automaticamente:
@@ -94,7 +94,7 @@ Dica: Execute /track para atualizar a barra de progresso.
 ## Fluxo: `/log show`
 
 ```bash
-python .agents/scripts/auto_session.py status
+python3 .agents/scripts/auto_session.py status
 ```
 
 Exibe sessão ativa (se houver) e resumo do dia.
@@ -104,7 +104,7 @@ Exibe sessão ativa (se houver) e resumo do dia.
 ## Fluxo: `/log summary`
 
 ```bash
-python .agents/scripts/metrics.py weekly
+python3 .agents/scripts/metrics.py weekly
 ```
 
 Gera resumo semanal consolidado com tempo por dia e por agente.

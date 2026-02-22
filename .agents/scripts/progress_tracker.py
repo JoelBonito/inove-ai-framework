@@ -4,7 +4,7 @@ Progress Tracker - Antigravity Kit
 Analisa o backlog de tarefas e gera uma barra de progresso visual.
 
 Uso:
-    python .agents/scripts/progress_tracker.py [caminho_backlog]
+    python3 .agents/scripts/progress_tracker.py [caminho_backlog]
 
 Se nenhum caminho for fornecido, procura automaticamente em:
     - docs/BACKLOG.md

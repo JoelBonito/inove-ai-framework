@@ -34,7 +34,7 @@ Before creating a squad, ask:
 ### Step 2: Create Structure
 
 ```bash
-python .agents/scripts/squad_manager.py create <name> --template specialist
+python3 .agents/scripts/squad_manager.py create <name> --template specialist
 ```
 
 ### Step 3: Generate Components
@@ -48,13 +48,13 @@ Based on discovery answers:
 ### Step 4: Validate
 
 ```bash
-python .agents/scripts/squad_manager.py validate <name>
+python3 .agents/scripts/squad_manager.py validate <name>
 ```
 
 ### Step 5: Activate (Optional)
 
 ```bash
-python .agents/scripts/squad_manager.py activate <name>
+python3 .agents/scripts/squad_manager.py activate <name>
 ```
 
 ---
@@ -71,7 +71,7 @@ When a PRD or Brief exists, auto-extract:
 ## Flow: /squad list
 
 ```bash
-python .agents/scripts/squad_manager.py list
+python3 .agents/scripts/squad_manager.py list
 ```
 
 Shows: name, version, components count, active/inactive status.
@@ -81,7 +81,7 @@ Shows: name, version, components count, active/inactive status.
 ## Flow: /squad activate
 
 ```bash
-python .agents/scripts/squad_manager.py activate <name>
+python3 .agents/scripts/squad_manager.py activate <name>
 ```
 
 Creates symlinks from `.agents/` to squad components. Activated squads are treated as native framework components.
@@ -91,7 +91,7 @@ Creates symlinks from `.agents/` to squad components. Activated squads are treat
 ## Flow: /squad deactivate
 
 ```bash
-python .agents/scripts/squad_manager.py deactivate <name>
+python3 .agents/scripts/squad_manager.py deactivate <name>
 ```
 
 Removes symlinks. Squad files remain in `squads/<name>/`.
@@ -101,7 +101,7 @@ Removes symlinks. Squad files remain in `squads/<name>/`.
 ## Flow: /squad validate
 
 ```bash
-python .agents/scripts/squad_manager.py validate <name>
+python3 .agents/scripts/squad_manager.py validate <name>
 ```
 
 Checks:

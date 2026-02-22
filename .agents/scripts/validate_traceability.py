@@ -5,9 +5,9 @@ Verifica se todos os requisitos funcionais têm cobertura no backlog
 e se todas as stories têm acceptance criteria.
 
 Uso:
-    python .agents/scripts/validate_traceability.py
-    python .agents/scripts/validate_traceability.py --strict
-    python .agents/scripts/validate_traceability.py --output json
+    python3 .agents/scripts/validate_traceability.py
+    python3 .agents/scripts/validate_traceability.py --strict
+    python3 .agents/scripts/validate_traceability.py --output json
 """
 
 import os

@@ -4,9 +4,9 @@ Reminder System - Inove AI Framework
 Sistema de lembretes para gerenciamento de sessões e tarefas.
 
 Uso:
-    python .agents/scripts/reminder_system.py check
-    python .agents/scripts/reminder_system.py session-check
-    python .agents/scripts/reminder_system.py end-of-day
+    python3 .agents/scripts/reminder_system.py check
+    python3 .agents/scripts/reminder_system.py session-check
+    python3 .agents/scripts/reminder_system.py end-of-day
 
 Lembretes implementados:
     1. Sessão longa (> 4 horas)
@@ -150,7 +150,7 @@ def check_session_reminders():
         print(f"   Agente: {agent_emoji} {session['agent']}")
         print()
         print("   Quer encerrar a sessão?")
-        print("   → python .agents/scripts/auto_session.py end")
+        print("   → python3 .agents/scripts/auto_session.py end")
         print()
 
         # Atualiza estado
@@ -187,7 +187,7 @@ def check_completion_reminder():
             print()
             print(result.stdout)
             print()
-            print("💡 Use: python .agents/scripts/auto_finish.py --check-context")
+            print("💡 Use: python3 .agents/scripts/auto_finish.py --check-context")
             print()
 
     except Exception:

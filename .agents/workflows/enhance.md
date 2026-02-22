@@ -23,7 +23,7 @@ This command adds features or makes updates to existing application.
 ### Steps:
 
 1. **Understand Current State**
-   - Load project state with `python .agents/scripts/project_analyzer.py info`
+   - Load project state with `python3 .agents/scripts/project_analyzer.py info`
    - Understand existing features, tech stack
 
 2. **Plan Changes**

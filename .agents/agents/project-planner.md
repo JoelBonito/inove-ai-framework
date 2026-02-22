@@ -302,7 +302,7 @@ Before assigning agents, determine project type:
 
 ```bash
 # SINGLE COMMAND - Runs all checks in priority order:
-python .agents/scripts/verify_all.py . --url http://localhost:3000
+python3 .agents/scripts/verify_all.py . --url http://localhost:3000
 
 # Priority Order:
 # P0: Security Scan (vulnerabilities, secrets)

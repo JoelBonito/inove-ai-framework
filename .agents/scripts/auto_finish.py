@@ -4,8 +4,8 @@ Auto-Finish - Inove AI Framework
 Detecta automaticamente conclusão de tarefas e atualiza o BACKLOG.
 
 Uso:
-    python .agents/scripts/auto_finish.py [--check-context] [--commit-msg "message"]
-    python .agents/scripts/auto_finish.py --suggest
+    python3 .agents/scripts/auto_finish.py [--check-context] [--commit-msg "message"]
+    python3 .agents/scripts/auto_finish.py --suggest
 
 Funcionalidades:
     - Detecta padrões de conclusão (palavras-chave, commits)

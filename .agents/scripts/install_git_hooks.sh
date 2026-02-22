@@ -41,11 +41,11 @@ if [ -n "$TASK_ID" ]; then
     echo "🔄 Task detectada no commit: $TASK_ID"
 
     # Tenta marcar como concluída
-    if python .agents/scripts/finish_task.py "$TASK_ID" 2>/dev/null; then
+    if python3 .agents/scripts/finish_task.py "$TASK_ID" 2>/dev/null; then
         echo "✅ Task $TASK_ID marcada como concluída"
 
         # Atualiza progresso
-        python .agents/scripts/progress_tracker.py 2>/dev/null || true
+        python3 .agents/scripts/progress_tracker.py 2>/dev/null || true
     else
         echo "⚠️ Não foi possível marcar task $TASK_ID (pode já estar concluída)"
     fi

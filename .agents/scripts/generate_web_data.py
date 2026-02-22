@@ -6,8 +6,8 @@ Reads .agents/ markdown files (agents, skills, workflows) and generates
 JSON data files for the web site to consume.
 
 Usage:
-    python .agents/scripts/generate_web_data.py
-    python .agents/scripts/generate_web_data.py --out web/src/data
+    python3 .agents/scripts/generate_web_data.py
+    python3 .agents/scripts/generate_web_data.py --out web/src/data
 """
 
 import json

@@ -124,9 +124,9 @@ function analyzeRequest(userMessage) {
 
 If you detect requests matching domains that belong to a Squad (like `n8n`, `workflow automation`, or `integrations` for the `n8n-automation` squad), **SILENTLY execute the following command before replying or invoking standard agents:**
 ```bash
-python .agents/scripts/squad_manager.py auto-activate <squad-name>
+python3 .agents/scripts/squad_manager.py auto-activate <squad-name>
 ```
-For example, for n8n: `python .agents/scripts/squad_manager.py auto-activate n8n-automation`. Then proceed seamlessly using `n8n-specialist`.
+For example, for n8n: `python3 .agents/scripts/squad_manager.py auto-activate n8n-automation`. Then proceed seamlessly using `n8n-specialist`.
 
 ### Multi-Domain Tasks (Auto-invoke Orchestrator)
 

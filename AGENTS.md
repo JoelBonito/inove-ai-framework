@@ -224,8 +224,8 @@ CORRETO: Ler contexto (HANDOFF/BACKLOG/docs) → Ler agente → Entender PORQUÊ
 Após completar QUALQUER tarefa do `docs/BACKLOG.md`:
 
 ```bash
-python .agents/scripts/finish_task.py "{task_id}"
-python .agents/scripts/progress_tracker.py
+python3 .agents/scripts/finish_task.py "{task_id}"
+python3 .agents/scripts/progress_tracker.py
 ```
 
 Informar ao usuário:
@@ -253,9 +253,9 @@ Rastrear sessões de trabalho e gerar um relatório diário consolidado em Markd
 ### Comandos
 
 ```bash
-python .agents/scripts/auto_session.py start --agent codex             # Abrir sessão
-python .agents/scripts/auto_session.py end --activities "ativ1; ativ2" # Fechar sessão
-python .agents/scripts/auto_session.py status                          # Ver sessão ativa
+python3 .agents/scripts/auto_session.py start --agent codex             # Abrir sessão
+python3 .agents/scripts/auto_session.py end --activities "ativ1; ativ2" # Fechar sessão
+python3 .agents/scripts/auto_session.py status                          # Ver sessão ativa
 ```
 
 ### Critérios de Qualidade
@@ -272,8 +272,8 @@ A saída da descrição das atividades enviadas à flag `--activities` deve ser 
 ## Final Checklist Protocol
 
 ```bash
-python .agents/scripts/checklist.py .
-python .agents/scripts/checklist.py . --url <URL>
+python3 .agents/scripts/checklist.py .
+python3 .agents/scripts/checklist.py . --url <URL>
 ```
 
 **Ordem:** Security → Lint → Schema → Tests → UX → SEO → Perf
@@ -284,14 +284,14 @@ python .agents/scripts/checklist.py . --url <URL>
 
 | Script | Comando | Descrição |
 |--------|---------|-----------|
-| Dashboard | `python .agents/scripts/dashboard.py` | Visão consolidada |
-| Progresso | `python .agents/scripts/progress_tracker.py` | Atualizar barra |
-| Sessão | `python .agents/scripts/auto_session.py start` | Iniciar sessão |
-| Finish | `python .agents/scripts/finish_task.py "Epic-1"` | Marcar completo |
-| Checklist | `python .agents/scripts/checklist.py .` | Auditoria do projeto |
-| Validar | `python .agents/scripts/validate_installation.py` | Verificar setup |
-| Squads | `python .agents/scripts/squad_manager.py list` | Gerenciar squads |
-| Shard Epic | `python .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
+| Dashboard | `python3 .agents/scripts/dashboard.py` | Visão consolidada |
+| Progresso | `python3 .agents/scripts/progress_tracker.py` | Atualizar barra |
+| Sessão | `python3 .agents/scripts/auto_session.py start` | Iniciar sessão |
+| Finish | `python3 .agents/scripts/finish_task.py "Epic-1"` | Marcar completo |
+| Checklist | `python3 .agents/scripts/checklist.py .` | Auditoria do projeto |
+| Validar | `python3 .agents/scripts/validate_installation.py` | Verificar setup |
+| Squads | `python3 .agents/scripts/squad_manager.py list` | Gerenciar squads |
+| Shard Epic | `python3 .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
 
 ---
 
@@ -299,8 +299,8 @@ python .agents/scripts/checklist.py . --url <URL>
 
 ```bash
 export AGENT_SOURCE=codex
-python .agents/scripts/lock_manager.py list
-python .agents/scripts/lock_manager.py cleanup
+python3 .agents/scripts/lock_manager.py list
+python3 .agents/scripts/lock_manager.py cleanup
 ```
 
 Ownership no BACKLOG.md: `## Epic 1 [OWNER: codex] [MODEL: gpt-4]`

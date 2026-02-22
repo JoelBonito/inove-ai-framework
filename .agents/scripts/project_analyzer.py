@@ -6,8 +6,8 @@ Analyzes project state, detects tech stack, tracks file statistics, and provides
 a summary of the current project.
 
 Usage:
-    python .agents/scripts/project_analyzer.py status [path]
-    python .agents/scripts/project_analyzer.py info [path]
+    python3 .agents/scripts/project_analyzer.py status [path]
+    python3 .agents/scripts/project_analyzer.py info [path]
 """
 
 import os

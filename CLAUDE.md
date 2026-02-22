@@ -131,7 +131,7 @@
 Se keywords correspondem a um squad ativo (ex: "n8n", "workflow automation"):
 
 ```bash
-python .agents/scripts/squad_manager.py auto-activate <squad-name>
+python3 .agents/scripts/squad_manager.py auto-activate <squad-name>
 ```
 
 Executar **silenciosamente** antes de rotear ao agente do squad.
@@ -244,8 +244,8 @@ CORRETO: Ler → Entender PORQUÊ → Aplicar PRINCÍPIOS → Codar
 Após completar QUALQUER tarefa do `docs/BACKLOG.md`:
 
 ```bash
-python .agents/scripts/finish_task.py "{task_id}"
-python .agents/scripts/progress_tracker.py
+python3 .agents/scripts/finish_task.py "{task_id}"
+python3 .agents/scripts/progress_tracker.py
 ```
 
 Informar ao usuário:
@@ -266,8 +266,8 @@ Próxima tarefa: {nome_proxima_tarefa}
 **Checklist Core (framework + traceability):**
 
 ```bash
-python .agents/scripts/checklist.py .                   # Core checks (installation + traceability)
-python .agents/scripts/checklist.py . --url <URL>       # Core + web checks (tsc, lint, build)
+python3 .agents/scripts/checklist.py .                   # Core checks (installation + traceability)
+python3 .agents/scripts/checklist.py . --url <URL>       # Core + web checks (tsc, lint, build)
 ```
 
 **Checklist Completo (agent-driven — executar manualmente na ordem):**
@@ -308,10 +308,10 @@ Rastrear sessoes de trabalho e gerar um relatorio diario consolidado em Markdown
 ### Comandos
 
 ```bash
-python .agents/scripts/auto_session.py start                      # Abrir sessao
-python .agents/scripts/auto_session.py start --agent antigravity  # Abrir com agente especifico
-python .agents/scripts/auto_session.py end --activities "ativ1; ativ2"  # Fechar sessao
-python .agents/scripts/auto_session.py status                     # Ver sessao ativa
+python3 .agents/scripts/auto_session.py start                      # Abrir sessao
+python3 .agents/scripts/auto_session.py start --agent antigravity  # Abrir com agente especifico
+python3 .agents/scripts/auto_session.py end --activities "ativ1; ativ2"  # Fechar sessao
+python3 .agents/scripts/auto_session.py status                     # Ver sessao ativa
 ```
 
 ### Criterios de Qualidade
@@ -422,8 +422,8 @@ export AGENT_SOURCE=codex
 
 ### Lock Manager
 ```bash
-python .agents/scripts/lock_manager.py list      # Ver locks ativos
-python .agents/scripts/lock_manager.py cleanup   # Limpar locks expirados
+python3 .agents/scripts/lock_manager.py list      # Ver locks ativos
+python3 .agents/scripts/lock_manager.py cleanup   # Limpar locks expirados
 ```
 
 ### Ownership e Modelo Preferencial de Epics
@@ -444,20 +444,20 @@ Formato no BACKLOG.md:
 
 | Script | Comando | Descrição |
 |--------|---------|-----------|
-| Dashboard | `python .agents/scripts/dashboard.py` | Visão consolidada |
-| Progresso | `python .agents/scripts/progress_tracker.py` | Atualizar barra |
-| Sessão | `python .agents/scripts/auto_session.py start` | Iniciar sessão |
-| Finish | `python .agents/scripts/finish_task.py "Epic-1"` | Marcar completo |
-| Métricas | `python .agents/scripts/metrics.py` | Insights |
-| Validar | `python .agents/scripts/validate_installation.py` | Verificar setup |
-| Rastreabilidade | `python .agents/scripts/validate_traceability.py` | Validar cobertura |
-| Projeto | `python .agents/scripts/project_analyzer.py status` | Analisar tech stack |
-| Web Data | `python .agents/scripts/generate_web_data.py` | Gerar JSONs do site |
-| Checklist | `python .agents/scripts/checklist.py .` | Validação incremental |
-| Verificar Tudo | `python .agents/scripts/verify_all.py .` | Verificação completa |
-| Squad Manager | `python .agents/scripts/squad_manager.py list` | Gerenciar squads |
-| Recovery | `python .agents/scripts/recovery.py checkpoint <label>` | Retry + rollback |
-| Shard Epic | `python .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
+| Dashboard | `python3 .agents/scripts/dashboard.py` | Visão consolidada |
+| Progresso | `python3 .agents/scripts/progress_tracker.py` | Atualizar barra |
+| Sessão | `python3 .agents/scripts/auto_session.py start` | Iniciar sessão |
+| Finish | `python3 .agents/scripts/finish_task.py "Epic-1"` | Marcar completo |
+| Métricas | `python3 .agents/scripts/metrics.py` | Insights |
+| Validar | `python3 .agents/scripts/validate_installation.py` | Verificar setup |
+| Rastreabilidade | `python3 .agents/scripts/validate_traceability.py` | Validar cobertura |
+| Projeto | `python3 .agents/scripts/project_analyzer.py status` | Analisar tech stack |
+| Web Data | `python3 .agents/scripts/generate_web_data.py` | Gerar JSONs do site |
+| Checklist | `python3 .agents/scripts/checklist.py .` | Validação incremental |
+| Verificar Tudo | `python3 .agents/scripts/verify_all.py .` | Verificação completa |
+| Squad Manager | `python3 .agents/scripts/squad_manager.py list` | Gerenciar squads |
+| Recovery | `python3 .agents/scripts/recovery.py checkpoint <label>` | Retry + rollback |
+| Shard Epic | `python3 .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
 
 ---
 
@@ -580,7 +580,7 @@ Pronto para trabalhar. O que devo fazer?
 4. Read → Understand → Apply: Ler regras dos agentes, entender princípios, aplicar
 5. Socratic Gate: Perguntar sobre escopo, edge cases, integrações
 6. [Implementa código seguindo regras dos agentes]
-7. Executando: `python .agents/scripts/finish_task.py "Epic 1"`
+7. Executando: `python3 .agents/scripts/finish_task.py "Epic 1"`
 8. Progresso: 25% (1/4 epics concluídos)
 9. Log de sessão atualizado
 

@@ -4,8 +4,8 @@ Sync Tracker - Inove AI Framework
 Detecta e reporta conflitos entre agentes trabalhando simultaneamente.
 
 Uso:
-    python .agents/scripts/sync_tracker.py
-    python .agents/scripts/sync_tracker.py --detailed
+    python3 .agents/scripts/sync_tracker.py
+    python3 .agents/scripts/sync_tracker.py --detailed
 
 Funcionalidades:
     - Verifica locks ativos

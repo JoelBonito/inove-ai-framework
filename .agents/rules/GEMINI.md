@@ -181,7 +181,7 @@ CORRECT: Read → Understand WHY → Apply PRINCIPLES → Code
 
 **When you complete a task defined in the Backlog:**
 
-1.  **EXECUTE:** `python .agents/scripts/finish_task.py "{task_id}"` (or use `/finish {task_id}` workflow).
+1.  **EXECUTE:** `python3 .agents/scripts/finish_task.py "{task_id}"` (or use `/finish {task_id}` workflow).
 2.  **VERIFY:** Ensure the output says "Marked as complete".
 3.  **INFORM:** Tell the user "Task {id} marked as complete."
 
@@ -193,8 +193,8 @@ CORRECT: Read → Understand WHY → Apply PRINCIPLES → Code
 
 | Task Stage       | Command                                            | Purpose                        |
 | ---------------- | -------------------------------------------------- | ------------------------------ |
-| **Manual Audit** | `python .agents/scripts/checklist.py .`             | Priority-based project audit   |
-| **Pre-Deploy**   | `python .agents/scripts/checklist.py . --url <URL>` | Full Suite + Performance + E2E |
+| **Manual Audit** | `python3 .agents/scripts/checklist.py .`             | Priority-based project audit   |
+| **Pre-Deploy**   | `python3 .agents/scripts/checklist.py . --url <URL>` | Full Suite + Performance + E2E |
 
 **Priority Execution Order:**
 
@@ -269,11 +269,11 @@ CORRECT: Read → Understand WHY → Apply PRINCIPLES → Code
 
 **Commands:**
 ```bash
-python .agents/scripts/auto_session.py start                          # Open session
-python .agents/scripts/auto_session.py start --agent antigravity      # Open with specific agent
-python .agents/scripts/auto_session.py end --activities "act1; act2"  # Close session
-python .agents/scripts/auto_session.py end --quick                    # Close without activities
-python .agents/scripts/auto_session.py status                         # Check active session
+python3 .agents/scripts/auto_session.py start                          # Open session
+python3 .agents/scripts/auto_session.py start --agent antigravity      # Open with specific agent
+python3 .agents/scripts/auto_session.py end --activities "act1; act2"  # Close session
+python3 .agents/scripts/auto_session.py end --quick                    # Close without activities
+python3 .agents/scripts/auto_session.py status                         # Check active session
 ```
 
 **Rules:**
