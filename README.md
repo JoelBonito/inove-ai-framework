@@ -7,9 +7,9 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
   <a href="https://www.npmjs.com/package/@joelbonito/inove-ai-framework"><img src="https://img.shields.io/npm/v/@joelbonito/inove-ai-framework" alt="npm version"></a>
-  <a href=".agents/agents/"><img src="https://img.shields.io/badge/Agents-22-green" alt="Agents"></a>
-  <a href=".agents/skills/"><img src="https://img.shields.io/badge/Skills-42-orange" alt="Skills"></a>
-  <a href=".agents/workflows/"><img src="https://img.shields.io/badge/Workflows-25-purple" alt="Workflows"></a>
+  <a href=".agents/agents/"><img src="https://img.shields.io/badge/Agents-21_core-green" alt="Agents"></a>
+  <a href=".agents/skills/"><img src="https://img.shields.io/badge/Skills-41_core-orange" alt="Skills"></a>
+  <a href=".agents/workflows/"><img src="https://img.shields.io/badge/Workflows-22_core-purple" alt="Workflows"></a>
 </p>
 
 <p align="center">
