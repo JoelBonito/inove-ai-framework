@@ -3,7 +3,7 @@
   "version": "5.3.0",
   "description": "Inove AI Framework - Multi-Agent AI Development Kit",
   "bin": {
-    "inove-ai-framework": "./bin/cli.js"
+    "inove-ai-framework": "bin/cli.js"
   },
   "files": [
     ".agents/**",
