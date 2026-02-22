@@ -246,72 +246,81 @@ class TestPlatformCompat:
 
 
 # ===========================================================================
-# 6. CLI — Migrate command
+# 6. CLI — Modular architecture (v5.2+)
 # ===========================================================================
 
 
-class TestMigrateCommand:
-    """Validate the migrate command in the CLI."""
+class TestCLIModularArchitecture:
+    """Validate the modular CLI architecture (commands/ + lib/)."""
 
     @pytest.fixture
-    def cli_content(self, project_root):
-        return (project_root / "bin" / "cli.js").read_text(encoding="utf-8")
+    def bin_dir(self, project_root):
+        return project_root / "bin"
 
-    def test_cli_has_migrate_command(self, cli_content):
-        """cli.js must contain the migrate command handler."""
-        assert "case 'migrate'" in cli_content
+    def test_entry_point_exists(self, bin_dir):
+        """bin/cli.js must exist."""
+        assert (bin_dir / "cli.js").is_file()
 
-    def test_cli_has_migrate_function(self, cli_content):
-        """cli.js must define the migrate function."""
-        assert "async function migrate" in cli_content
+    def test_command_modules_exist(self, bin_dir):
+        """All command modules must exist in bin/commands/."""
+        expected = ["install.js", "custom-install.js", "update.js",
+                    "add-platform.js", "validate.js", "uninstall.js"]
+        for name in expected:
+            path = bin_dir / "commands" / name
+            assert path.is_file(), f"Command module missing: {name}"
 
-    def test_thin_templates_are_embedded(self, cli_content):
-        """Thin MCP templates must be embedded in cli.js."""
-        assert "CLAUDE_THIN_TEMPLATE" in cli_content
-        assert "AGENTS_THIN_TEMPLATE" in cli_content
-        assert "GEMINI_THIN_TEMPLATE" in cli_content
+    def test_lib_modules_exist(self, bin_dir):
+        """All library modules must exist in bin/lib/."""
+        expected = ["constants.js", "security.js", "ui.js",
+                    "platforms.js", "fs-utils.js"]
+        for name in expected:
+            path = bin_dir / "lib" / name
+            assert path.is_file(), f"Library module missing: {name}"
 
-    def test_templates_reference_mcp_tools(self, cli_content):
-        """Templates must reference MCP tool names."""
-        for tool in ["list_agents", "list_skills", "get_agent", "route_task", "search_content"]:
-            assert tool in cli_content, f"MCP tool '{tool}' not found in templates"
+    def test_entry_point_has_all_commands(self, bin_dir):
+        """cli.js must handle all supported commands."""
+        content = (bin_dir / "cli.js").read_text(encoding="utf-8")
+        for cmd in ["install", "update", "validate", "uninstall", "migrate", "init"]:
+            assert f"case '{cmd}'" in content, f"Command '{cmd}' not in cli.js"
 
-    def test_mcp_config_targets_defined(self, cli_content):
-        """MCP configuration targets must include all editors."""
-        assert ".mcp.json" in cli_content
-        assert ".cursor/mcp.json" in cli_content
-        assert ".vscode/mcp.json" in cli_content
-        assert ".gemini/mcp.json" in cli_content
+    def test_install_blocks_ci_environment(self, bin_dir):
+        """install.js must block CI environments."""
+        content = (bin_dir / "commands" / "install.js").read_text(encoding="utf-8")
+        assert "process.env.CI" in content
 
-    def test_safe_remove_dir_exists(self, cli_content):
-        """safeRemoveDir must use lstatSync (not statSync/rmSync)."""
-        assert "safeRemoveDir" in cli_content
-        assert "lstatSync" in cli_content
+    def test_install_blocks_dangerous_dirs(self, bin_dir):
+        """install.js must refuse dangerous directories."""
+        content = (bin_dir / "commands" / "install.js").read_text(encoding="utf-8")
+        assert "DANGEROUS_DIRS" in content
 
-    def test_dry_run_flag_supported(self, cli_content):
-        """Migrate must support --dry-run flag."""
-        assert "--dry-run" in cli_content
+    def test_security_module_has_path_validation(self, bin_dir):
+        """security.js must provide path traversal protection."""
+        content = (bin_dir / "lib" / "security.js").read_text(encoding="utf-8")
+        assert "isPathSafe" in content
 
-    def test_no_backup_flag_supported(self, cli_content):
-        """Migrate must support --no-backup flag."""
-        assert "--no-backup" in cli_content
+    def test_fs_utils_has_atomic_write(self, bin_dir):
+        """fs-utils.js must provide atomic writes."""
+        content = (bin_dir / "lib" / "fs-utils.js").read_text(encoding="utf-8")
+        assert "atomicWrite" in content
 
-    def test_ci_environment_blocked(self, cli_content):
-        """Migrate must block execution in CI environments."""
-        assert "process.env.CI" in cli_content
+    def test_fs_utils_has_safe_remove(self, bin_dir):
+        """fs-utils.js must provide safe directory removal with lstatSync."""
+        content = (bin_dir / "lib" / "fs-utils.js").read_text(encoding="utf-8")
+        assert "safeRemoveDir" in content
+        assert "lstatSync" in content
 
-    def test_symlink_cleanup_targets(self, cli_content):
-        """Migrate must clean up legacy symlinks."""
-        for target in [".claude/agents", ".claude/skills", ".codex/agents"]:
-            assert target in cli_content, f"Symlink cleanup target '{target}' not found"
+    def test_platforms_module_has_setup(self, bin_dir):
+        """platforms.js must export setup and detect functions."""
+        content = (bin_dir / "lib" / "platforms.js").read_text(encoding="utf-8")
+        assert "setupAllPlatforms" in content
+        assert "detectInstalledPlatforms" in content
 
-    def test_atomic_write_function(self, cli_content):
-        """Migrate must use atomic writes (.tmp + rename)."""
-        assert "atomicWrite" in cli_content
-
-    def test_dangerous_dirs_blocked(self, cli_content):
-        """Migrate must refuse to run in system directories."""
-        assert "os.homedir()" in cli_content
+    def test_constants_defines_three_platforms(self, bin_dir):
+        """constants.js must define Claude Code, Codex CLI, and Gemini platforms."""
+        content = (bin_dir / "lib" / "constants.js").read_text(encoding="utf-8")
+        assert "claude-code" in content
+        assert "codex-cli" in content
+        assert "gemini-antigravity" in content
 
 
 # ===========================================================================

@@ -758,7 +758,7 @@ Por favor, revise o UX Concept e responda:
    - Se alguma tela da lista NAO tem prototipo: **GERAR** antes de prosseguir
    - Preencher tabela de cobertura no documento de output (ver template abaixo)
 
-6. **Documentar resultados**
+7. **Documentar resultados**
    - Criar arquivo de output com template abaixo
 
 ```markdown

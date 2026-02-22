@@ -21,11 +21,17 @@ web/
 !GEMINI.md
 !CHANGELOG.md
 !LICENSE
+!.agents/**/*.md
+!squads/**/*.md
 
 # Agent runtime artifacts
 .agents/locks/
 .agents/.shared/
 .agents/.shared
+
+# Squad runtime (keep templates only)
+!squads/.templates/**
+!squads/README.md
 
 # OS files
 .DS_Store
@@ -37,3 +43,7 @@ node_modules/
 # Symlink directories (local dev only)
 .claude/
 .codex/
+.gemini/
+
+# MCP server (separate package)
+mcp-server/

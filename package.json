@@ -1,6 +1,6 @@
 {
   "name": "@joelbonito/inove-ai-framework",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "description": "Inove AI Framework - Multi-Agent AI Development Kit",
   "bin": {
     "inove-ai-framework": "./bin/cli.js"
@@ -12,10 +12,17 @@
     "!**/__pycache__/**",
     "!**/*.pyc",
     "bin",
+    "squads",
     "CLAUDE.md",
     "AGENTS.md",
     "GEMINI.md"
   ],
+  "dependencies": {
+    "@clack/prompts": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "test": "python3 -m pytest tests/ -v"
   },
@@ -29,7 +36,10 @@
     "framework",
     "inove",
     "claude",
-    "gemini"
+    "gemini",
+    "codex",
+    "antigravity",
+    "multi-agent"
   ],
   "author": "JoelBonito",
   "license": "MIT",
