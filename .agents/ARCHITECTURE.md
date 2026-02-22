@@ -1,6 +1,6 @@
 # Inove AI Framework - Architecture
 
-> Multi-agent AI development framework with 21 agents, 41 skills, 22 workflows, and multi-platform support.
+> Multi-agent AI development framework with 22 agents, 42 skills, 25 workflows, and multi-platform support.
 
 ---
 
@@ -8,9 +8,9 @@
 
 Inove AI Framework is a modular system that enhances AI coding assistants with:
 
-- **21 Specialist Agents** -- Role-based AI personas for different domains
-- **41 Skills** -- Domain-specific knowledge modules loaded on demand
-- **22 Workflows** -- Slash command procedures for structured processes
+- **22 Specialist Agents** -- Role-based AI personas for different domains
+- **42 Skills** -- Domain-specific knowledge modules loaded on demand
+- **25 Workflows** -- Slash command procedures for structured processes
 - **22 Scripts** -- Python/Bash automation for task tracking, sessions, and validation
 - **Multi-Platform Support** -- Claude Code, Codex CLI, and Antigravity/Gemini
 
@@ -24,7 +24,7 @@ The canonical source of truth lives in `.agents/`. Other platforms access it thr
 .agents/
 ├── ARCHITECTURE.md              # This file
 ├── INSTRUCTIONS.md              # Canonical instructions (synced to CLAUDE.md, AGENTS.md)
-├── agents/                      # 21 specialist agents
+├── agents/                      # 22 specialist agents
 │   ├── orchestrator.md
 │   ├── project-planner.md
 │   ├── product-manager.md

@@ -77,15 +77,15 @@ describe("health check", () => {
       expect(body.version).toBe(SERVER_VERSION);
     });
 
-    it("should include at least 21 agents", () => {
+    it("should include at least 22 agents", () => {
       expect(body.agents).toBeGreaterThanOrEqual(21);
     });
 
-    it("should include at least 41 skills", () => {
+    it("should include at least 42 skills", () => {
       expect(body.skills).toBeGreaterThanOrEqual(41);
     });
 
-    it("should include at least 22 workflows", () => {
+    it("should include at least 25 workflows", () => {
       expect(body.workflows).toBeGreaterThanOrEqual(22);
     });
 

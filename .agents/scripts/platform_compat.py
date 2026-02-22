@@ -233,7 +233,7 @@ def get_config_path(platform: str = None) -> Path:
     config_map = {
         "codex": root / "config" / "codex.toml",
         "claude_code": root / "config" / "claude.json",
-        "antigravity": root / "config" / "antigravity.json",
+        "antigravity": root / "rules" / "GEMINI.md",
     }
 
     return config_map.get(platform, root / "config" / "codex.toml")

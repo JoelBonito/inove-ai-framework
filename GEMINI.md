@@ -13,7 +13,7 @@ trigger: always_on
 
 ## Papel do Gemini CLI
 
-O Gemini CLI é primariamente responsável por **Estratégia, Design e Planejamento**. Quando usado junto com o Codex (Flow B), gera `HANDOFF.md` e delega implementação. Quando usado **sozinho** (Standalone Mode), opera de forma autônoma com todos os 21 agentes.
+O Gemini CLI é primariamente responsável por **Estratégia, Design e Planejamento**. Quando usado junto com o Codex (Flow B), gera `HANDOFF.md` e delega implementação. Quando usado **sozinho** (Standalone Mode), opera de forma autônoma com todos os 22 agentes.
 
 ```
 ┌─────────────────────────────────────┐
@@ -24,8 +24,8 @@ O Gemini CLI é primariamente responsável por **Estratégia, Design e Planejame
 │  - Output: HANDOFF.md + Backlog     │
 │                                     │
 │  Standalone (sem Codex):            │
-│  - Todos os 21 agentes disponíveis  │
-│  - Todos os 22 workflows            │
+│  - Todos os 22 agentes disponíveis  │
+│  - Todos os 25 workflows            │
 │  - Planning + Implementação         │
 │                                     │
 │  MCP: Stitch + Context7             │
@@ -84,9 +84,9 @@ Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Re
 
 ```
 .agents/
-├── agents/           # 21 agentes especializados (core)
-├── skills/           # 41 skills modulares (core)
-├── workflows/        # 22 workflows (slash commands)
+├── agents/           # 22 agentes especializados (core)
+├── skills/           # 42 skills modulares (core)
+├── workflows/        # 25 workflows (slash commands)
 ├── scripts/          # Automação Python
 ├── config/           # Configurações por plataforma
 └── ARCHITECTURE.md   # Documentação técnica
@@ -264,7 +264,7 @@ No modo standalone, além dos 7 agentes de planning, ficam disponíveis os 14 ag
 | `/review` | Revisão de código |
 | `/preview` | Gerenciar servidor de preview |
 
-> **Resumo:** Gemini standalone = todos os 21 agentes + 22 workflows. Funciona como agente autônomo completo.
+> **Resumo:** Gemini standalone = todos os 22 agentes + 25 workflows. Funciona como agente autônomo completo.
 
 ---
 
@@ -412,4 +412,3 @@ Formato no BACKLOG.md: `## Epic 1 [OWNER: antigravity]`
 
 📄 **[.agents/INSTRUCTIONS.md](.agents/INSTRUCTIONS.md)** — Regras compartilhadas
 📄 **[.agents/ARCHITECTURE.md](.agents/ARCHITECTURE.md)** — Documentação técnica
-📄 **[.agents/rules/GEMINI.md](.agents/rules/GEMINI.md)** — Regras específicas Antigravity

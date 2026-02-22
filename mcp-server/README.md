@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  MCP server for <strong>Inove AI Framework</strong> — 21 agents, 41 skills, and 22 workflows served via the Model Context Protocol.
+  MCP server for <strong>Inove AI Framework</strong> — 22 agents, 42 skills, and 25 workflows served via the Model Context Protocol.
 </p>
 
 Zero disk usage per project. Auto-updates on every run. Setup in 30 seconds.
@@ -48,9 +48,9 @@ Any MCP-compatible tool works — point it to `npx -y @joelbonito/mcp-server` as
 
 | Tool | Description |
 |------|-------------|
-| `list_agents` | List all 21 specialized agents |
+| `list_agents` | List all 22 specialized agents |
 | `list_skills` | List all 41 modular skills |
-| `list_workflows` | List all 22 workflows |
+| `list_workflows` | List all 25 workflows |
 | `get_agent` | Get full agent content by name |
 | `get_skill` | Get skill content (SKILL.md + sub-files) |
 | `get_workflow` | Get workflow content by name |
@@ -109,7 +109,7 @@ AI:   [calls route_task] → recommends debugger + security-auditor
 
 ```
 User: "List available workflows"
-AI:   [calls list_workflows] → 22 workflows with descriptions
+AI:   [calls list_workflows] → 25 workflows with descriptions
       → Shows /define, /debug, /create, /deploy, etc.
 ```
 

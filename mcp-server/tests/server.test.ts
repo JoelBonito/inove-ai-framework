@@ -34,15 +34,15 @@ describe("getCache", () => {
 // Content counts
 // ---------------------------------------------------------------------------
 describe("content counts", () => {
-  it("should have at least 21 agents", () => {
+  it("should have at least 22 agents", () => {
     expect(cache.agents.size).toBeGreaterThanOrEqual(21);
   });
 
-  it("should have at least 41 skills", () => {
+  it("should have at least 42 skills", () => {
     expect(cache.skills.size).toBeGreaterThanOrEqual(41);
   });
 
-  it("should have at least 22 workflows", () => {
+  it("should have at least 25 workflows", () => {
     expect(cache.workflows.size).toBeGreaterThanOrEqual(22);
   });
 });

@@ -1,6 +1,6 @@
 /**
  * Cloudflare Workers entrypoint for Inove AI MCP Server.
- * Serves the same 21 agents, 41 skills, 22 workflows as the stdio server
+ * Serves the same 22 agents, 42 skills, 25 workflows as the stdio server
  * via Streamable HTTP transport (stateless, public).
  *
  * WARNING: This module must NOT import paths.ts or cache.ts — they use node:fs.

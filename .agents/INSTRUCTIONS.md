@@ -7,9 +7,9 @@
 
 **Inove AI Framework** é um kit de desenvolvimento AI com sistema multi-agent (Claude Code + Codex CLI + Antigravity/Gemini) que fornece:
 
-- **21 Agentes Especializados** para diferentes domínios
-- **41 Skills Modulares** carregadas sob demanda
-- **22 Workflows** (slash commands) para processos estruturados
+- **22 Agentes Especializados** para diferentes domínios
+- **42 Skills Modulares** carregadas sob demanda
+- **25 Workflows** (slash commands) para processos estruturados
 - **Sistema Multi-Agent** com sincronização de locks e ownership
 
 ---
@@ -18,9 +18,9 @@
 
 ```
 .agents/
-├── agents/           # 21 agentes especializados
+├── agents/           # 22 agentes especializados
 ├── skills/           # 41 módulos de conhecimento
-├── workflows/        # 22 workflows (slash commands)
+├── workflows/        # 25 workflows (slash commands)
 ├── scripts/          # Automação Python
 ├── config/           # Configurações por plataforma
 └── ARCHITECTURE.md   # Documentação técnica
@@ -236,7 +236,7 @@ Este framework suporta **três ferramentas AI simultaneamente**:
 |------------|---------------------|-----------------|--------|
 | Claude Code | `CLAUDE.md` | `.agents/skills/` | N/A |
 | Codex CLI | `AGENTS.md` | `.codex/skills/` (symlink) | `.agents/config/codex.toml` |
-| Antigravity/Gemini | `GEMINI.md` | `.agents/skills/` | `.agents/rules/GEMINI.md` |
+| Antigravity/Gemini | `GEMINI.md` | `.agents/skills/` | N/A |
 
 ### Symlinks Nativos
 
@@ -366,9 +366,9 @@ Toda conversa começa com:
 ```
 ✅ Project Instructions carregadas
 ✅ Protocolo Inove AI Framework ativo
-✅ 21 agentes disponíveis
-✅ 41 skills disponíveis
-✅ 22 workflows disponíveis
+✅ 22 agentes disponíveis
+✅ 42 skills disponíveis
+✅ 25 workflows disponíveis
 ✅ Roteamento inteligente habilitado
 
 🎯 Pronto para trabalhar. O que devo fazer?

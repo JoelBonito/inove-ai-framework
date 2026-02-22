@@ -85,9 +85,9 @@ npx @joelbonito/inove-ai-framework migrate --force
 
 ## What's Included
 
-- **21 Specialized Agents** for different domains (frontend, backend, security, database, mobile, UX, game dev, etc.)
+- **22 Specialized Agents** for different domains (frontend, backend, security, database, mobile, UX, game dev, etc.)
 - **41 Modular Skills** loaded on demand (clean-code, testing-patterns, api-patterns, tailwind, etc.)
-- **22 Workflows** (slash commands) for structured processes
+- **25 Workflows** (slash commands) for structured processes
 - **Squad System** — reusable agent+skill+workflow packages for custom domains
 - **Recovery System** — automatic retry and git checkpoint/rollback for resilient execution
 - **Stitch MCP Integration** — visual mockups for UI projects via `/define`, `/ui-ux-pro-max`, and `/readiness`
@@ -224,9 +224,9 @@ Squads live in `squads/<name>/` with a `squad.yaml` manifest. See [squads/README
 
 ```
 .agents/
-├── agents/           # 21 specialized agents
+├── agents/           # 22 specialized agents
 ├── skills/           # 41 knowledge modules
-├── workflows/        # 22 workflows (slash commands)
+├── workflows/        # 25 workflows (slash commands)
 ├── scripts/          # Python automation (22 scripts)
 ├── config/           # Per-platform configuration
 ├── .shared/          # Shared data (UI/UX databases)

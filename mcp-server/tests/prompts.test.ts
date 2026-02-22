@@ -10,7 +10,7 @@ beforeAll(async () => {
 });
 
 describe("prompts registration", () => {
-  it("has at least 22 workflows available for prompt registration", () => {
+  it("has at least 25 workflows available for prompt registration", () => {
     expect(cache.workflows.size).toBeGreaterThanOrEqual(22);
   });
 

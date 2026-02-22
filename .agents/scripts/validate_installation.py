@@ -33,6 +33,7 @@ CORE_AGENTS = {
     "frontend-specialist.md",
     "game-developer.md",
     "mobile-developer.md",
+    "n8n-specialist.md",
     "orchestrator.md",
     "penetration-tester.md",
     "performance-optimizer.md",
@@ -44,7 +45,7 @@ CORE_AGENTS = {
     "seo-specialist.md",
     "test-engineer.md",
     "ux-researcher.md",
-}  # 21
+}  # 25
 
 CORE_SKILLS = {
     "api-patterns",
@@ -68,6 +69,7 @@ CORE_SKILLS = {
     "lint-and-validate",
     "mcp-builder",
     "mobile-design",
+    "n8n-orchestration",
     "nextjs-react-expert",
     "nodejs-best-practices",
     "parallel-agents",
@@ -88,7 +90,7 @@ CORE_SKILLS = {
     "vulnerability-scanner",
     "web-design-guidelines",
     "webapp-testing",
-}  # 41
+}  # 42
 
 CORE_WORKFLOWS = {
     "brainstorm.md",
@@ -113,7 +115,7 @@ CORE_WORKFLOWS = {
     "test.md",
     "track.md",
     "ui-ux-pro-max.md",
-}  # 22
+}  # 25
 
 CORE_SCRIPTS = {
     "_check_runner.py",
@@ -138,7 +140,7 @@ CORE_SCRIPTS = {
     "validate_installation.py",
     "validate_traceability.py",
     "verify_all.py",
-}  # 22
+}  # 25
 
 
 # ---------------------------------------------------------------------------

@@ -8,7 +8,7 @@
 
 ## Papel do Codex CLI
 
-O Codex CLI é primariamente um **implementador de código**. Quando usado junto com o Gemini (Flow B), recebe contexto via `HANDOFF.md`. Quando usado **sozinho** (Standalone Mode), opera de forma autônoma com todos os 21 agentes.
+O Codex CLI é primariamente um **implementador de código**. Quando usado junto com o Gemini (Flow B), recebe contexto via `HANDOFF.md`. Quando usado **sozinho** (Standalone Mode), opera de forma autônoma com todos os 22 agentes.
 
 ```
 ┌──────────────────────────────────────┐
@@ -19,8 +19,8 @@ O Codex CLI é primariamente um **implementador de código**. Quando usado junto
 │  - Foco: Implementação               │
 │                                      │
 │  Standalone (sem Gemini):            │
-│  - Todos os 21 agentes disponíveis   │
-│  - Todos os 22 workflows             │
+│  - Todos os 22 agentes disponíveis   │
+│  - Todos os 25 workflows             │
 │  - Planning + Implementação          │
 │                                      │
 │  MCP: Context7 + Shadcn              │
@@ -90,7 +90,7 @@ No modo standalone, além dos 14 agentes de implementação, ficam disponíveis 
 | `/squad` | Gerenciar squads |
 | `/ui-ux-pro-max` | Design system |
 
-> **Resumo:** Codex standalone = todos os 21 agentes + 22 workflows. Funciona como agente autônomo completo.
+> **Resumo:** Codex standalone = todos os 22 agentes + 25 workflows. Funciona como agente autônomo completo.
 
 ---
 
@@ -114,9 +114,9 @@ Para TODOS os projetos com interface visual (HAS_UI=true):
 
 ```
 .agents/
-├── agents/           # 21 agentes especializados (core)
-├── skills/           # 41 skills modulares (core)
-├── workflows/        # 22 workflows (slash commands)
+├── agents/           # 22 agentes especializados (core)
+├── skills/           # 42 skills modulares (core)
+├── workflows/        # 25 workflows (slash commands)
 ├── scripts/          # Automação Python
 ├── config/           # Configurações por plataforma
 └── ARCHITECTURE.md   # Documentação técnica
