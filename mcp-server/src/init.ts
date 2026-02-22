@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 /**
- * Bootstrap generator for Inove AI Framework (MCP Mode).
+ * CLI entry point for Inove AI Framework.
  *
- * Creates minimal instruction files that bridge /slash and @agent
- * patterns to the MCP tools (execute_workflow, activate_agent).
+ * Dispatches commands:
+ *   npx @joelbonito/mcp-server install   # Full framework install
+ *   npx @joelbonito/mcp-server update    # Update framework (preserves instruction files)
+ *   npx @joelbonito/mcp-server init      # MCP-only mode (lightweight bootstrap)
  *
- * Usage:
- *   npx @joelbonito/mcp-server init          # generates CLAUDE.md + AGENTS.md
- *   npx @joelbonito/mcp-server init --claude  # only CLAUDE.md
- *   npx @joelbonito/mcp-server init --codex   # only AGENTS.md
+ * The MCP server itself runs via `inove-mcp` (dist/index.js).
  */
 
 import { writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
+
+// ---------------------------------------------------------------------------
+// MCP-only init (lightweight bootstrap)
+// ---------------------------------------------------------------------------
 
 const WORKFLOWS = [
   "define", "debug", "create", "brainstorm", "enhance", "deploy",
@@ -74,26 +77,7 @@ For ALL requests involving code, STOP and ASK first:
 - Respond in the user's language
 `;
 
-const CLAUDE_MD = `# Inove AI Framework (MCP Mode)
-
-> This project uses the Inove AI Framework via MCP server (\`@joelbonito/mcp-server\`).
-> No local framework files needed — all agents, skills and workflows are served via MCP.
-
-${SHARED_RULES}`;
-
-const AGENTS_MD = `# Inove AI Framework (MCP Mode)
-
-> This project uses the Inove AI Framework via MCP server (\`@joelbonito/mcp-server\`).
-> No local framework files needed — all agents, skills and workflows are served via MCP.
-
-${SHARED_RULES}`;
-
-function main(): void {
-  const args = process.argv.slice(2);
-
-  // Remove "init" if passed as first arg (from bin dispatch)
-  if (args[0] === "init") args.shift();
-
+function mcpInit(args: string[]): void {
   const claudeOnly = args.includes("--claude");
   const codexOnly = args.includes("--codex");
   const both = !claudeOnly && !codexOnly;
@@ -101,38 +85,73 @@ function main(): void {
   const cwd = process.cwd();
   let created = 0;
 
-  if (both || claudeOnly) {
-    const path = resolve(cwd, "CLAUDE.md");
-    if (existsSync(path)) {
-      console.log(`⚠️  CLAUDE.md already exists — skipping (use --force to overwrite is not supported, merge manually)`);
-    } else {
-      writeFileSync(path, CLAUDE_MD, "utf-8");
-      console.log(`✅ Created CLAUDE.md`);
-      created++;
-    }
-  }
+  const header = `# Inove AI Framework (MCP Mode)
 
-  if (both || codexOnly) {
-    const path = resolve(cwd, "AGENTS.md");
+> This project uses the Inove AI Framework via MCP server (\`@joelbonito/mcp-server\`).
+> No local framework files needed — all agents, skills and workflows are served via MCP.
+`;
+
+  const files: { name: string; condition: boolean }[] = [
+    { name: "CLAUDE.md", condition: both || claudeOnly },
+    { name: "AGENTS.md", condition: both || codexOnly },
+    { name: "GEMINI.md", condition: both },
+  ];
+
+  for (const { name, condition } of files) {
+    if (!condition) continue;
+    const path = resolve(cwd, name);
     if (existsSync(path)) {
-      console.log(`⚠️  AGENTS.md already exists — skipping`);
+      console.log(`  ${name} already exists — skipping`);
     } else {
-      writeFileSync(path, AGENTS_MD, "utf-8");
-      console.log(`✅ Created AGENTS.md`);
+      writeFileSync(path, header + SHARED_RULES, "utf-8");
+      console.log(`  Created ${name}`);
       created++;
     }
   }
 
   if (created > 0) {
-    console.log(`\n🚀 Inove AI Framework (MCP Mode) initialized!`);
-    console.log(`   Now you can use /slash commands and @agent mentions.`);
-    console.log(`\n   Make sure the MCP server is configured:`);
-    console.log(`   • Claude Code: claude mcp add inove-ai -- npx -y @joelbonito/mcp-server`);
-    console.log(`   • Codex CLI:   codex mcp add inove-ai -- npx -y @joelbonito/mcp-server`);
-    console.log(`   • Cursor:      .cursor/mcp.json`);
+    console.log(`\nInove AI Framework (MCP Mode) initialized!`);
+    console.log(`Now you can use /slash commands and @agent mentions.\n`);
+    console.log(`Make sure the MCP server is configured:`);
+    console.log(`  claude mcp add inove-ai -- npx -y @joelbonito/mcp-server`);
+    console.log(`  codex mcp add inove-ai -- npx -y @joelbonito/mcp-server`);
   } else {
     console.log(`\nNothing to create — files already exist.`);
   }
 }
 
-main();
+// ---------------------------------------------------------------------------
+// Main dispatcher
+// ---------------------------------------------------------------------------
+
+async function main(): Promise<void> {
+  const args = process.argv.slice(2);
+  const command = args[0];
+
+  switch (command) {
+    case "install":
+    case "update": {
+      // Dynamic import to avoid loading registry.ts for non-install commands
+      const { installFramework } = await import("./install.js");
+      installFramework(process.cwd(), command === "update");
+      break;
+    }
+    case "init":
+      mcpInit(args.slice(1));
+      break;
+    default:
+      console.log(`Inove AI Framework CLI\n`);
+      console.log(`Usage:`);
+      console.log(`  npx @joelbonito/mcp-server install   Full framework install (agents, skills, workflows, scripts)`);
+      console.log(`  npx @joelbonito/mcp-server update    Update framework (preserves CLAUDE.md, AGENTS.md, GEMINI.md)`);
+      console.log(`  npx @joelbonito/mcp-server init      MCP-only mode (lightweight bootstrap files)`);
+      console.log(``);
+      console.log(`The MCP server runs automatically when configured in your AI tool.`);
+      process.exit(command ? 1 : 0);
+  }
+}
+
+main().catch((err) => {
+  console.error("Error:", err.message);
+  process.exit(1);
+});

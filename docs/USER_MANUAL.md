@@ -3,34 +3,57 @@
 </p>
 
 <h1 align="center">Manual de Uso Oficial — Inove AI Framework</h1>
-<h3 align="center">Edição MCP</h3>
 
-> **Nota v5+:** Este manual descreve o fluxo de trabalho utilizando o **Inove AI MCP Server**. Com essa arquitetura, você **não precisa mais ter a pasta `.agents` pesada dentro de cada projeto**. O "cérebro" do framework vive globalmente no seu computador e injeta inteligência de forma invisível nos seus workspaces.
+> **Nota v5+:** O framework volta a ser distribuído como pacote npm local (`@joelbonito/inove-ai-framework`). Cada repositório mantém sua própria pasta `.agents/`, garantindo funcionamento offline e versionamento explícito.
 
 ---
 
-## 1. Configuração Única (Setup Global)
+## 1. Configuração Rápida (Instalação Local)
 
-Você só precisa configurar o MCP uma única vez para a sua IDE ou Ferramenta CLI. Depois disso, todos os projetos vazios que você iniciar já terão os "Superpoderes" dos 21 agentes.
+### 1.1 Passo único — rodar o instalador
 
-### 💻 Opção A: Usando Claude Code (Recomendado para Arquitetura/Backend)
-Abra seu terminal em qualquer pasta e digite:
 ```bash
-claude mcp add inove-ai -- npx -y @joelbonito/mcp-server
+npx -y @joelbonito/inove-ai-framework init
 ```
-*Pronto! O Claude puxará a última versão sempre.*
 
-### 🖥️ Opção B: Usando Cursor IDE
-1. Abra as Configurações do Cursor (Settings > Features > MCP).
-2. Adicione um novo servidor MCP do tipo `command`.
-3. Nome: `inove-ai`
-4. Comando: `npx -y @joelbonito/mcp-server`
-5. Salve e recarregue a janela.
+O comando acima:
 
-### 🏄 Opção C: Usando Windsurf ou Cline
-Qualquer ferramenta compatível com MCP funciona. Basta apontar para o comando `npx -y @joelbonito/mcp-server` como um servidor **stdio**.
+- Copia `.agents/` (22 agentes, 42 skills, 25 workflows, scripts, squads, skills).
+- Sincroniza `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` na raiz do projeto (Claude/Codex/Gemini leem automaticamente).
+- Instala os git hooks oficiais (`.agents/scripts/install_git_hooks.sh`).
 
-*(Sempre que houver atualizações no nosso GitHub oficial, o `npx` garantirá que a versão cacheada mais recente e estável seja executada automaticamente em qualquer um desses editores).*
+Use `--force` para sobrescrever uma instalação existente:
+
+```bash
+npx -y @joelbonito/inove-ai-framework init --force
+```
+
+### 1.2 Atualizar para a versão mais recente
+
+```bash
+npm install --save-dev @joelbonito/inove-ai-framework@latest
+npx -y @joelbonito/inove-ai-framework init --force
+```
+
+Isso garante que seu `.agents/` sempre corresponda ao pacote publicado.
+
+### 1.3 Checklist pós-instalação
+
+Após o comando `init` você deve ver:
+
+```
+.agents/                    # núcleo do framework
+CLAUDE.md / AGENTS.md / GEMINI.md
+docs/ (vazio ou existente)
+```
+
+### 1.4 Integração com IDEs e CLIs
+
+- **Claude Code** lê `CLAUDE.md` automaticamente (assim que o arquivo existe na raiz).
+- **Codex CLI** usa `AGENTS.md` como ponte e referencia `.agents/INSTRUCTIONS.md`.
+- **Antigravity/Gemini** usa `GEMINI.md` + `docs/PROJECT_STATUS.md` para contexto.
+
+Não é necessário configurar MCP ou servidores externos. Basta manter os arquivos na raiz do repositório.
 
 ---
 
@@ -51,18 +74,18 @@ Antes de programar ansiosamente, valide se o planejamento está a prova de balas
 
 O Framework vai auditar tudo que acabou de criar, garantir que a paleta de cores não conflita com a marca, que o PRD não tem pontas soltas, e no final, ele constrói o `HANDOFF.md` (o bilhete dourado com as orientações para os codificadores).
 
-### Passo 3: Fatiando o Monstro (Sharding do Backlog)
-Um erro comum é mandar a IA ler um backlog de 500 linhas para codar uma telinha simples. Economize os "tokens" da sua IA fatiando seu Backlog:
-> *Rode no seu terminal: `python .agents/scripts/shard_epic.py`*
+### Passo 3: Story Files Automáticos (Backlog Lean)
+Na v5 o `/define` já cria um `docs/BACKLOG.md` enxuto **e** todos os arquivos em `docs/stories/` com contexto completo. Você não precisa mais “fatiar” nada manualmente — basta abrir o `PROJECT_STATUS.md`, ver qual story está pendente e entrar direto no arquivo indicado.
 
-**O que vai acontecer?**
-Ele vai ler seu `BACKLOG.md` gigante e transformá-lo em micro-arquivos dentro da pasta `docs/stories` (ex: `STORY-1-1_login.md`).
+**Projetos legados:** se herdou um backlog “gordo” das versões anteriores, execute apenas uma vez:
+- `python .agents/scripts/shard_epic.py migrate` → converte o backlog para formato lean e gera os story files.
+- `python .agents/scripts/shard_epic.py generate` → reidrata/sincroniza stories específicas (`--story 1.2`) sem destruir o Agent Workspace.
 
 ### Passo 4: Execução Focada (Sprint 1)
-Agora você programa usando os Shards fatiados, garantindo 100% de hiperfoco:
+Agora você programa usando os story files, garantindo 100% de hiperfoco:
 > *"Olhe nosso `PROJECT_STATUS.md`. Acione o `@frontend-specialist`, e vamos focar exclusivamente na `@STORY-1-1` que está na pasta de stories. Deixe todas as suas anotações temporárias salvas na 'Área do Agente' no rodapé do arquivo da Story."*
 
-*(Nota: Graças ao AST e Sharding, as IAs trabalharão cirurgicamente focadas nas tarefas indicadas sem esquecer do contexto global).*
+*(Nota: Graças ao AST + Story Files, as IAs trabalham cirurgicamente focadas sem esquecer do contexto global).*
 
 ### Passo 5: Fechando a Conta (Track & Finish)
 Concluiu a feature com a IA? Nunca se esqueça de fechar a tarefa e atualizar a sua "matriz":
@@ -74,40 +97,33 @@ Esses comandos atualizam as caixas `[ ]` originais do Backlog, reatualizam a sua
 
 ---
 
-## 3. Como Migrar Projetos Legados para o MCP Server
+## 3. Migrando de uma instalação MCP (thin client) para o pacote local
 
-Se você possui um projeto antigo rodando o framework na _versão 4 ou inferior_ (com aquela pasta pesada `.agents/` de 15MB copiada localmente), criamos um comando seguro para atualizar sua arquitetura para o novo paradigma **Thin Client (MCP)**.
+Se você estava usando o `@joelbonito/mcp-server` (sem `.agents/`), siga estes passos para voltar ao pacote completo:
 
-### 🛠️ O Comando `migrate`
+1. **Remova configurações MCP**  
+   - Claude Code: `claude mcp remove inove-ai`  
+   - Cursor/VS Code: apague a entrada `"inove-ai"` em `.cursor/mcp.json` / `.vscode/mcp.json`.
 
-Abra o terminal na raiz do seu projeto antigo e execute:
-```bash
-npx @joelbonito/inove-ai-framework migrate
-```
+2. **Recrie os arquivos locais**  
+   ```bash
+   npx -y @joelbonito/inove-ai-framework init --force
+   ```
+   Isso copia `.agents/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` e reinstala os git hooks.
 
-**O que o comando faz com segurança?**
-1. **Backup:** Cria uma pasta `.agents.bak/` com todos os seus arquivos (ignorada no git).
-2. **Deleção Cirúrgica:** Remove a pasta `.agents/` atual sem seguir symlinks (via `lstatSync`).
-3. **Limpeza de Symlinks:** Apaga referências órfãs (`.claude/agents`, `.codex/skills`, etc).
-4. **Injeção Thin Client:** Substitui os antigos `CLAUDE.md`, `GEMINI.md` e `AGENTS.md` de 500 linhas por versões enxutas (~40 linhas) que instruem a IA a buscar as "Tools via MCP".
-5. **Auto-Configuração:** Atualiza/Gera arquivos em `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` e `.gemini/mcp.json` blindando seus servidores anteriores (merge seguro).
+3. **Commit**  
+   ```
+   git add -A
+   git commit -m "chore: voltar para instalacao local do Inove AI"
+   ```
 
-### ⚙️ Modos Avançados de Operação
-
-*   **Preview Seguro:** Veja o que será deletado e modificado antes (Dry Run).
-    > `npx @joelbonito/inove-ai-framework migrate --dry-run`
-*   **Modo Automático:** Migração sem perguntas `[Y/n]` interativas (bom para scripts).
-    > `npx @joelbonito/inove-ai-framework migrate --force`
-*   **Sem Backup:** Se quiser apagar o `.agents/` nativo permanentemente sem criar o `.bak/`.
-    > `npx @joelbonito/inove-ai-framework migrate --no-backup`
-
-Após concluir o comando, basta um commit: `git add -A && git commit -m "chore: migrate to MCP server"`.
+Depois disso, todas as instruções e skills vivem dentro do repositório e podem ser versionadas normalmente.
 
 ---
 
 ## 4. O Ciclo em Projetos Existentes (Manutenção)
 
-Os agentes MCP não servem apenas para "projetos em branco". Se você acabou de abrir o MCP Server em um projeto que já existe (ou que herdou de alguém), siga estes workflows vitais:
+Os agentes do framework não servem apenas para "projetos em branco". Se você acabou de assumir um projeto existente (ou herdou código legado), siga estes workflows vitais:
 
 ### 💡 3.1 A Fase de Brainstorming (Para Melhorar o Sistema)
 Antes de pedir *"adicione a feature X"*, use a metodologia socrática do framework para encontrar soluções melhores que a sua ideia inicial.
@@ -168,7 +184,7 @@ Se você precisa automatizar o Zapier/Make da sua vida, em vez de usar os agente
 
 Depois de ativado, você ganha acesso a fluxos poderosíssimos especializados nele:
 1. **`/n8n-scaffold`**: Você diz *"crie um fluxo que lida com dados do stripe"* e e a IA monta o JSON do workflow do zero.
-2. **`/n8n-setup`**: A IA entra no seu docker e prepara as credenciais e variáveis sensíveis usando as senhas do seu servidor e configurando o N8N MCP server.
+2. **`/n8n-setup`**: A IA entra no seu docker e prepara as credenciais e variáveis sensíveis usando as senhas do seu servidor e configurando a instância do n8n.
 3. **`/n8n-debug`**: *"Meu nó do Hubspot falhou no meio do loop!"* A IA entra e conserta os subfluxos JSON do N8N na hora.
 
 *(O membro vital deste squad é o `@n8n-automation-expert` armado com a skill `n8n-orchestration`).*

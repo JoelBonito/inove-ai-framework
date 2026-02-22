@@ -40,7 +40,7 @@ O script irá:
 1. Ler o arquivo de backlog
 2. Contar tarefas `[x]` (concluídas) vs `[ ]` (pendentes)
 3. Calcular % global e por Epic
-4. Gerar `docs/progress-bar.md`
+4. Gerar `docs/PROJECT_STATUS.md`
 
 ---
 
@@ -58,7 +58,7 @@ Mostre um resumo no terminal:
 | Concluídas | 21 |
 | Total | 30 |
 
-Arquivo gerado: `docs/progress-bar.md`
+Arquivo gerado: `docs/PROJECT_STATUS.md`
 ```
 
 ---
@@ -91,7 +91,7 @@ Por Epic:
 • Epic 2: API         ████████████████░░░░ 80%
 • Epic 3: Dashboard   ████████████░░░░░░░░ 60%
 
-✅ Arquivo atualizado: docs/progress-bar.md
+✅ Arquivo atualizado: docs/PROJECT_STATUS.md
 ```
 
 ---

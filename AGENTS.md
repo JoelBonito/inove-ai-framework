@@ -39,19 +39,18 @@ O Codex CLI é primariamente um **implementador de código**. Quando usado junto
 
 **ANTES de começar qualquer implementação:**
 
-0. **Ler silenciosamente** o arquivo `docs/PROJECT_STATUS.md` (se existir) para resgatar o contexto atual (onde paramos, branch atual, etc) sem perguntar ao usuário.
+0. **Ler silenciosamente** `docs/PROJECT_STATUS.md` (se existir) para saber **onde** estamos (branch, próxima story, alertas de roteamento).
 1. **Verificar** se `docs/HANDOFF.md` existe:
    - **Se existir:** Ler para entender prioridades e decisões (contexto rico)
    - **Se não existir:** Prosseguir sem ele (ver Standalone Mode abaixo)
-2. **Ler** `docs/BACKLOG.md` para identificar a próxima tarefa
-3. **Ler** documentos relevantes em `docs/01-Planejamento/` (se existirem):
-   - `04-architecture.md` para decisões de arquitetura
-   - `06-stack.md` para stack e dependências
-   - `07-design-system.md` para UI (se aplicável)
-   - `05-security.md` para requisitos de segurança
-   - **Fallback:** Se `docs/01-Planejamento/` não existir, procurar em `docs/planning/`
+2. **Abrir** o arquivo da próxima story listado em `PROJECT_STATUS.md` (sempre em `docs/stories/`). Esse arquivo é a **fonte total de contexto** (requisito, critérios, dependências, agente, ferramenta e Agent Workspace).
+3. **Validar dependências** (`depends_on`): se alguma story estiver pendente, finalize-a antes de prosseguir.
+4. **Ativar o agente/ferramenta** especificados no frontmatter (`agent`, `tool`). Só troque manualmente se o usuário instruir.
+5. **Registrar descobertas** no bloco **Agent Workspace** da própria story (fonte única de notas e links).
+6. **Auto-finish obrigatório:** ao concluir, rode `finish_task.py` + `progress_tracker.py` para sincronizar backlog, story e PROJECT_STATUS.
+7. **Usar** `docs/BACKLOG.md` apenas como índice/checkbox para saber o panorama geral ou confirmar que a story existe. **Nunca** usar o backlog para absorver contexto detalhado.
 
-> **Regra:** O HANDOFF.md enriquece o contexto mas **NÃO é bloqueante**. Se não existir, usar o que estiver disponível.
+> **Regra adicional:** STORY FILE é a única fonte de contexto. Se precisar de detalhes extra, documente-os no Agent Workspace do próprio arquivo.
 
 ---
 
@@ -59,9 +58,11 @@ O Codex CLI é primariamente um **implementador de código**. Quando usado junto
 
 Quando o Codex CLI é usado **sem o Gemini** (sem `docs/HANDOFF.md`):
 
-1. **Se `docs/BACKLOG.md` existir:** Ler e implementar a próxima tarefa
-2. **Se `docs/01-Planejamento/` existir:** Usar os documentos como contexto (fallback: `docs/planning/`)
-3. **Se nenhum existir:** Usar o Socratic Gate para descobrir requisitos com o usuário, depois implementar
+1. **Leia `docs/PROJECT_STATUS.md`:** ele aponta a próxima story e traz alertas de roteamento (p. ex., “próxima story exige antigravity”).
+2. **Abra o story file listado:** todo requisito, critério, dependência, agente e ferramenta estão em `docs/stories/STORY-*.md`. Nenhum outro arquivo fornece esse contexto.
+3. **Use** `docs/BACKLOG.md` apenas como índice leve (checkbox). Se o projeto não tiver status/story definidos, gere-os via `/define` ou `shard_epic.py migrate`.
+4. **Planejamento adicional:** Só consulte `docs/01-Planejamento/` se precisar de decisões de arquitetura/stack/design específicas para a story atual.
+5. **Se nada disso existir:** use o Socratic Gate para descobrir requisitos com o usuário e documente um story antes de implementar.
 
 ### Agentes Adicionais (Standalone)
 
@@ -106,6 +107,8 @@ Para TODOS os projetos com interface visual (HAS_UI=true):
 
 **Regras de Cobertura Total:**
 - `/define` Fase 3.5: Prototipar **TODAS** as telas do UX Concept (não apenas 1 ou 2)
+- `/ui-ux-pro-max` Step 2c: Preview visual obrigatório para cada tela mencionada
+- `/readiness` valida cobertura Stitch antes de liberar implementação
 - **Gate de Bloqueio:** Fase 4 BLOQUEADA até cobertura 100%
 
 ---
@@ -143,17 +146,21 @@ Para TODOS os projetos com interface visual (HAS_UI=true):
 
 ### Socratic Gate (OBRIGATÓRIO)
 
-| Tipo                      | Ação Obrigatória                                     |
-| ------------------------- | ---------------------------------------------------- |
-| **Nova Feature / Build**  | PERGUNTAR mínimo 3 questões estratégicas             |
-| **Edit / Bug Fix**        | Confirmar entendimento + perguntas de impacto        |
-| **"Prossiga" direto**     | Mesmo assim, perguntar 2 questões de Edge Case       |
+| Tipo de Requisição        | Estratégia       | Ação Obrigatória                                          |
+| ------------------------- | ---------------- | --------------------------------------------------------- |
+| **Nova Feature / Build**  | Deep Discovery   | Perguntar no mínimo 3 questões estratégicas               |
+| **Edit / Bug Fix**        | Context Check    | Confirmar entendimento e perguntar impactos/regressões    |
+| **Vago / Simples**        | Clarificação     | Perguntar Propósito, Usuários e Escopo                    |
+| **Orquestração Full**     | Gatekeeper       | Parar subagentes até o plano ser confirmado               |
+| **"Prossiga" direto**     | Validação        | Mesmo assim perguntar 2 edge cases antes de codar         |
+
+**Protocolo:** Nunca assumir (qualquer dúvida → perguntar), responder em listas objetivas, esperar autorização explícita antes de editar, e usar `.agents/skills/brainstorming/SKILL.md` como referência.
 
 ### Read → Understand → Apply
 
 ```
 ERRADO: Ler agente → Começar a codar
-CORRETO: Ler contexto (HANDOFF/BACKLOG/docs) → Ler agente → Entender PORQUÊ → Aplicar PRINCÍPIOS → Codar
+CORRETO: Ler contexto (PROJECT_STATUS → Story file → HANDOFF/docs de apoio) → Ler agente → Entender PORQUÊ → Aplicar PRINCÍPIOS → Codar
 ```
 
 ---
@@ -235,7 +242,7 @@ Progresso atualizado: {percentual}%
 Próxima tarefa: {nome_proxima_tarefa}
 ```
 
-> **Regra:** Você é RESPONSÁVEL por atualizar o status no backlog. Não peça ao usuário para fazer isso.
+> **Regras adicionais:** O `finish_task.py` valida se o story file existe antes de marcar o checkbox, atualiza o frontmatter da story e injeta contexto nas dependências desbloqueadas. Nunca marque manualmente.
 
 ---
 
@@ -291,7 +298,8 @@ python3 .agents/scripts/checklist.py . --url <URL>
 | Checklist | `python3 .agents/scripts/checklist.py .` | Auditoria do projeto |
 | Validar | `python3 .agents/scripts/validate_installation.py` | Verificar setup |
 | Squads | `python3 .agents/scripts/squad_manager.py list` | Gerenciar squads |
-| Shard Epic | `python3 .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
+| Story Ops | `python3 .agents/scripts/shard_epic.py generate` | Gerar/atualizar story files (novo fluxo) |
+| Story Migrate | `python3 .agents/scripts/shard_epic.py migrate` | Converter backlog antigo em backlog lean + stories |
 
 ---
 

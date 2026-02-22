@@ -6,10 +6,10 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
-  <a href="https://www.npmjs.com/package/@joelbonito/mcp-server"><img src="https://img.shields.io/npm/v/@joelbonito/mcp-server" alt="npm version"></a>
-  <a href=".agents/agents/"><img src="https://img.shields.io/badge/Agents-21-green" alt="Agents"></a>
-  <a href=".agents/skills/"><img src="https://img.shields.io/badge/Skills-41-orange" alt="Skills"></a>
-  <a href=".agents/workflows/"><img src="https://img.shields.io/badge/Workflows-22-purple" alt="Workflows"></a>
+  <a href="https://www.npmjs.com/package/@joelbonito/inove-ai-framework"><img src="https://img.shields.io/npm/v/@joelbonito/inove-ai-framework" alt="npm version"></a>
+  <a href=".agents/agents/"><img src="https://img.shields.io/badge/Agents-22-green" alt="Agents"></a>
+  <a href=".agents/skills/"><img src="https://img.shields.io/badge/Skills-42-orange" alt="Skills"></a>
+  <a href=".agents/workflows/"><img src="https://img.shields.io/badge/Workflows-25-purple" alt="Workflows"></a>
 </p>
 
 <p align="center">
@@ -18,75 +18,47 @@
 
 ## Quick Install
 
-> **Requires:** Node.js >= 22. Check with `node -v`.
-
-### Claude Code (recommended)
+> **Requires:** Node.js ≥ 22, Python 3, Git.
 
 ```bash
-claude mcp add inove-ai -- npx -y @joelbonito/mcp-server
+npx -y @joelbonito/inove-ai-framework init
 ```
 
-### Cursor / VS Code
+That single command:
 
-Add to `.cursor/mcp.json` or `.vscode/mcp.json`:
+- Copies the entire `.agents/` folder (22 agents, 42 skills, 25 workflows, scripts, skills, workflows).
+- Drops fresh `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` into the repo root (auto-loaded by Claude Code, Codex CLI, Gemini CLI).
+- Installs the Git hooks defined in `.agents/scripts/install_git_hooks.sh`.
 
-```json
-{
-  "mcpServers": {
-    "inove-ai": {
-      "command": "npx",
-      "args": ["-y", "@joelbonito/mcp-server"]
-    }
-  }
-}
-```
-
-### Windsurf / Cline
-
-Any MCP-compatible tool works — point it to `npx -y @joelbonito/mcp-server` as a stdio server.
-
-> Zero disk usage per project. Auto-updates on every run. Setup in 30 seconds.
-
-### Legacy Install (Deprecated)
-
-> **Deprecated.** Use the MCP server above instead.
+The command is idempotent. Use `--force` to overwrite an existing installation:
 
 ```bash
-npx @joelbonito/inove-ai-framework init
+npx -y @joelbonito/inove-ai-framework init --force
 ```
 
-This copies `.agents/` into your project (~15MB). The MCP server provides the same content without copying files.
-
-### Migrate from Legacy to MCP
-
-If your project was installed via `npx ... init` and has a local `.agents/` folder, migrate to the MCP approach:
+### Keep it up-to-date
 
 ```bash
-npx @joelbonito/inove-ai-framework migrate
+npm install --save-dev @joelbonito/inove-ai-framework@latest
+npx -y @joelbonito/inove-ai-framework init --force
 ```
 
-This will:
-- Remove `.agents/` (backed up to `.agents.bak/`)
-- Replace `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` with thin MCP-aware versions
-- Auto-configure MCP for Claude Code, Cursor, VS Code, and Gemini CLI
+That ensures your `.agents/` folder, scripts, and instruction files always match the published package.
 
-Your project data (`docs/`, `squads/`) is never touched.
+### Migrating from the MCP/Thin setup
 
-```bash
-# Preview changes without applying
-npx @joelbonito/inove-ai-framework migrate --dry-run
+If you previously relied on the `@joelbonito/mcp-server` thin client:
 
-# Skip backup
-npx @joelbonito/inove-ai-framework migrate --no-backup
+1. Remove any `claude mcp add ...` / `.cursor/mcp.json` entries that pointed to the remote server.
+2. In the project root, run `npx -y @joelbonito/inove-ai-framework init --force`.
+3. Commit the fresh `.agents/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`.
 
-# Non-interactive (CI-safe with override)
-npx @joelbonito/inove-ai-framework migrate --force
-```
+From now on every repository is self-contained; all instructions and skills live alongside your code.
 
 ## What's Included
 
 - **22 Specialized Agents** for different domains (frontend, backend, security, database, mobile, UX, game dev, etc.)
-- **41 Modular Skills** loaded on demand (clean-code, testing-patterns, api-patterns, tailwind, etc.)
+- **42 Modular Skills** loaded on demand (clean-code, testing-patterns, api-patterns, tailwind, etc.)
 - **25 Workflows** (slash commands) for structured processes
 - **Squad System** — reusable agent+skill+workflow packages for custom domains
 - **Recovery System** — automatic retry and git checkpoint/rollback for resilient execution
@@ -225,7 +197,7 @@ Squads live in `squads/<name>/` with a `squad.yaml` manifest. See [squads/README
 ```
 .agents/
 ├── agents/           # 22 specialized agents
-├── skills/           # 41 knowledge modules
+├── skills/           # 42 knowledge modules
 ├── workflows/        # 25 workflows (slash commands)
 ├── scripts/          # Python automation (22 scripts)
 ├── config/           # Per-platform configuration

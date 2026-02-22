@@ -1,12 +1,5 @@
 {
   "mcpServers": {
-    "inove-ai": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@joelbonito/mcp-server"
-      ]
-    },
     "context7": {
       "command": "npx",
       "args": [

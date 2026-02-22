@@ -404,33 +404,215 @@ def _get_git_available() -> bool:
 _BACKLOG_TEMPLATE = """\
 # Backlog
 
-## Epic 1: Placeholder
-- [ ] **Story 1.1:** Definir primeira tarefa real do projeto
+## Epic 1: Placeholder [P0]
+- [ ] Story 1.1: Definir primeira tarefa real do projeto
 """
 
 _PROJECT_STATUS_TEMPLATE = """\
-# Project Status (Context State)
+# Project Status
 
-> **AUTO-GENERATED:** Le este arquivo para se situar no projeto.
+**Atualizado:** {timestamp}
+**Branch:** `{branch}`
+**Progresso:** {progress_bar} {percent}% ({done}/{total})
 
-**Ultima Atualizacao:** {timestamp}
+## Proxima Story
+{next_story_block}
 
-**Branch Atual:** `{branch}`
+{routing_alert}
 
-## Progresso Atual
-
-- **Global:** 0.0% (0/0 tarefas)
-
-## Proxima Tarefa no Foco
-
-- Nenhum epic ativo
+## Progresso por Epic
+| Epic | Status | Progresso |
+|------|--------|-----------|
+{epic_table}
 
 ## Ultimos Commits
+```
+{commits}
+```
+"""
 
-```bash
+_PROJECT_STATUS_INITIAL = """\
+# Project Status
+
+**Atualizado:** {timestamp}
+**Branch:** `{branch}`
+**Progresso:** ░░░░░░░░░░ 0% (0/0)
+
+## Proxima Story
+Nenhuma story pendente. Execute /define para criar o backlog.
+
+## Progresso por Epic
+| Epic | Status | Progresso |
+|------|--------|-----------|
+| (nenhum epic) | - | - |
+
+## Ultimos Commits
+```
 (nenhum commit registrado)
 ```
 """
+
+STORY_TEMPLATE = """\
+---
+story: "{story_id}"
+epic: "Epic {epic_num}: {epic_name}"
+status: {status}
+agent: {agent}
+tool: {tool}
+depends_on: {depends_on}
+unlocks: {unlocks}
+priority: {priority}
+spec_hash: "{spec_hash}"
+---
+
+# Story {story_id}: {title}
+
+## Contexto do Epic
+{epic_context}
+
+## Requisito
+{requirement}
+
+## Criterios de Aceite
+{acceptance_criteria}
+
+## Contexto de Dependencias
+{dependency_context}
+
+## Agent Workspace
+{workspace}
+"""
+
+# Tool mapping: which tool runs each agent type
+TOOL_MAPPING = {
+    # Design/Planning → antigravity (Gemini)
+    "ux-researcher": "antigravity",
+    # Implementation → codex
+    "frontend-specialist": "codex",
+    "backend-specialist": "codex",
+    "database-architect": "codex",
+    "security-auditor": "codex",
+    "devops-engineer": "codex",
+    "test-engineer": "codex",
+    "qa-automation-engineer": "codex",
+    "debugger": "codex",
+    "mobile-developer": "codex",
+    "game-developer": "codex",
+    "performance-optimizer": "codex",
+    "seo-specialist": "codex",
+    "penetration-tester": "codex",
+    # Planning/Strategy → claude_code por padrão
+    "orchestrator": "claude_code",
+    "project-planner": "claude_code",
+    "product-manager": "claude_code",
+    "product-owner": "claude_code",
+    "code-archaeologist": "claude_code",
+    "documentation-writer": "claude_code",
+    "explorer-agent": "claude_code",
+}
+
+
+def get_tool_for_agent(agent: str, source: Optional[str] = None) -> str:
+    """
+    Returns the recommended tool for a given agent name.
+
+    Standalone mode: when a single tool runs without others, all agents
+    are normalized to the current tool (everything executes locally).
+    """
+    tool = TOOL_MAPPING.get(agent, "codex")
+    agent_source = source or get_agent_source()
+
+    # Standalone: normalize to the running tool
+    if agent_source in ("codex", "claude_code", "antigravity") and tool != agent_source:
+        return agent_source
+
+    return tool
+
+
+def find_stories_dir(root_path: Optional[Path] = None) -> Path:
+    """
+    Returns the path to docs/stories/ directory.
+
+    Args:
+        root_path: Project root. Defaults to current directory.
+
+    Returns:
+        Path to stories directory (may not exist yet).
+    """
+    base = root_path or Path(".")
+    return base / "docs" / "stories"
+
+
+def find_story_file(story_id: str, root_path: Optional[Path] = None) -> Optional[Path]:
+    """
+    Locates a story file by its ID (e.g., '1.1', '0.3').
+
+    Searches docs/stories/ for STORY-{N-N}_*.md pattern.
+
+    Args:
+        story_id: Story ID like '1.1' or '0.3'.
+        root_path: Project root. Defaults to current directory.
+
+    Returns:
+        Path to the story file, or None if not found.
+    """
+    stories_dir = find_stories_dir(root_path)
+    if not stories_dir.exists():
+        return None
+
+    safe_id = story_id.replace(".", "-")
+    prefix = f"STORY-{safe_id}_"
+    for f in stories_dir.glob(f"{prefix}*.md"):
+        return f
+    return None
+
+
+def parse_story_frontmatter(story_path: Path) -> dict:
+    """
+    Reads YAML-like frontmatter from a story file.
+
+    Args:
+        story_path: Path to the story .md file.
+
+    Returns:
+        Dict with keys: story, epic, status, agent, tool, depends_on, unlocks, priority.
+        Returns empty dict if file not found or no frontmatter.
+    """
+    if not story_path.exists():
+        return {}
+
+    content = story_path.read_text(encoding="utf-8")
+
+    # Check for frontmatter delimiters
+    if not content.startswith("---"):
+        return {}
+
+    end_idx = content.find("---", 3)
+    if end_idx == -1:
+        return {}
+
+    frontmatter = content[3:end_idx].strip()
+    result = {}
+
+    for line in frontmatter.split("\n"):
+        line = line.strip()
+        if ":" not in line:
+            continue
+        key, _, value = line.partition(":")
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+
+        # Parse list values like ["0.1", "0.2"]
+        if value.startswith("[") and value.endswith("]"):
+            inner = value[1:-1].strip()
+            if inner:
+                result[key] = [v.strip().strip('"').strip("'") for v in inner.split(",")]
+            else:
+                result[key] = []
+        else:
+            result[key] = value
+
+    return result
 
 
 def ensure_backlog(create_if_missing: bool = True) -> dict:
@@ -478,7 +660,7 @@ def ensure_project_status(create_if_missing: bool = True) -> dict:
 
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(
-        _PROJECT_STATUS_TEMPLATE.format(timestamp=timestamp, branch=branch),
+        _PROJECT_STATUS_INITIAL.format(timestamp=timestamp, branch=branch),
         encoding="utf-8",
     )
     return {"path": str(target), "created": True, "existed": False}

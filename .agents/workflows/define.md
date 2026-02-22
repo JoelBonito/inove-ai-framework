@@ -1643,128 +1643,100 @@ Por favor, revise e responda: ok / editar [secao] / cancelar
 
 ---
 
-### Fase 8: Backlog (Consolidacao de GAPs)
+### Fase 8: Backlog + Story Files (Consolidacao de GAPs)
 
 **Agente:** `product-owner`
-**Output:** `docs/BACKLOG.md`
+**Outputs:** `docs/BACKLOG.md` (lean) + `docs/stories/STORY-*.md` (detalhados)
 **Skills:** `plan-writing`, `gap-analysis`
 **Referencia:** Leia TODOS os 7 documentos anteriores
+
+> **REGRA v2:** O backlog e um INDICE de checkboxes. Todo detalhe vai nos story files.
+> Nunca colocar descricoes, gherkin ou subtarefas no BACKLOG.md.
+
+#### Output A: Lean BACKLOG.md
 
 ```markdown
 # Backlog: {Nome do Projeto}
 
-> Gerado a partir dos documentos de planejamento com GAPs consolidados.
+## Epic 0: {Nome} [P0] [OWNER: {owner}]
+- [ ] Story 0.1: {Titulo}
+- [ ] Story 0.2: {Titulo}
 
-**Ultima Atualizacao:** {YYYY-MM-DD HH:MM}
-**Total de Tarefas:** {N}
-**Progresso:** 0%
+## Epic 1: {Nome} [P0]
+- [ ] Story 1.1: {Titulo}
+- [ ] Story 1.2: {Titulo}
 
----
-
-## Indice de Epicos
-
-| # | Epico | Stories | Status |
-|---|-------|---------|--------|
-| 1 | [Nome] | {N} | TODO |
-| 2 | [Nome] | {N} | TODO |
-| 3 | [Nome] | {N} | TODO |
-
----
-
-## Epic 1: {Nome}
-
-> **Objetivo:** {Descricao}
-> **Requisitos:** RF01, RF02
-> **GAPs:** G-PRD-01, G-ARCH-01
-
-### Story 1.1: {Titulo}
-
-**Como** {persona}, **quero** {acao} **para** {beneficio}.
-
-**Criterios de Aceite:**
-- [ ] {Criterio 1}
-- [ ] {Criterio 2}
-
-**Subtarefas:**
-- [ ] **1.1.1:** {Subtarefa}
-- [ ] **1.1.2:** {Subtarefa}
-
-**Dependencias:** Nenhuma | Story X.Y
-**Estimativa:** P/M/G
-**GAPs resolvidos:** [IDs]
-
----
-
-[Repetir para cada Story e Epic]
-
----
-
-## Consolidated GAP Summary
-
-### Por Severidade
-| Severidade | Produto | UX | Arquitetura | Seguranca | Stack | Design | Total |
-|-----------|---------|-----|------------|-----------|-------|--------|-------|
-| Critical | [N] | [N] | [N] | [N] | [N] | [N] | [N] |
-| High | [N] | [N] | [N] | [N] | [N] | [N] | [N] |
-| Medium | [N] | [N] | [N] | [N] | [N] | [N] | [N] |
-| Low | [N] | [N] | [N] | [N] | [N] | [N] | [N] |
-
-### GAP-to-Task Mapping
-| GAP ID | Origem | Epic | Story | Prioridade | Status |
-|--------|--------|------|-------|------------|--------|
-| G-PRD-01 | PRD | Epic 1 | Story 1.1 | P0 | TODO |
-| G-UX-01 | UX Concept | Epic 2 | Story 2.2 | P1 | TODO |
-| G-ARCH-01 | Architecture | Epic 1 | Story 1.3 | P0 | TODO |
-| G-SEC-01 | Security | Epic 1 | Story 1.2 | P0 | TODO |
-| G-STACK-01 | Stack | Epic 3 | Story 3.1 | P1 | TODO |
-| G-DS-01 | Design System | Epic 2 | Story 2.4 | P2 | TODO |
-
-### Roadmap para Fechar GAPs
-| Fase | GAPs | Milestone | Dependencias |
-|------|------|-----------|-------------|
-| Foundation | G-PRD-01, G-ARCH-01, G-STACK-01 | Infra pronta | Nenhuma |
-| Core | G-UX-01, G-PRD-02 | Fluxos principais | Foundation |
-| Polish | G-DS-01, G-UX-03 | Consistencia | Core |
-
----
-
-## Progresso
-
-| Epico | Total | Done | In Progress | TODO | % |
-|-------|-------|------|------------|------|---|
-| Epic 1 | {N} | 0 | 0 | {N} | 0% |
-| **TOTAL** | **{N}** | **0** | **0** | **{N}** | **0%** |
-
-```
-[                    ] 0% (0/{N} stories)
+## Epic 2: {Nome} [P1]
+- [ ] Story 2.1: {Titulo}
 ```
 
+**Regras do Backlog Lean:**
+- SEM descricoes, SEM gherkin, SEM subtarefas
+- Apenas: `## Epic N: Nome [Prioridade] [OWNER: agent]` + checkboxes
+- O backlog e um indice/guia, NAO fonte de contexto
+
+#### Output B: Story Files em docs/stories/
+
+Para CADA story do backlog, criar um arquivo em `docs/stories/`:
+
+```markdown
+---
+story: "{N.N}"
+epic: "Epic {N}: {Nome do Epic}"
+status: pending
+agent: {agente-detectado}
+tool: {codex|antigravity|claude_code}
+depends_on: ["{dep1}", "{dep2}"]
+unlocks: ["{unlock1}"]
+priority: {P0|P1|P2}
 ---
 
-## Dependencias
+# Story {N.N}: {Titulo}
 
-```mermaid
-flowchart LR
-    S1.1[Story 1.1] --> S1.2[Story 1.2]
-    S1.1 --> S2.1[Story 2.1]
+## Contexto do Epic
+{1-2 frases resumindo o objetivo do epic}
+
+## Requisito
+Como {persona}, quero {acao} para {beneficio}.
+
+## Criterios de Aceite
+DADO {precondição}
+QUANDO {acao}
+ENTAO {resultado esperado}
+
+## Contexto de Dependencias
+> Story {dep1}: {O que foi construido nessa story}
+> Story {dep2}: {O que foi construido nessa story}
+(Se nao tem dependencias: "> Sem dependencias anteriores")
+
+## Agent Workspace
+> Notas do agente durante implementacao
 ```
 
----
+**Regras dos Story Files:**
+- Campo `agent` detectado pelo conteudo (frontend-specialist, backend-specialist, etc.)
+- Campo `tool` derivado do agente:
+  - `antigravity`: ux-researcher, frontend-specialist (quando design/UI)
+  - `codex`: backend-specialist, database-architect, security-auditor, etc.
+  - `claude_code`: orchestrator, project-planner, product-manager, etc.
+- Campo `depends_on`: IDs das stories anteriores necessarias
+- Campo `unlocks`: IDs das stories que esta story desbloqueia
+- `Contexto de Dependencias` pre-preenchido com o que se espera das stories anteriores
+- NAO criar pasta `epics/`. Todo contexto epico cabe em 1-2 frases no story file
 
-## Ordem de Execucao
+#### Consolidated GAP Summary (no BACKLOG.md ou em documento separado)
 
-1. **Foundation:** Story 1.1, 1.2
-2. **Core:** Story 2.1, 2.2, 2.3
-3. **Polish:** Story 3.1, 3.2
-4. **Launch:** Story 4.1
+Se o projeto tiver GAPs identificados nas fases anteriores, incluir mapeamento GAP-to-Story:
 
----
-
-## Changelog
-| Data | Alteracao | Autor |
-|------|-----------|-------|
-| {YYYY-MM-DD} | Backlog criado | AI Product Owner |
+```markdown
+## GAP-to-Task Mapping
+| GAP ID | Origem | Story | Prioridade |
+|--------|--------|-------|------------|
+| G-PRD-01 | PRD | Story 1.1 | P0 |
+| G-UX-01 | UX | Story 2.2 | P1 |
 ```
+
+> Nota: O mapeamento de GAPs pode ficar no final do BACKLOG.md lean (nao polui o indice) ou em doc separado conforme tamanho do projeto.
 
 ---
 
@@ -1811,15 +1783,15 @@ Quando executado pelo Gemini CLI (Flow B), gerar automaticamente `docs/HANDOFF.m
 
 > **Regra:** O HANDOFF.md e gerado automaticamente. No Claude Code (Flow A), este passo e opcional pois o mesmo agente faz planning + implementacao.
 
-### Sharding Recomendado
+### Fase 8.5: Inicializar PROJECT_STATUS
 
-Apos gerar o BACKLOG.md, sugerir ao usuario:
+Apos gerar o BACKLOG.md lean e os story files, executar:
 
 ```bash
-python3 .agents/scripts/shard_epic.py shard
+python3 .agents/scripts/progress_tracker.py
 ```
 
-Isso divide o backlog em arquivos individuais por story em `docs/stories/`, permitindo que as IAs trabalhem com contexto focado.
+Isso cria o `docs/PROJECT_STATUS.md` inicial com 0% de progresso e ponteiro para a primeira story.
 
 ### Resumo Final
 
@@ -1835,16 +1807,17 @@ Isso divide o backlog em arquivos individuais por story em `docs/stories/`, perm
 5. docs/01-Planejamento/05-security.md — Seguranca + GAP security
 6. docs/01-Planejamento/06-stack.md — Stack + GAP tecnologia
 7. docs/01-Planejamento/07-design-system.md — Design + GAP design
-8. docs/BACKLOG.md — Backlog + GAPs consolidados
-9. docs/HANDOFF.md — Handoff para implementacao (se Flow B)
+8. docs/BACKLOG.md — Indice lean (checkboxes apenas)
+9. docs/stories/ — Story files com contexto completo
+10. docs/PROJECT_STATUS.md — Ponteiro + progresso
+11. docs/HANDOFF.md — Handoff para implementacao (se Flow B)
 
 ### Proximo Passo: Revisao
 Documentos devem ser revisados com skill `doc-review` por Claude Code ou Codex.
 
 ### Apos Revisao:
-1. /track — Inicializar tracking
-2. `python3 .agents/scripts/shard_epic.py shard` — Fatiar backlog em story files
-3. implementar Story 1.1 — Comecar implementacao
+1. /track — Verificar progresso
+2. implementar Story 0.1 — Comecar implementacao (ler PROJECT_STATUS para saber qual story)
 
 NAO inicio implementacao sem aprovacao explicita.
 ```

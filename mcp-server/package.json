@@ -1,6 +1,6 @@
 {
   "name": "@joelbonito/mcp-server",
-  "version": "5.2.1",
+  "version": "5.4.0",
   "description": "MCP server for Inove AI Framework — agents, skills, and workflows as MCP resources, tools and prompts",
   "license": "MIT",
   "author": "Inove AI <hello@inove.ai>",
@@ -26,10 +26,10 @@
     "inove-init": "dist/init.js"
   },
   "scripts": {
-    "prebuild": "tsx scripts/bundle-content.ts",
+    "prebuild": "node --loader ./scripts/ts-esm-loader.mjs scripts/bundle-content.ts",
     "build": "tsc",
-    "postbuild": "chmod +x dist/index.js dist/init.js",
-    "dev": "tsx src/index.ts",
+    "postbuild": "chmod +x dist/index.js dist/init.js dist/install.js",
+    "dev": "node --watch --loader ./scripts/ts-esm-loader.mjs src/index.ts",
     "start": "node dist/index.js",
     "test": "vitest run",
     "test:watch": "vitest",

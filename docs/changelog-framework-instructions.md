@@ -240,8 +240,8 @@ O `AGENTS.md` manteve a filosofia de **ponte/redirect** para `.agents/INSTRUCTIO
 - [x] Atualizar `.agents/rules/GEMINI.md` com Regra Zero + paths corrigidos + Sessões
 - [x] Atualizar `auto_session.py` com versão melhorada (parser robusto + resumo automático)
 - [x] Criar `docs/changelog-framework-instructions.md`
-- [ ] Verificar que nenhuma referência a "crono-capilar" existe nos arquivos de instrução
-- [ ] Confirmar contagens 21/41/21
+- [x] Verificar que nenhuma referência a "crono-capilar" existe nos arquivos de instrução
+- [x] Confirmar contagens 22/42/25 (21 agentes core + squads ativos, 41 skills core + 1 squad, 22 workflows core + 3 adicionais)
 
 ---
 

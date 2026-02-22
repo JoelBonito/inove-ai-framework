@@ -113,21 +113,21 @@ Informar ao usuário:
 🎯 Próxima tarefa: {nome_proxima_tarefa}
 ```
 
+> **Guardas automáticos:** `finish_task.py` só marca o checkbox se o story file correspondente existir, atualiza o frontmatter e injeta o resumo nas histórias desbloqueadas. Nunca marque manualmente.
+
 ---
 
-## Integração com Backlog
+## Integração com Backlog / Stories / Status
 
-Quando o usuário disser "implementar Epic X" ou "implementar Story Y.Z":
+Quando o usuário disser "implementar Epic X" ou "implementar Story Y.Z", siga SEMPRE esta ordem:
 
-1. **Ler backlog:** `docs/BACKLOG.md`
-2. **Verificar shards:** Se `docs/stories/` não existir, executar `python3 .agents/scripts/shard_epic.py shard` antes de continuar
-3. **Identificar detalhes** da tarefa
-4. **Detectar domínio** → Ativar agente apropriado
-5. **Implementar** seguindo regras do agente
-6. **Auto-finish** usando scripts
-7. **Atualizar progresso**
-
-> **Regra:** Após `/define` ou `/readiness`, se `docs/stories/` não existir, executar `python3 .agents/scripts/shard_epic.py shard` automaticamente antes de iniciar qualquer implementação.
+1. **PROJECT_STATUS primeiro:** Abra `docs/PROJECT_STATUS.md` para saber a próxima story, branch atual, progresso e alertas (ex.: “próxima task é UI/antigravity”).
+2. **Story file = fonte única:** Abrir o arquivo indicado em `docs/stories/STORY-Y.Z_*.md`. Todo o contexto (requisito, critérios, dependências, agente, ferramenta, workspace) vive nele. Não use o backlog para isso.
+3. **Validar dependências:** Checar `depends_on`. Se alguma story estiver pendente, pare e finalize-a antes de avançar.
+4. **Ativar agente/ferramenta:** Utilize os campos `agent`/`tool` do story para rotear automaticamente (ex.: `frontend-specialist` + `codex`, `ux-researcher` + `antigravity`).
+5. **Backlog = índice:** Use `docs/BACKLOG.md` apenas como checklist global. Se uma story no backlog não tiver arquivo correspondente, gere-o com `/define` ou `python3 .agents/scripts/shard_epic.py generate|migrate` antes de marcar qualquer progresso.
+6. **Registrar no Agent Workspace:** Documente decisões, anotações e links diretamente no story file para manter o contexto vivo.
+7. **Auto-finish obrigatório:** Execute `finish_task.py` + `progress_tracker.py` para atualizar backlog, story files e PROJECT_STATUS. Nunca marque manualmente.
 
 ---
 
@@ -315,7 +315,8 @@ Formato no BACKLOG.md:
 | Verificar Tudo | `python3 .agents/scripts/verify_all.py .` | Verificação completa |
 | Squad Manager | `python3 .agents/scripts/squad_manager.py list` | Gerenciar squads |
 | Recovery | `python3 .agents/scripts/recovery.py checkpoint <label>` | Retry + rollback |
-| Shard Epic | `python3 .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
+| Story Ops | `python3 .agents/scripts/shard_epic.py generate` | Gerar/atualizar story files |
+| Story Migrate | `python3 .agents/scripts/shard_epic.py migrate` | Converter backlog antigo em lean + stories |
 
 ---
 

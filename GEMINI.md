@@ -176,8 +176,8 @@ Para TODOS os projetos com interface visual (HAS_UI=true):
 
 **Regras de Cobertura Total:**
 - `/define` Fase 3.5: Prototipar **TODAS** as telas do UX Concept (não apenas 1 ou 2)
-- `/ui-ux-pro-max` Step 2c: Preview visual é **OBRIGATÓRIO**
-- `/readiness`: Valida existência de mockups E cobertura completa
+- `/ui-ux-pro-max` Step 2c: Preview visual é **OBRIGATÓRIO** para cada tela
+- `/readiness`: Valida existência de mockups e cobertura completa antes do handoff
 - **Gate de Bloqueio:** Fase 4 BLOQUEADA até cobertura 100%
 
 ---
@@ -307,15 +307,31 @@ Squads são pacotes reutilizáveis de agentes+skills+workflows.
 
 ---
 
+## Integração com Backlog / Stories / Status
+
+Quando coordenar ou executar implementação (Standalone ou orientando o Codex), siga SEMPRE esta ordem:
+
+1. **PROJECT_STATUS primeiro:** Abra `docs/PROJECT_STATUS.md` para saber próxima story, branch, progresso e alertas (ex.: “próxima task exige antigravity”).
+2. **Story file = fonte única:** Abra o arquivo em `docs/stories/STORY-Y.Z_*.md` indicado ali. Todo o contexto (requisito, critérios, dependências, agente, ferramenta, Agent Workspace) vive nesse arquivo. O backlog não traz detalhes completos.
+3. **Validar dependências:** Cheque `depends_on`. Se houver histórias pendentes, pare e finalize-as antes de seguir.
+4. **Roteamento automático:** Use os campos `agent`/`tool` para ativar o agente correto (ex.: `ux-researcher` + `antigravity`, `frontend-specialist` + `codex`).
+5. **Backlog = índice:** Utilize `docs/BACKLOG.md` apenas como checklist. Se o backlog citar uma story sem arquivo correspondente, gere-a com `/define` ou `python3 .agents/scripts/shard_epic.py generate|migrate` antes de atualizar status.
+6. **Workspace obrigatório:** Documente descobertas e decisões na seção **Agent Workspace** do story para que o próximo agente receba o contexto consolidado.
+7. **Auto-finish sempre:** Ao concluir, rode `finish_task.py` + `progress_tracker.py` para sincronizar backlog, stories e PROJECT_STATUS. Nunca marque manualmente.
+
+---
+
 ## Socratic Gate
 
-**For complex requests, STOP and ASK first:**
+| Request Type            | Strategy         | Required Action                                      |
+| ----------------------- | ---------------- | ---------------------------------------------------- |
+| **New Feature / Build** | Deep Discovery   | Ask at least 3 strategic questions                   |
+| **Edit / Bug Fix**      | Context Check    | Confirm understanding + ask for regressions/risks    |
+| **Vague / Simple**      | Clarification    | Ask Purpose, Users, and Scope                        |
+| **Full Orchestration**  | Gatekeeper       | STOP subagents until user confirms the plan          |
+| **“Proceed” direct**    | Validation       | Still ask 2 edge-case questions before coding        |
 
-| Request Type            | Required Action                                |
-| ----------------------- | ---------------------------------------------- |
-| **New Feature / Build** | ASK minimum 3 strategic questions              |
-| **Vague / Simple**      | Ask Purpose, Users, and Scope                  |
-| **Full Orchestration**  | **STOP** subagents until user confirms plan    |
+**Protocol:** Never assume (any missing detail → ask), respond in bullet lists, wait for explicit approval before editing, and lean on `.agents/skills/brainstorming/SKILL.md` for question patterns.
 
 ---
 
@@ -335,7 +351,21 @@ Progresso atualizado: {percentual}%
 Próxima tarefa: {nome_proxima_tarefa}
 ```
 
-> **Regra:** Você é RESPONSÁVEL por atualizar o status no backlog. Não peça ao usuário para fazer isso.
+> **Regras adicionais:** Você é responsável por rodar os scripts e deixar o status sincronizado. `finish_task.py` recusa marcar o checkbox se não existir story file correspondente, atualiza o frontmatter e injeta o resumo nas histórias desbloqueadas. Nunca marque manualmente.
+
+---
+
+## Final Checklist (antes de handoff/deploy)
+
+Execute os checks na ordem:
+1. **Security** – `python .agents/skills/vulnerability-scanner/scripts/security_scan.py`
+2. **Lint** – `python .agents/skills/lint-and-validate/scripts/lint_runner.py`
+3. **Schema** – `python .agents/skills/database-design/scripts/schema_validator.py`
+4. **Tests** – `python .agents/skills/testing-patterns/scripts/test_runner.py`
+5. **UX/SEO/Perf** – `ux_audit.py`, `seo_checker.py`, `lighthouse_audit.py` conforme escopo
+6. **Checklist core** – `python3 .agents/scripts/checklist.py .` (e `--url` quando houver front-end)
+
+> Uma tarefa só está concluída depois que os scripts acima retornam sucesso.
 
 ---
 
@@ -374,7 +404,8 @@ A saída da descrição das atividades enviadas à flag `--activities` deve ser 
 | Checklist | `python3 .agents/scripts/checklist.py .` | Auditoria do projeto |
 | Validar | `python3 .agents/scripts/validate_installation.py` | Verificar setup |
 | Squads | `python3 .agents/scripts/squad_manager.py list` | Gerenciar squads |
-| Shard Epic | `python3 .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
+| Story Ops | `python3 .agents/scripts/shard_epic.py generate` | Gerar/atualizar story files (fluxo lean) |
+| Story Migrate | `python3 .agents/scripts/shard_epic.py migrate` | Converter backlog antigo em backlog lean + stories |
 
 ---
 

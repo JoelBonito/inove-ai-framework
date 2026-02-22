@@ -27,8 +27,7 @@ description: Marca uma tarefa do backlog como concluída. Uso: /finish {ID}
    Run: python3 .agents/scripts/progress_tracker.py
 
 // turbo
-3. Se `docs/stories/` existir, sincronizar status dos shards
-   Run: python3 .agents/scripts/shard_epic.py sync
+3. Story file e PROJECT_STATUS atualizados automaticamente pelo finish_task.py
 
 ## Exemplos de Uso
 

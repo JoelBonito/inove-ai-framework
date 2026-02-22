@@ -128,18 +128,20 @@ ${agentList}
 
 When the user says "implement Epic X" or "implement Story Y.Z":
 
-1. Read backlog: \`docs/BACKLOG.md\`
-2. If \`docs/stories/\` doesn't exist, suggest running \`shard_epic.py shard\`
-3. Detect domain → Activate appropriate agent
-4. Implement following agent rules
-5. After completion, update progress
+1. Read \`docs/PROJECT_STATUS.md\` — know which story to open
+2. Open story file in \`docs/stories/STORY-*.md\` — full implementation context
+3. Validate dependencies (depends_on field must all be done)
+4. Activate agent indicated in story file's \`agent\` field
+5. Implement following agent rules
+6. Run finish_task.py to update backlog + story + PROJECT_STATUS
+
+> Backlog is just an index of checkboxes. Never read it for implementation context.
 
 ## Post-Define Flow
 
-After \`/define\` or \`/readiness\`:
-1. \`/track\` — Initialize tracking
-2. \`shard_epic.py shard\` — Split backlog into story files
-3. Start implementing Story 1.1
+After \`/define\`:
+1. \`/track\` — Verify progress
+2. Start implementing (PROJECT_STATUS tells you which story is next)
 `;
 
       return { contents: [{ uri: "inove://system-prompt", text: prompt, mimeType: "text/markdown" }] };

@@ -19,7 +19,7 @@
 ```
 .agents/
 ├── agents/           # 22 agentes especializados
-├── skills/           # 41 módulos de conhecimento
+├── skills/           # 42 módulos de conhecimento
 ├── workflows/        # 25 workflows (slash commands)
 ├── scripts/          # Automação Python
 ├── config/           # Configurações por plataforma
@@ -256,6 +256,8 @@ Próxima tarefa: {nome_proxima_tarefa}
 ```
 
 > **Regra:** Você é RESPONSÁVEL por atualizar o status no backlog. Não peça ao usuário para fazer isso.
+>
+> **Guardas automáticas:** `finish_task.py` só marca o checkbox se o story file correspondente existir em `docs/stories/`, atualiza o frontmatter (status, Agent Workspace) e injeta o resumo nas histórias desbloqueadas. Nunca marque manualmente.
 
 ---
 
@@ -319,19 +321,19 @@ A saida da descricao das atividades enviadas a flag `--activities` deve ser curt
 
 ---
 
-## Integração com Backlog
+## Integração com Backlog / Stories / Status
 
-Quando o usuário disser "implementar Epic X" ou "implementar Story Y.Z":
+Quando o usuário pedir “implementar Epic X” ou “Story Y.Z”, siga SEMPRE esta ordem:
 
-1. **Ler backlog:** `docs/BACKLOG.md`
-2. **Verificar shards:** Se `docs/stories/` não existir, executar `python3 .agents/scripts/shard_epic.py shard` antes de continuar
-3. **Identificar detalhes** da tarefa
-4. **Detectar domínio** → Ativar agente apropriado
-5. **Implementar** seguindo regras do agente
-6. **Auto-finish** usando scripts
-7. **Atualizar progresso**
+1. **Project Status primeiro:** Abra `docs/PROJECT_STATUS.md`. Ele diz qual story vem a seguir, a branch atual, o percentual e possíveis alertas de roteamento (ex.: próxima task exige antigravity).
+2. **Story file é a fonte de verdade:** Abra o arquivo em `docs/stories/STORY-Y.Z_*.md` indicado no status. Todo contexto vive ali (requisito, critérios, dependências, agente, ferramenta e Agent Workspace). **Nunca** use o backlog para obter esses detalhes.
+3. **Validar dependências:** No frontmatter, confirme se todas as stories listadas em `depends_on` estão marcadas como feitas. Se não estiverem, volte e finalize-as antes de prosseguir.
+4. **Ativar o agente certo:** Use os campos `agent` e `tool` do story para rotear automaticamente (ex.: `frontend-specialist` + `codex`, ou `ux-researcher` + `antigravity`).
+5. **Implementar e registrar:** Trabalhe seguindo o contexto do story, escreva findings/notas na seção **Agent Workspace** e mantenha esse arquivo como log vivo.
+6. **Auto-finish obrigatório:** No fim, rode `finish_task.py` (que atualiza backlog + story + dependências) e `progress_tracker.py` (que recalcula `PROJECT_STATUS.md`).
+7. **Backlog = índice:** Use `docs/BACKLOG.md` apenas para visão geral (checkbox). Se uma story estiver no backlog mas não existir em `docs/stories/`, gere-a com `/define` ou `python3 .agents/scripts/shard_epic.py generate|migrate` antes de marcar qualquer progresso.
 
-> **Regra:** Após `/define` ou `/readiness`, se `docs/stories/` não existir, executar `python3 .agents/scripts/shard_epic.py shard` automaticamente antes de iniciar qualquer implementação.
+> **Fontes únicas:** `PROJECT_STATUS` aponta o próximo passo, `docs/stories/` contém o contexto e o backlog é só a lista de controle. Se estiver faltando algum desses arquivos, corrija antes de produzir código.
 
 ---
 
@@ -402,7 +404,7 @@ Os scripts Python detectam automaticamente qual ferramenta está executando:
 
 ```python
 from platform_compat import get_agent_source
-source = get_agent_source()  # 'claude_code', 'codex', ou 'unknown'
+source = get_agent_source()  # 'claude_code', 'codex', 'antigravity' ou 'unknown'
 ```
 
 ---
@@ -433,13 +435,13 @@ python3 .agents/scripts/lock_manager.py cleanup   # Limpar locks expirados
 
 Formato no BACKLOG.md:
 ```markdown
-## Epic 1: Nome [OWNER: claude_code] [MODEL: opus-4-5]
+## Epic 1: Nome [OWNER: claude_code] [MODEL: opus-4-6]
 ```
 
 | Campo | Descrição | Valores |
 |-------|-----------|---------|
 | `OWNER` | Agente/ferramenta responsável | `claude_code`, `antigravity`, `codex` |
-| `MODEL` | Modelo AI preferencial | `opus-4-5`, `sonnet`, `haiku`, `gemini-2.0` |
+| `MODEL` | Modelo AI preferencial | `opus-4-6`, `sonnet`, `haiku`, `gemini-2.5` |
 
 ---
 
@@ -460,7 +462,8 @@ Formato no BACKLOG.md:
 | Verificar Tudo | `python3 .agents/scripts/verify_all.py .` | Verificação completa |
 | Squad Manager | `python3 .agents/scripts/squad_manager.py list` | Gerenciar squads |
 | Recovery | `python3 .agents/scripts/recovery.py checkpoint <label>` | Retry + rollback |
-| Shard Epic | `python3 .agents/scripts/shard_epic.py shard` | Fatiar backlog em stories |
+| Story Ops | `python3 .agents/scripts/shard_epic.py generate` | Gerar/atualizar story files (fluxo lean) |
+| Story Migrate | `python3 .agents/scripts/shard_epic.py migrate` | Converter backlog antigo em backlog lean + stories |
 
 ---
 
@@ -536,6 +539,8 @@ Roteamento inteligente habilitado
 Log de sessão iniciado
 
 Pronto para trabalhar. O que devo fazer?
+
+> Nota: São 21 agentes core; squads ativos (ex.: n8n) adicionam papéis extras, elevando o total disponível para 22.
 ```
 
 > **OBRIGATÓRIO:** Criar/abrir o arquivo de log diário ao inicializar a sessão.
