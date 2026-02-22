@@ -120,11 +120,14 @@ Informar ao usuário:
 Quando o usuário disser "implementar Epic X" ou "implementar Story Y.Z":
 
 1. **Ler backlog:** `docs/BACKLOG.md`
-2. **Identificar detalhes** da tarefa
-3. **Detectar domínio** → Ativar agente apropriado
-4. **Implementar** seguindo regras do agente
-5. **Auto-finish** usando scripts
-6. **Atualizar progresso**
+2. **Verificar shards:** Se `docs/stories/` não existir, executar `python3 .agents/scripts/shard_epic.py shard` antes de continuar
+3. **Identificar detalhes** da tarefa
+4. **Detectar domínio** → Ativar agente apropriado
+5. **Implementar** seguindo regras do agente
+6. **Auto-finish** usando scripts
+7. **Atualizar progresso**
+
+> **Regra:** Após `/define` ou `/readiness`, se `docs/stories/` não existir, executar `python3 .agents/scripts/shard_epic.py shard` automaticamente antes de iniciar qualquer implementação.
 
 ---
 

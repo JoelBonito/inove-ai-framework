@@ -301,8 +301,9 @@ Gere o relatório consolidado:
 
 ### Se PRONTO:
 1. Rodar `/track` para inicializar tracking
-2. Começar com `implementar Story 1.1`
-3. Seguir ordem de execução sugerida no Backlog
+2. Rodar `python3 .agents/scripts/shard_epic.py shard` para fatiar backlog em stories
+3. Começar com `implementar Story 1.1`
+4. Seguir ordem de execução sugerida no Backlog
 
 ### Se NÃO PRONTO:
 1. Resolver bloqueadores listados acima

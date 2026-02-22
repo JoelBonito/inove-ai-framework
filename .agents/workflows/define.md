@@ -1843,7 +1843,8 @@ Documentos devem ser revisados com skill `doc-review` por Claude Code ou Codex.
 
 ### Apos Revisao:
 1. /track — Inicializar tracking
-2. implementar Story 1.1 — Comecar implementacao
+2. `python3 .agents/scripts/shard_epic.py shard` — Fatiar backlog em story files
+3. implementar Story 1.1 — Comecar implementacao
 
 NAO inicio implementacao sem aprovacao explicita.
 ```
