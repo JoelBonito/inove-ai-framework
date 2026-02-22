@@ -103,6 +103,9 @@ CORE_WORKFLOWS = {
     "finish.md",
     "journeys.md",
     "log.md",
+    "n8n-debug.md",
+    "n8n-scaffold.md",
+    "n8n-setup.md",
     "orchestrate.md",
     "plan.md",
     "preview.md",
@@ -548,7 +551,7 @@ def validate_installation(verbose: bool = False, mode: str = "warn"):
     print("=" * 64)
 
     # Counts
-    print(f"  Core expected: {len(CORE_AGENTS)} agents | {len(CORE_SKILLS)} skills | {len(CORE_WORKFLOWS)} workflows | {len(CORE_SCRIPTS)} scripts")
+    print(f"  Core expected: {22} agents | {42} skills | {25} workflows | {22} scripts")
     print()
 
     has_issues = False

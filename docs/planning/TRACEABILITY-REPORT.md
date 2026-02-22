@@ -1,6 +1,6 @@
 # Relatório de Rastreabilidade
 
-**Gerado em:** 2026-02-21 21:00:30
+**Gerado em:** 2026-02-21 21:35:09
 **Status:** ⚠️ PASSED_WITH_WARNINGS
 
 ---
