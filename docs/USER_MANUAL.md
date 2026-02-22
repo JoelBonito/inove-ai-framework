@@ -10,48 +10,142 @@
 
 ## 1. Configuração Rápida (Instalação Local)
 
-### 1.1 Passo único — rodar o instalador
+### 1.1 Menu Interativo (recomendado)
 
 ```bash
-npx -y @joelbonito/inove-ai-framework init
+npx @joelbonito/inove-ai-framework
 ```
 
-O comando acima:
+Abre o assistente de instalação em PT-BR. Você verá um menu com 6 opções:
 
-- Copia `.agents/` (22 agentes, 42 skills, 25 workflows, scripts, squads, skills).
-- Sincroniza `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` na raiz do projeto (Claude/Codex/Gemini leem automaticamente).
-- Instala os git hooks oficiais (`.agents/scripts/install_git_hooks.sh`).
+```
+● Instalação Completa       — Instala o framework inteiro: agentes, skills, workflows,
+                               scripts, symlinks e git hooks.
+○ Instalação Personalizada  — Permite escolher quais plataformas, componentes e squads
+                               instalar individualmente.
+○ Atualizar                 — Atualiza o framework sem sobrescrever CLAUDE.md,
+                               AGENTS.md ou GEMINI.md.
+○ Adicionar Plataforma      — Habilita suporte a Claude Code, Codex CLI ou
+                               Gemini / Antigravity em uma instalação existente.
+○ Verificar Instalação      — Analisa arquivos em falta, symlinks quebrados e
+                               dependências do sistema.
+○ Desinstalar               — Remove .agents/ e symlinks. O código do projeto
+                               não é afetado.
+```
 
-Use `--force` para sobrescrever uma instalação existente:
+### 1.2 Passo a passo — Instalação Completa
+
+Ao selecionar **Instalação Completa**, o assistente guia você por estas etapas:
+
+**Etapa 1 — Confirmação do plano**
+```
+┌ Será instalado ──────────────────────────────────────────┐
+│ .agents/ (21 agentes, 41 skills, 22 workflows, 22 scripts)│
+│ CLAUDE.md, AGENTS.md, GEMINI.md                          │
+│ Symlinks: .claude/ (Claude Code), .codex/ (Codex CLI)    │
+│ squads/ (templates basic e specialist)                    │
+│ Git hooks (post-commit para tracking)                     │
+└──────────────────────────────────────────────────────────┘
+? Prosseguir com a instalação? ● Sim  ○ Não
+```
+
+**Etapa 2 — Chaves de API do Gemini (opcional)**
+```
+? Configurar chaves de API para MCPs do Gemini?
+  Context7 (docs de libs em tempo real) e Stitch (prototipagem de UI).
+  Opcional — pode configurar depois em .gemini/mcp.json
+  ○ Não  ● Sim
+
+? CONTEXT7_API_KEY (Context7): sua-chave-aqui
+? STITCH_API_KEY (Stitch):     sua-chave-aqui
+```
+
+> Se pular, o arquivo `.gemini/mcp.json` é criado com placeholders
+> `${CONTEXT7_API_KEY}` e `${STITCH_API_KEY}` para configuração manual posterior.
+
+**Etapa 3 — Execução e resumo**
+
+O assistente executa todas as etapas com feedback em tempo real e exibe um
+resumo final com o que foi instalado e os próximos passos recomendados.
+
+### 1.3 Instalação Personalizada
+
+Ao selecionar **Instalação Personalizada**, você escolhe individualmente:
+
+1. **Plataformas** — Claude Code, Codex CLI, Gemini / Antigravity (multi-select)
+2. **Componentes** — Agentes, Skills, Workflows, Scripts, Configurações (multi-select)
+3. **Templates de squads** — Sim/Não
+4. **Git hooks** — Sim/Não (apenas se for repositório git)
+5. **Auto-start de sessão** — Sim/Não (apenas se Python 3 disponível)
+6. **Chaves de API do Gemini** — idem à Instalação Completa (apenas se Gemini selecionado)
+
+### 1.4 Instalação Não-Interativa (CI / scripts)
 
 ```bash
-npx -y @joelbonito/inove-ai-framework init --force
+npx @joelbonito/inove-ai-framework install
 ```
 
-### 1.2 Atualizar para a versão mais recente
+Sem prompts. Instala tudo com defaults e escreve placeholders de env vars no `.gemini/mcp.json`. Use `--force` para sobrescrever instalação existente:
 
 ```bash
-npm install --save-dev @joelbonito/inove-ai-framework@latest
-npx -y @joelbonito/inove-ai-framework init --force
+npx @joelbonito/inove-ai-framework install --force
 ```
 
-Isso garante que seu `.agents/` sempre corresponda ao pacote publicado.
+### 1.5 Atualizar para a versão mais recente
 
-### 1.3 Checklist pós-instalação
-
-Após o comando `init` você deve ver:
-
-```
-.agents/                    # núcleo do framework
-CLAUDE.md / AGENTS.md / GEMINI.md
-docs/ (vazio ou existente)
+```bash
+npx @joelbonito/inove-ai-framework update
 ```
 
-### 1.4 Integração com IDEs e CLIs
+Atualiza `.agents/`, scripts e skills sem sobrescrever seus arquivos de instrução (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`).
+
+### 1.6 Verificar a instalação
+
+```bash
+npx @joelbonito/inove-ai-framework validate
+```
+
+Verifica 21 agentes core, 41 skills core, 22 workflows core, 22 scripts, symlinks e configs de plataforma. Componentes de squad (ex.: n8n-automation) são rastreados separadamente — só verificados quando o squad está ativo.
+
+### 1.7 Checklist pós-instalação
+
+Após a instalação você deve ver na raiz do projeto:
+
+```
+.agents/                    # núcleo do framework (agentes, skills, workflows, scripts)
+.claude/                    # symlinks para Claude Code (agents/, skills/)
+.codex/                     # symlinks para Codex CLI (agents/, skills/, prompts/)
+.gemini/                    # config do Gemini CLI (settings.json + mcp.json)
+squads/                     # templates de squads (n8n-automation incluído)
+CLAUDE.md                   # instruções para Claude Code
+AGENTS.md                   # instruções para Codex CLI
+GEMINI.md                   # instruções para Gemini / Antigravity
+```
+
+### 1.8 Configurar chaves de API do Gemini manualmente
+
+Se pulou o step durante a instalação, edite `.gemini/mcp.json` e substitua os placeholders:
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "env": { "CONTEXT7_API_KEY": "sua-chave-aqui" }
+    },
+    "stitch": {
+      "env": { "STITCH_API_KEY": "sua-chave-aqui" }
+    }
+  }
+}
+```
+
+> `.gemini/mcp.json` está no `.gitignore` do projeto — suas chaves não são commitadas.
+
+### 1.9 Integração com IDEs e CLIs
 
 - **Claude Code** lê `CLAUDE.md` automaticamente (assim que o arquivo existe na raiz).
 - **Codex CLI** usa `AGENTS.md` como ponte e referencia `.agents/INSTRUCTIONS.md`.
-- **Antigravity/Gemini** usa `GEMINI.md` + `docs/PROJECT_STATUS.md` para contexto.
+- **Antigravity/Gemini** usa `GEMINI.md` + `.gemini/settings.json` + `docs/PROJECT_STATUS.md` para contexto.
 
 Não é necessário configurar MCP ou servidores externos. Basta manter os arquivos na raiz do repositório.
 
@@ -105,11 +199,11 @@ Se você estava usando o `@joelbonito/mcp-server` (sem `.agents/`), siga estes p
    - Claude Code: `claude mcp remove inove-ai`  
    - Cursor/VS Code: apague a entrada `"inove-ai"` em `.cursor/mcp.json` / `.vscode/mcp.json`.
 
-2. **Recrie os arquivos locais**  
+2. **Recrie os arquivos locais**
    ```bash
-   npx -y @joelbonito/inove-ai-framework init --force
+   npx @joelbonito/inove-ai-framework install --force
    ```
-   Isso copia `.agents/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` e reinstala os git hooks.
+   Isso copia `.agents/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, cria `.gemini/` e reinstala os git hooks.
 
 3. **Commit**  
    ```

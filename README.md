@@ -20,46 +20,79 @@
 
 > **Requires:** Node.js ≥ 22, Python 3, Git.
 
+### Interactive Menu (recommended)
+
 ```bash
-npx -y @joelbonito/inove-ai-framework init
+npx @joelbonito/inove-ai-framework
 ```
 
-That single command:
+Opens a PT-BR installation wizard with 6 options:
 
-- Copies the entire `.agents/` folder (22 agents, 42 skills, 25 workflows, scripts, skills, workflows).
-- Drops fresh `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` into the repo root (auto-loaded by Claude Code, Codex CLI, Gemini CLI).
-- Installs the Git hooks defined in `.agents/scripts/install_git_hooks.sh`.
+```
+● Instalação Completa       — Full install: .agents/, instruction files, symlinks, git hooks
+○ Instalação Personalizada  — Choose platforms, components and squads individually
+○ Atualizar                 — Update without overwriting CLAUDE.md, AGENTS.md, GEMINI.md
+○ Adicionar Plataforma      — Enable Claude Code, Codex CLI or Gemini / Antigravity
+○ Verificar Instalação      — Check missing files, broken symlinks and dependencies
+○ Desinstalar               — Remove .agents/ and symlinks (project code untouched)
+```
 
-The command is idempotent. Use `--force` to overwrite an existing installation:
+**During "Instalação Completa"**, the wizard also asks for Gemini MCP API keys (optional — you can configure later in `.gemini/mcp.json`):
+
+```
+? Configurar chaves de API para MCPs do Gemini?
+  Context7 (real-time lib docs) e Stitch (UI prototyping). Optional.
+  ○ Não  ● Sim
+
+? CONTEXT7_API_KEY (Context7): ________________
+? STITCH_API_KEY (Stitch):     ________________
+```
+
+If you skip, placeholder env vars (`${CONTEXT7_API_KEY}`, `${STITCH_API_KEY}`) are written to `.gemini/mcp.json` automatically.
+
+### Non-Interactive (CI / scripts)
 
 ```bash
-npx -y @joelbonito/inove-ai-framework init --force
+npx @joelbonito/inove-ai-framework install
+```
+
+No prompts — installs everything with defaults. Use `--force` to overwrite an existing installation:
+
+```bash
+npx @joelbonito/inove-ai-framework install --force
 ```
 
 ### Keep it up-to-date
 
 ```bash
-npm install --save-dev @joelbonito/inove-ai-framework@latest
-npx -y @joelbonito/inove-ai-framework init --force
+npx @joelbonito/inove-ai-framework update
 ```
 
-That ensures your `.agents/` folder, scripts, and instruction files always match the published package.
+Updates `.agents/`, scripts and skills without overwriting your instruction files (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`).
+
+### Validate your installation
+
+```bash
+npx @joelbonito/inove-ai-framework validate
+```
+
+Checks all 21 core agents, 41 core skills, 22 core workflows, 22 scripts, symlinks and platform configs. Squad components (e.g. n8n-automation) are tracked separately and only checked when the squad is active.
 
 ### Migrating from the MCP/Thin setup
 
 If you previously relied on the `@joelbonito/mcp-server` thin client:
 
 1. Remove any `claude mcp add ...` / `.cursor/mcp.json` entries that pointed to the remote server.
-2. In the project root, run `npx -y @joelbonito/inove-ai-framework init --force`.
+2. In the project root, run `npx @joelbonito/inove-ai-framework`.
 3. Commit the fresh `.agents/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`.
 
 From now on every repository is self-contained; all instructions and skills live alongside your code.
 
 ## What's Included
 
-- **22 Specialized Agents** for different domains (frontend, backend, security, database, mobile, UX, game dev, etc.)
-- **42 Modular Skills** loaded on demand (clean-code, testing-patterns, api-patterns, tailwind, etc.)
-- **25 Workflows** (slash commands) for structured processes
+- **21 Core Agents** for different domains (frontend, backend, security, database, mobile, UX, game dev, etc.) + extra agents via Squads (e.g. n8n-specialist)
+- **41 Core Skills** loaded on demand (clean-code, testing-patterns, api-patterns, tailwind, etc.) + extra skills via Squads
+- **22 Core Workflows** (slash commands) for structured processes + extra workflows via Squads
 - **Squad System** — reusable agent+skill+workflow packages for custom domains
 - **Recovery System** — automatic retry and git checkpoint/rollback for resilient execution
 - **Stitch MCP Integration** — visual mockups for UI projects via `/define`, `/ui-ux-pro-max`, and `/readiness`
@@ -196,15 +229,19 @@ Squads live in `squads/<name>/` with a `squad.yaml` manifest. See [squads/README
 
 ```
 .agents/
-├── agents/           # 22 specialized agents
-├── skills/           # 42 knowledge modules
-├── workflows/        # 25 workflows (slash commands)
+├── agents/           # 21 core specialized agents
+├── skills/           # 41 core knowledge modules
+├── workflows/        # 22 core workflows (slash commands)
 ├── scripts/          # Python automation (22 scripts)
 ├── config/           # Per-platform configuration
 ├── .shared/          # Shared data (UI/UX databases)
 └── ARCHITECTURE.md   # Technical documentation
 
 squads/               # Reusable agent+skill+workflow packages
+│ └── n8n-automation/ # n8n specialist (+1 agent, +1 skill, +3 workflows)
+.gemini/              # Gemini CLI config (created automatically on install)
+│ ├── settings.json   # Model and system instruction
+│ └── mcp.json        # MCP servers (Context7, Stitch) — gitignored
 tests/                # Framework tests
 web/                  # Documentation website (Next.js)
 docs/                 # Project docs, backlog, logs
