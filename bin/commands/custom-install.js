@@ -6,7 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { PACKAGE_ROOT, AGENT_SRC, SQUADS_SRC, VERSION, PLATFORMS, COMPONENTS, DANGEROUS_DIRS } = require('../lib/constants');
+const { PACKAGE_ROOT, AGENT_SRC, SQUADS_SRC, VERSION, PLATFORMS, COMPONENTS, DANGEROUS_DIRS, generateGeminiMcp } = require('../lib/constants');
 const { sanitizeErrorMessage } = require('../lib/security');
 const { copyDir, copyComponent, isGitRepo, hasPython3, atomicWrite, ensureGitignore } = require('../lib/fs-utils');
 const { setupPlatform } = require('../lib/platforms');
@@ -84,6 +84,33 @@ async function run() {
       message: 'Instalar git hooks?\n  Adiciona auto-tracking de progresso nos commits (post-commit hook).',
       initialValue: true,
     });
+  }
+
+  // ── 5. API Keys para MCPs do Gemini ───────────────────────────────
+
+  let geminiKeys = { context7: '', stitch: '' };
+
+  if (selectedPlatforms.includes('gemini-antigravity')) {
+    const wantKeys = await ui.confirm({
+      message:
+        'Configurar chaves de API para MCPs do Gemini?\n' +
+        '  Context7 (docs de libs em tempo real) e Stitch (prototipagem de UI).\n' +
+        '  Opcional — pode configurar depois em .gemini/mcp.json',
+      initialValue: false,
+    });
+
+    if (wantKeys) {
+      geminiKeys.context7 = await ui.text({
+        message: 'CONTEXT7_API_KEY (Context7):',
+        placeholder: 'Deixe em branco para usar placeholder',
+        defaultValue: '',
+      });
+      geminiKeys.stitch = await ui.text({
+        message: 'STITCH_API_KEY (Stitch):',
+        placeholder: 'Deixe em branco para usar placeholder',
+        defaultValue: '',
+      });
+    }
   }
 
   // ── 5. Auto-start session ──────────────────────────────────────────
@@ -181,6 +208,15 @@ async function run() {
     }
   }
 
+  // 3.1. Write API keys into .gemini/mcp.json (if provided)
+  if (geminiKeys.context7 || geminiKeys.stitch) {
+    const mcpPath = path.join(targetDir, '.gemini', 'mcp.json');
+    if (fs.existsSync(path.dirname(mcpPath))) {
+      atomicWrite(mcpPath, generateGeminiMcp(geminiKeys.context7, geminiKeys.stitch));
+      s.stop('Chaves de API configuradas em .gemini/mcp.json.');
+    }
+  }
+
   // 4. Squad templates
   if (includeSquads && fs.existsSync(SQUADS_SRC)) {
     s.start('Copiando templates de squads...');
@@ -229,6 +265,7 @@ async function run() {
   ensureGitignore(targetDir, '.agents/locks/');
   ensureGitignore(targetDir, '.agents/.session_state.json');
   ensureGitignore(targetDir, '.agents.bak/');
+  ensureGitignore(targetDir, '.gemini/mcp.json');
 
   // ── Summary ────────────────────────────────────────────────────────
 

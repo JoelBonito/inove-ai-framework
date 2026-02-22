@@ -33,7 +33,6 @@ CORE_AGENTS = {
     "frontend-specialist.md",
     "game-developer.md",
     "mobile-developer.md",
-    "n8n-specialist.md",
     "orchestrator.md",
     "penetration-tester.md",
     "performance-optimizer.md",
@@ -45,7 +44,7 @@ CORE_AGENTS = {
     "seo-specialist.md",
     "test-engineer.md",
     "ux-researcher.md",
-}  # 25
+}  # 21
 
 CORE_SKILLS = {
     "api-patterns",
@@ -69,7 +68,6 @@ CORE_SKILLS = {
     "lint-and-validate",
     "mcp-builder",
     "mobile-design",
-    "n8n-orchestration",
     "nextjs-react-expert",
     "nodejs-best-practices",
     "parallel-agents",
@@ -90,7 +88,7 @@ CORE_SKILLS = {
     "vulnerability-scanner",
     "web-design-guidelines",
     "webapp-testing",
-}  # 42
+}  # 41
 
 CORE_WORKFLOWS = {
     "brainstorm.md",
@@ -103,9 +101,6 @@ CORE_WORKFLOWS = {
     "finish.md",
     "journeys.md",
     "log.md",
-    "n8n-debug.md",
-    "n8n-scaffold.md",
-    "n8n-setup.md",
     "orchestrate.md",
     "plan.md",
     "preview.md",
@@ -118,7 +113,7 @@ CORE_WORKFLOWS = {
     "test.md",
     "track.md",
     "ui-ux-pro-max.md",
-}  # 25
+}  # 22
 
 CORE_SCRIPTS = {
     "_check_runner.py",
@@ -551,7 +546,7 @@ def validate_installation(verbose: bool = False, mode: str = "warn"):
     print("=" * 64)
 
     # Counts
-    print(f"  Core expected: {22} agents | {42} skills | {25} workflows | {22} scripts")
+    print(f"  Core expected: {21} agents | {41} skills | {22} workflows | {22} scripts")
     print()
 
     has_issues = False

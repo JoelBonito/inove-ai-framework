@@ -5,6 +5,33 @@
 const path = require('path');
 const os = require('os');
 
+/**
+ * Generate the content for .gemini/mcp.json.
+ * Uses env var placeholders when keys are not provided.
+ */
+function generateGeminiMcp(context7Key, stitchKey) {
+  const c7 = context7Key || '${CONTEXT7_API_KEY}';
+  const sk = stitchKey || '${STITCH_API_KEY}';
+  return JSON.stringify(
+    {
+      mcpServers: {
+        context7: {
+          command: 'npx',
+          args: ['-y', '@upstash/context7-mcp'],
+          env: { CONTEXT7_API_KEY: c7 },
+        },
+        stitch: {
+          command: 'npx',
+          args: ['-y', '@_davideast/stitch-mcp@latest', 'proxy'],
+          env: { STITCH_API_KEY: sk },
+        },
+      },
+    },
+    null,
+    2
+  ) + '\n';
+}
+
 const PACKAGE_ROOT = path.resolve(__dirname, '..', '..');
 const VERSION = require(path.join(PACKAGE_ROOT, 'package.json')).version;
 const AGENT_SRC = path.join(PACKAGE_ROOT, '.agents');
@@ -67,10 +94,19 @@ const PLATFORMS = {
   'gemini-antigravity': {
     label: 'Gemini / Antigravity',
     instructionFile: 'GEMINI.md',
-    setupDir: null,
+    setupDir: '.gemini',
     symlinks: [],
-    extraFiles: [],
-    description: 'Copia GEMINI.md para a raiz. Acessa .agents/ diretamente sem symlinks.',
+    extraFiles: [
+      {
+        name: 'settings.json',
+        content: '{\n  "model": "gemini-2.5-pro",\n  "systemInstruction": "GEMINI.md"\n}\n',
+      },
+      {
+        name: 'mcp.json',
+        content: generateGeminiMcp(),
+      },
+    ],
+    description: 'Cria .gemini/ com settings.json e mcp.json, e copia GEMINI.md para a raiz.',
   },
 };
 
@@ -94,4 +130,5 @@ module.exports = {
   POINTER_CONTENT,
   PLATFORMS,
   COMPONENTS,
+  generateGeminiMcp,
 };
