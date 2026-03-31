@@ -106,8 +106,10 @@
 | "jogo", "game", "Unity", "Godot", "Phaser", "multiplayer", "game design" | Game Dev | `game-developer` |
 | "explorar codebase", "discovery", "mapeamento", "como funciona este código" | Exploration | `explorer-agent` |
 | MCP, "MCP server", "MCP tool", "protocol" | MCP Dev | `backend-specialist` (skill: mcp-builder) |
+| "firebase", "firestore", "cloud functions", "security rules", "firebase auth", "emulators", "onCall", "onRequest" | Firebase | `backend-specialist` (skill: firebase-patterns) |
 
 > **Mobile + frontend-specialist = ERRADO.** Mobile = `mobile-developer` APENAS.
+> **Firebase + database-design = ERRADO.** Firebase = `firebase-patterns` skill SEMPRE (prevalece sobre `database-design` e `api-patterns`).
 
 ### 2. Avaliação de Complexidade (AUTOMÁTICO)
 

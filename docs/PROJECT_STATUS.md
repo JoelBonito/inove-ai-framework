@@ -1,21 +1,18 @@
-# Project Status (Context State)
+# Project Status
 
-> **AUTO-GENERATED:** Le este arquivo para se situar no projeto.
+**Atualizado:** 2026-03-31 16:04
+**Branch:** `main`
+**Progresso:** ░░░░░░░░░░ 0% (0/0)
 
-**Ultima Atualizacao:** 2026-02-21 20:58
+## Proxima Story
+Nenhuma story pendente. Execute /define para criar o backlog.
 
-**Branch Atual:** `main`
-
-## Progresso Atual
-
-- **Global:** 0.0% (0/0 tarefas)
-
-## Proxima Tarefa no Foco
-
-- Nenhum epic ativo
+## Progresso por Epic
+| Epic | Status | Progresso |
+|------|--------|-----------|
+| (nenhum epic) | - | - |
 
 ## Ultimos Commits
-
-```bash
+```
 (nenhum commit registrado)
 ```
